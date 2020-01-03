@@ -1,6 +1,6 @@
 const notifications = {
-  "colorSuccess": "rgb(0,173,133)",
-  "colorError": "rgb(200,0,25)",
+  "colorSuccess": "rgb(44,182,125)",
+  "colorError": "rgb(239,69,101)",
 };
 
 const urls = {

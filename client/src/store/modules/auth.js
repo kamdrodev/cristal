@@ -43,10 +43,7 @@ const actions = {
         message: "You are logged in"
       }
     } catch(e) {
-      const customError = new Error(e.response.data.message);
-      customError.status = e.response.status;
-      customError.errors = e.response.data.errors ? e.response.data.errors : [];
-      throw customError;
+      throw new Error(e.response.data.message);
     }
   },
 };
