@@ -9,9 +9,15 @@ const signUp = async (req, res, next) => {
     const validationErrors = validationResult(req);
 
     if (!validationErrors.isEmpty()) {
-      const customError = new Error('Incorrect Data');
+      let errors = [];
+
+      for (let i = 0; i < validationErrors.errors.length; i++) {
+        errors.push(validationErrors.errors[i]);
+      }
+
+      const customError = new Error(validationErrors);
       customError.status = 400;
-      
+      customError.errors = errors;
       return next(customError);
     }
 
@@ -39,14 +45,27 @@ const signIn = async (req, res, next) => {
   try {
     const validationErrors = validationResult(req);
 
-    if (!validationErrors.isEmpty()) {
-      const customError = new Error('Incorrect Data');
+    if (!validationErrors.isEmpty()) {     
+      let errors = [];
+
+      for (let i = 0; i < validationErrors.errors.length; i++) {
+        errors.push(validationErrors.errors[i]);
+      }
+
+      const customError = new Error("Incorrect Data");
       customError.status = 400;
-      
+      customError.errors = errors;
       return next(customError);
     }
 
     const user = await User.findOne({email: req.body.email});
+
+    if (!user) {
+      const customError = new Error('Email or password is incorrect');
+      customError.status = 401;
+
+      return next(customError);
+    }
 
     const match = await bcrypt.compare(req.body.password, user.password);
 
@@ -66,6 +85,7 @@ const signIn = async (req, res, next) => {
       return next(customError);
     }
   } catch(e) {
+    console.log(e);
     const customError = new Error('Something went wrong during sign-in proces');
 
     return next(customError);

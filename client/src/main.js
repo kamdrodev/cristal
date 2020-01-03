@@ -1,6 +1,9 @@
 import Vue from "vue";
 import Vuesax from "vuesax";
 
+import axios from "axios";
+
+
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
@@ -9,6 +12,8 @@ import config from "./config.js";
 
 import "vuesax/dist/vuesax.css";
 import "material-icons/iconfont/material-icons.css";
+
+axios.defaults.baseURL = config.urls.api + "/api/";
 
 Vue.use(Vuesax, {});
 

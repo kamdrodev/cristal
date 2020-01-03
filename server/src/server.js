@@ -34,14 +34,21 @@ app.get('/api', (req, res) => {
 });
 
 app.use((err, req, res, next) => {
+  console.log(err);
   if (!err.status) {
     err.status = 500;
   } 
   if (!err.message) {
     err.message = 'Something went really wrong';
   }
+
+  if (!err.errors) {
+    err.erros = [];
+  }
+
   res.status(err.status).json({
-    message: err.message
+    message: err.message,
+    errors: err.errors,
   });
 });
 

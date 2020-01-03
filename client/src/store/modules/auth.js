@@ -18,7 +18,7 @@ const mutations = {
 const actions = {
   async signUp({}, {username, email, pasword}) {
     try {
-      const signUpRequest = await axios.post("/auth/sign-up", {
+      const signUpRequest = await axios.post("auth/sign-up", {
         username,
         email,
         password,
@@ -31,7 +31,6 @@ const actions = {
     }
   },
   signIn: async function({commit}, {email, password}) {
-    console.log("Sign In", email, password);
     try {
       const signInRequest = await axios.post("auth/sign-in", {
         email,
@@ -44,8 +43,10 @@ const actions = {
         message: "You are logged in"
       }
     } catch(e) {
-     
-      throw new Error(e.message);
+      const customError = new Error(e.response.data.message);
+      customError.status = e.response.status;
+      customError.errors = e.response.data.errors ? e.response.data.errors : [];
+      throw customError;
     }
   },
 };
