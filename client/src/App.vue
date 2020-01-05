@@ -28,6 +28,8 @@ export default {
   --headline: #fffffe;
   --button-background-color: #ff8906;
   --validation-error-color: #EF4565;
+
+  --menu-icon-color: #fffffe;
 }
 
 body {

@@ -79,14 +79,11 @@ export default {
 <style lang="scss">
 
 .menu {
-  // cursor: pointer !important;
-  // padding-top: 20px;
-  // padding-left: 20px;
-  // font-size: 30px !important;
   position: absolute;
-  // margin-left: 20px;
-  // margin-top: 30px;
-  // left: 30px;
+
+  i {
+    color: var(--menu-icon-color);
+  }
 }
 
 #parentx {

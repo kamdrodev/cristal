@@ -2,12 +2,17 @@
   <vs-row class="form-sign-in">
     <vs-col class="full-center" vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
       <h1>Sign In</h1>
-      <validation-provider rules="required" v-slot="{ errors }">
+      <validation-provider rules="required|email" v-slot="{ errors }">
         <vs-input type="email" label="Email" placeholder="Email" v-model="email"/>
         <span class="error">{{ errors[0] }}</span>
       </validation-provider>
+      <validation-provider rules="required" v-slot="{ errors }">
         <vs-input type="password" label="Password" placeholder="Password" v-model="password"/>
-        <vs-button @click="signIn" >Sign In</vs-button>
+        
+      
+        <span class="error">{{ errors[0] }}</span>
+      </validation-provider>
+      <vs-button @click="signIn" >Sign In</vs-button>
     </vs-col>
   </vs-row>
 </template>
@@ -15,11 +20,15 @@
 <script>
 
 import { ValidationProvider, extend} from "vee-validate";
-import { required } from "vee-validate/dist/rules";
+import { required, email } from "vee-validate/dist/rules";
 
 extend('required', {
   ...required,
   message: 'This field is required'
+});
+extend('email', {
+  ...email,
+  message: 'This is not valid email'
 });
 
 export default {
