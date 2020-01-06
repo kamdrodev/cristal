@@ -1,16 +1,21 @@
 <template>
-  <div>
+  <vs-row>
+  <Menu></Menu>
+  <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
+    <router-view />
+  </vs-col>
+</vs-row>
     
-  </div>
 </template>
 
 <script>
 
+import Menu from "./components/Menu.vue";
 
 export default {
   name: "home",
   components: {
-    
+    Menu
   }
 };
 </script>
@@ -24,10 +29,7 @@ export default {
   --button-background-color: #ff8906;
   --validation-error-color: #EF4565;
 
-
-  --sidebar-background-color: #0f0e17;
-  --sidebar-icon-color: #fffffe;
-  --sidebar-link-color: #fffffe;
+  --menu-icon-color: #fffffe;
 }
 
 body {
