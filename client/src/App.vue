@@ -30,6 +30,10 @@ export default {
   --validation-error-color: #EF4565;
 
   --menu-icon-color: #fffffe;
+
+  --sidebar-title-color: #ff8906;
+  --sidebar-background-color: #0f0e17;
+  --sidebar-item-color: #fffffe;
 }
 
 body {
