@@ -1,5 +1,5 @@
 import Vue from "vue";
-import Vuesax from "vuesax";
+import Buefy from "buefy";
 import axios from "axios";
 
 
@@ -9,12 +9,12 @@ import store from "./store";
 
 import config from "./config.js";
 
-import "vuesax/dist/vuesax.css";
+import 'buefy/dist/buefy.css';
 import "material-icons/iconfont/material-icons.css";
 
 axios.defaults.baseURL = config.urls.api + "/api/";
 
-Vue.use(Vuesax, {});
+Vue.use(Buefy);
 
 Vue.prototype.$notificationsColorSuccess = config.notifications.colorSuccess;
 Vue.prototype.$notificationsColorError = config.notifications.colorError;
