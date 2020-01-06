@@ -16,7 +16,12 @@ const mutations = {
 };
 
 const actions = {
-  async signUp({}, {username, email, pasword}) {
+  async signUp({}, {username, email, password}) {
+    console.log(`
+          username: ${username},
+          password: ${password},
+          email: ${email}
+        `);
     try {
       const signUpRequest = await axios.post("auth/sign-up", {
         username,
@@ -27,7 +32,8 @@ const actions = {
         message: "Your account has been created"
       }
     } catch(e) {
-      throw new Error("Something went wrong during sign up process");
+      console.log(e);
+      throw new Error(e.response.data.message);
     }
   },
   signIn: async function({commit}, {email, password}) {

@@ -10,13 +10,13 @@ router.post('/sign-up',
   [
     check('username').trim(),
     check('username').exists().withMessage("Fill username field"),
-    check('username').isLength({min: 6}),
+    check('username').isLength({min: 6, max: 16}),
     check('email').trim(),
     check('email').exists().withMessage("Fill email field"),
     check('email').normalizeEmail().isEmail().withMessage("Email is not valid"),
     check('password').trim(),
     check('password').exists().withMessage("Fill email field"),
-    check('password').isLength({min: 6}).withMessage("The password must be 6+ chars long"),
+    check('password').isLength({min: 6, max: 16}).withMessage("The password must be 6+ chars long"),
   ],
   authMiddlewares.checkIfUserExists,
   authControllers.signUp);
@@ -26,7 +26,7 @@ router.post('/sign-in',
     check('email').normalizeEmail().isEmail().withMessage("Email is not valid"),
     check('password').trim(),
     check('password').exists().withMessage("Fill password field"),
-    check('password').isLength({min: 6}).withMessage("The password must be 6+ chars long"),
+    check('password').isLength({min: 6, max: 16}).withMessage("The password must be 6+ chars long"),
     authControllers.signIn);
 
 export default router;

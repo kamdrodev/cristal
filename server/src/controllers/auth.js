@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 
 const signUp = async (req, res, next) => {
+  console.log("Sing Up")
   try {
     const validationErrors = validationResult(req);
 

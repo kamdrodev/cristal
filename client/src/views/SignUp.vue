@@ -3,18 +3,18 @@
     <vs-col class="full-center" vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
     <ValidationObserver v-slot="{invalid}">
       <form @submit.prevent="signUp">
-      <h1>Sign In</h1>
-      <validation-provider rules="required|email" v-slot="{ errors }">
-        <vs-input type="email" label="Username" placeholder="Username" v-model="username"/>
-        <span class="error">{{ errors[0] }}</span>
+      <h1>Sign Up</h1>
+      <validation-provider rules="required|minUsername:6|maxUsername:16" v-slot="{ errors }">
+        <vs-input type="text" label="Username" placeholder="Username" v-model="username" name="username" />
+        <div class="error">{{ errors[0] }}</div>
       </validation-provider>
       <validation-provider rules="required|email" v-slot="{ errors }">
         <vs-input type="email" label="Email" placeholder="Email" v-model="email"/>
-        <span class="error">{{ errors[0] }}</span>
+        <div class="error">{{ errors[0] }}</div>
       </validation-provider>
-      <validation-provider rules="required" v-slot="{ errors }">
+      <validation-provider rules="required|minPassword:6" v-slot="{ errors }">
         <vs-input type="password" label="Password" placeholder="Password" v-model="password"/>
-        <span class="error">{{ errors[0] }}</span>
+        <div class="error">{{ errors[0] }}</div>
       </validation-provider>
       <vs-button button="submit" :disabled="invalid">Sign Up</vs-button>
       </form>
@@ -26,16 +26,39 @@
 <script>
 
 import { ValidationProvider, ValidationObserver,  extend} from "vee-validate";
-import { required, email } from "vee-validate/dist/rules";
+import { required, email, length, min, max} from "vee-validate/dist/rules";
 
-extend('required', {
+extend("required", {
   ...required,
-  message: 'This field is required'
+  message: "This field is required"
 });
-extend('email', {
+extend("email", {
   ...email,
-  message: 'This is not valid email'
+  message: "This is not valid email"
 });
+
+extend("length", {
+  ...length,
+  message: "The field must be 6+ chars"
+});
+
+extend("minUsername", {
+  ...min,
+  message: "The field must be 6+ chars"
+});
+
+extend("maxUsername", {
+  ...max,
+  message: "The field must be 16- chars"
+});
+
+extend("minPassword", {
+  ...min,
+  message: "The field must be 6+ chars"
+});
+
+
+
 
 export default {
   name: "SignUp",
@@ -51,8 +74,24 @@ export default {
     }
   },
   methods: {
-    signUp: async () => {
-      console.log("sign up");
+    async signUp() {
+      try {
+        const signUpProcess = await this.$store.dispatch("auth/signUp", {username: this.username, email: this.email, password: this.password});
+
+        this.$vs.notify({
+          title:"Sign Up",
+          text: signUpProcess.message,
+          color:this.$notificationsColorSuccess
+        });
+      } catch(e) {      
+        console.log(e)
+        this.$vs.notify({
+          time: 2000,
+          title:"Error",
+          text: e.message,
+          color:this.$notificationsColorError
+        });
+      }
     }
   }
 };
@@ -69,6 +108,10 @@ export default {
     }
     
     .error {
+      overflow-wrap: break-word;
+      max-width: 200px;
+      height:100%;
+      margin-top: 10px;
       color: var(--validation-error-color) !important;
     }
 

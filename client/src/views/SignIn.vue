@@ -1,40 +1,48 @@
 <template>
   <vs-row class="form-sign-in">
     <vs-col class="full-center" vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
-      <h1>Sign In</h1>
-      <validation-provider rules="required|email" v-slot="{ errors }">
-        <vs-input type="email" label="Email" placeholder="Email" v-model="email"/>
-        <span class="error">{{ errors[0] }}</span>
-      </validation-provider>
-      <validation-provider rules="required" v-slot="{ errors }">
-        <vs-input type="password" label="Password" placeholder="Password" v-model="password"/>
-        
-      
-        <span class="error">{{ errors[0] }}</span>
-      </validation-provider>
-      <vs-button @click="signIn" >Sign In</vs-button>
+      <ValidationObserver v-slot="{invalid}">
+        <form @submit.prevent="signIn">
+          <h1>Sign In</h1>
+          <validation-provider rules="required|email" v-slot="{ errors }">
+            <vs-input type="email" label="Email" placeholder="Email" v-model="email"/>
+            <div class="error">{{ errors[0] }}</div>
+          </validation-provider>
+          <validation-provider rules="required|minPassword:6" v-slot="{ errors }">
+            <vs-input type="password" label="Password" placeholder="Password" v-model="password"/>
+            <div class="error">{{ errors[0] }}</div>
+          </validation-provider>
+          <vs-button button="submit" :disabled="invalid">Sign Up</vs-button>
+          </form>
+      </ValidationObserver>
     </vs-col>
   </vs-row>
 </template>
 
 <script>
 
-import { ValidationProvider, extend} from "vee-validate";
-import { required, email } from "vee-validate/dist/rules";
+import { ValidationProvider, ValidationObserver, extend} from "vee-validate";
+import { required, email, length, min, max } from "vee-validate/dist/rules";
 
-extend('required', {
+extend("required", {
   ...required,
-  message: 'This field is required'
+  message: "This field is required"
 });
-extend('email', {
+extend("email", {
   ...email,
-  message: 'This is not valid email'
+  message: "This is not valid email"
+});
+
+extend("minPassword", {
+  ...min,
+  message: "The field must be 6+ chars"
 });
 
 export default {
   name: "SignIn",
   components: {
     ValidationProvider,
+    ValidationObserver
   },
   created: function() {
     console.log(this.$notificationsColorSuccess);
@@ -48,20 +56,18 @@ export default {
   methods: {
     async signIn() {
       try {
-
-
         console.log("qweq")
         const signInProcess = await this.$store.dispatch("auth/signIn", {email: this.email, password: this.password});
 
         this.$vs.notify({
-          title:'Color',
-          text:'Lorem ipsum dolor sit amet, consectetur',
+          title: "Sign In",
+          text: signInProcess.message,
           color:this.$notificationsColorSuccess
         });
       } catch(e) {      
         this.$vs.notify({
           time: 2000,
-          title:'Error',
+          title:"Error",
           text: e.message,
           color:this.$notificationsColorError
         });
@@ -80,6 +86,7 @@ export default {
     }
     
     .error {
+      margin-top: 2px;
       color: var(--validation-error-color) !important;
     }
 
