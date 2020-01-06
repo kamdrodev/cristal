@@ -26,6 +26,7 @@ export default {
   --background-color: #0f0e17;
   --color: #fffffe;
   --headline: #fffffe;
+  --link-color: #ff8906;
   --button-background-color: #ff8906;
   --validation-error-color: #EF4565;
 

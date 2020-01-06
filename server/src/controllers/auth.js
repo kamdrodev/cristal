@@ -88,14 +88,28 @@ const signIn = async (req, res, next) => {
   } catch(e) {
     console.log(e);
     const customError = new Error('Something went wrong during sign-in proces');
+    customError.status = 401;
 
     return next(customError);
   }
 };
 
-const auth = {
-  signUp,
-  signIn
+const verifyToken = async (req, res, next) => {
+  try {
+    return res.status(200).json({message: "Token is valid"});
+  } catch(e) {
+    console.log(e);
+    const customError = new Error('Email or password is incorrect');
+    customError.status = 401;
+
+    return next(customError);
+  }
 }
 
-export default auth
+const auth = {
+  signUp,
+  signIn,
+  verifyToken,
+};
+
+export default auth;

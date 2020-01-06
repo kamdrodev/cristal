@@ -15,6 +15,9 @@
           <vs-button button="submit" :disabled="invalid">Sign Up</vs-button>
           </form>
       </ValidationObserver>
+      <router-link to="/sign-up">
+        <span class="link">I don't have an account yet</span>
+      </router-link>
     </vs-col>
   </vs-row>
 </template>
@@ -64,6 +67,8 @@ export default {
           text: signInProcess.message,
           color:this.$notificationsColorSuccess
         });
+
+        this.$router.push("/dashboard");
       } catch(e) {      
         this.$vs.notify({
           time: 2000,
@@ -83,6 +88,10 @@ export default {
     
     h1 {
       color: var(--headline);
+    }
+
+    .link {
+      color: var(--link-color) !important;;
     }
     
     .error {

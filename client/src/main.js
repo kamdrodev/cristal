@@ -14,6 +14,17 @@ import "material-icons/iconfont/material-icons.css";
 
 axios.defaults.baseURL = config.urls.api + "/api/";
 
+axios.interceptors.request.use(
+ function(config) {
+  const token = localStorage.getItem('token')
+  if (token) config.headers.Authorization = `Bearer ${token}`
+  return config
+ },
+ function(error) {
+  return Promise.reject(error)
+ }
+)
+
 Vue.use(Vuesax, {});
 
 Vue.prototype.$notificationsColorSuccess = config.notifications.colorSuccess;
@@ -22,7 +33,7 @@ Vue.prototype.$notificationsColorError = config.notifications.colorError;
 Vue.config.productionTip = false;
 
 new Vue({
-  router,
   store,
+  router,
   render: h => h(App)
 }).$mount("#app");

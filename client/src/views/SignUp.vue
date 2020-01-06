@@ -19,6 +19,9 @@
       <vs-button button="submit" :disabled="invalid">Sign Up</vs-button>
       </form>
     </ValidationObserver>
+    <router-link to="/sign-in">
+      <span class="link">I have an account yet</span>
+    </router-link>
     </vs-col>
   </vs-row>
 </template>
@@ -83,6 +86,8 @@ export default {
           text: signUpProcess.message,
           color:this.$notificationsColorSuccess
         });
+
+        this.$router.push("/sign-in");
       } catch(e) {      
         console.log(e)
         this.$vs.notify({
@@ -99,6 +104,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+.link {
+  color: var(--link-color);
+}
 
 .form-sign-up {
     
@@ -106,6 +114,8 @@ export default {
       color: var(--headline);
       text-align: center;
     }
+
+    
     
     .error {
       overflow-wrap: break-word;

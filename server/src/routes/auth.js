@@ -20,6 +20,7 @@ router.post('/sign-up',
   ],
   authMiddlewares.checkIfUserExists,
   authControllers.signUp);
+
 router.post('/sign-in', 
     check('email').trim(),
     check('email').exists().withMessage("Fill username field"),
@@ -28,5 +29,9 @@ router.post('/sign-in',
     check('password').exists().withMessage("Fill password field"),
     check('password').isLength({min: 6, max: 16}).withMessage("The password must be 6+ chars long"),
     authControllers.signIn);
+
+router.get( '/verify-token',
+  authMiddlewares.jwtVerify ,
+  authControllers.verifyToken);
 
 export default router;

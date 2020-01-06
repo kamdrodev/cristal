@@ -1,5 +1,7 @@
 import axios from "axios";
 
+import router from "../../router/index.js";
+
 const state = {
   token: localStorage.getItem("token") || null,
   status: ''
@@ -18,10 +20,10 @@ const mutations = {
 const actions = {
   async signUp({}, {username, email, password}) {
     console.log(`
-          username: ${username},
-          password: ${password},
-          email: ${email}
-        `);
+      username: ${username},
+      password: ${password},
+      email: ${email}
+    `);
     try {
       const signUpRequest = await axios.post("auth/sign-up", {
         username,
@@ -52,6 +54,36 @@ const actions = {
       throw new Error(e.response.data.message);
     }
   },
+  signOut: async function({dispatch, commit}) {
+    try {
+      localStorage.removeItem("token");
+      commit("setToken", null);
+
+      return {
+        message: "You have been logged out"
+      }
+    } catch(e) {
+      throw new Error("You have not been logged out")
+    }
+    
+    // router.push("/sign-in");
+  },
+  async verifyToken({dispatch, commit}) {
+    try {
+      const verifyTokenRequest = await axios.get(`auth/verify-token`, {
+        
+      });
+      return {
+        message: "You are logged in.",
+      }
+
+    } catch (e) {
+      localStorage.removeItem("token");
+      commit("setToken", null);
+      throw new Error("Something went wrong during sign in process");
+
+    }
+  }
 };
 
 

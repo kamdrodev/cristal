@@ -25,7 +25,7 @@
 
 
           <div class="footer-sidebar" slot="footer">
-            <vs-button icon="reply"  type="flat">log out</vs-button>
+            <vs-button icon="reply"  type="flat" @click="signOut">log out</vs-button>
             <vs-button icon="settings" type="border"></vs-button>
           </div>
 
@@ -42,7 +42,36 @@ export default {
     active: false,
     notExpand: true,
     reduce: false
-  })
+  }),
+  methods: {
+    async signOut() {
+      try {
+        console.log("signOut")
+
+        const signOutProcess = await this.$store.dispatch("auth/signOut");
+        this.$vs.notify({
+          title: "Sign In",
+          text: signOutProcess.message,
+          color:this.$notificationsColorSuccess
+        });
+
+        this.$router.push("/sign-in");
+      } catch(e) {
+        this.$vs.notify({
+          title: "Sign In",
+          text: signOutProcess.message,
+          color:this.$notificationsColorError
+        });
+      }
+      
+      
+    }
+  },
+  computed: {
+    isAuthenticated() {
+      return this.$store.getters["auth/isAuthenticated"];
+    }
+  }
 }
 </script>
 
