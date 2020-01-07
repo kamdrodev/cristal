@@ -1,6 +1,9 @@
 <template>
   <vs-row>
-  <Menu></Menu>
+    <div>
+      <Menu ></Menu>
+    </div>
+ 
   <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
     <router-view />
   </vs-col>
@@ -16,6 +19,11 @@ export default {
   name: "home",
   components: {
     Menu
+  },
+  computed: {
+    isAuthenticated() {
+      return this.$store.getters["auth/isAuthenticated"];
+    }
   }
 };
 </script>

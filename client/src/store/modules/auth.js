@@ -54,7 +54,7 @@ const actions = {
       throw new Error(e.response.data.message);
     }
   },
-  signOut: async function({dispatch, commit}) {
+  async signOut({dispatch, commit}) {
     try {
       localStorage.removeItem("token");
       commit("setToken", null);

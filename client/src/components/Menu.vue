@@ -1,10 +1,10 @@
 <template lang="html">
-  <vs-row class="menu"  v-if="isAuthenticated">
+  <vs-row class="menu">
    
     <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12" class="sidebar">
-      <div id="parentx">
-        <vs-icon icon="menu" @click="active=!active, notExpand = true" type="filled" class="menu"></vs-icon>
-        <vs-sidebar parent="body" default-index="1"  color="primary" class="sidebarx" spacer v-model="active">
+      <div id="parentx" >
+        <vs-icon icon="menu" @click="active=!active, notExpand = true" type="filled" class="menu" v-if="isAuthenticated"></vs-icon>
+        <vs-sidebar parent="body" default-index="1"  color="primary" class="sidebarx" spacer v-model="active"  >
 
           <div class="header-sidebar" slot="header">
            <svg width="100%" height="100%" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
@@ -32,24 +32,24 @@
               </defs>
           </svg>
           </div>
-          <vs-sidebar-item index="1" to="dashboard" icon="question_answer" class="item">
+          <vs-sidebar-item index="1" to="dashboard" icon="question_answer" class="item" v-if="isAuthenticated">
             Dashboard
           </vs-sidebar-item>
           <!-- <vs-divider icon="person" position="left" class="item">
             User
           </vs-divider> -->
-          <vs-sidebar-item index="2" icon="person" class="item">
+          <vs-sidebar-item index="2" icon="person" class="item"  v-if="isAuthenticated">
             Profile
           </vs-sidebar-item>
-          <vs-sidebar-item index="3" icon="verified_user" class="item">
+          <vs-sidebar-item index="3" icon="verified_user" class="item" v-if="isAuthenticated">
             My Activity
           </vs-sidebar-item>
-          <vs-sidebar-item index="4" icon="settings" class="item">
+          <vs-sidebar-item index="4" icon="settings" class="item" v-if="isAuthenticated">
             Configuration
           </vs-sidebar-item>
           <div class="footer-sidebar" slot="footer">
-            <vs-button icon="reply"  type="flat" @click="signOut">log out</vs-button>
-            <vs-button icon="settings" type="border"></vs-button>
+            <vs-button icon="reply"  type="flat" @click="signOut" v-if="isAuthenticated">log out</vs-button>
+            <vs-button icon="settings" type="border" v-if="isAuthenticated"></vs-button>
           </div>
         </vs-sidebar>
       </div>

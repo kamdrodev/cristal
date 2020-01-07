@@ -66,9 +66,7 @@ export default {
           title: "Sign In",
           text: signInProcess.message,
           color:this.$notificationsColorSuccess
-        });
-
-        this.$router.push("/dashboard");
+        });        this.$router.push("/dashboard");
       } catch(e) {      
         this.$vs.notify({
           time: 2000,
