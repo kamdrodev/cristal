@@ -35,6 +35,7 @@ export default {
   --sidebar-title-color: #ff8906;
   --sidebar-background-color: #0f0e17;
   --sidebar-item-color: #fffffe;
+  --sidebar-item-color-active: #ff8906;
 }
 
 body {

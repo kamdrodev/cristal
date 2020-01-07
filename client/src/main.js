@@ -16,7 +16,7 @@ axios.defaults.baseURL = config.urls.api + "/api/";
 
 axios.interceptors.request.use(
  function(config) {
-  const token = localStorage.getItem('token')
+  const token = localStorage.getItem("token")
   if (token) config.headers.Authorization = `Bearer ${token}`
   return config
  },
@@ -25,7 +25,17 @@ axios.interceptors.request.use(
  }
 )
 
-Vue.use(Vuesax, {});
+Vue.use(Vuesax, {
+  theme:{
+    colors:{
+      primary:"#ff8906",
+      success:"#1AF09A",
+      danger:"#EF4565",
+      warning:"#ff8906",
+      dark:"#0f0e17"
+    }
+  }
+});
 
 Vue.prototype.$notificationsColorSuccess = config.notifications.colorSuccess;
 Vue.prototype.$notificationsColorError = config.notifications.colorError;

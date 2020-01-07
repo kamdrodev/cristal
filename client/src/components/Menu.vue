@@ -15,7 +15,9 @@
           <vs-divider icon="person" position="left" class="item">
             User
           </vs-divider>
-
+          <vs-sidebar-item index="2" icon="person" class="item">
+            Profile
+          </vs-sidebar-item>
           <vs-sidebar-item index="3" icon="verified_user" class="item">
             My Activity
           </vs-sidebar-item>
@@ -103,6 +105,8 @@ export default {
   }
 
 }
+
+
 .vs-sidebar--background {
 
 }
