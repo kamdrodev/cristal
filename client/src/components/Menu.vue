@@ -1,6 +1,5 @@
 <template lang="html">
   <vs-row class="menu">
-   
     <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12" class="sidebar">
       <div id="parentx" >
         <vs-icon icon="menu" @click="active=!active, notExpand = true" type="filled" class="menu" v-if="isAuthenticated"></vs-icon>
@@ -43,9 +42,6 @@
           </vs-sidebar-item>
           <vs-sidebar-item index="3" icon="verified_user" class="item" v-if="isAuthenticated">
             My Activity
-          </vs-sidebar-item>
-          <vs-sidebar-item index="4" icon="settings" class="item" v-if="isAuthenticated">
-            Configuration
           </vs-sidebar-item>
           <div class="footer-sidebar" slot="footer">
             <vs-button icon="reply"  type="flat" @click="signOut" v-if="isAuthenticated">log out</vs-button>
@@ -100,13 +96,13 @@ export default {
 <style lang="scss">
 
 .menu {
-  position: absolute;
+  // position: absolute;
 
-  i {
-    color: var(--menu-icon-color);
-    margin-top: 16px;
-    margin-left: 16px;
-  }
+  // i {
+  //   color: var(--menu-icon-color);
+  //   margin-top: 16px;
+  //   margin-left: 16px;
+  // }
 }
 
 #parentx {

@@ -1,14 +1,10 @@
 <template>
   <vs-row>
-    <div>
-      <Menu ></Menu>
-    </div>
- 
-  <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
-    <router-view />
-  </vs-col>
-</vs-row>
-    
+    <Menu ></Menu>
+    <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
+      <router-view />
+    </vs-col>
+  </vs-row>
 </template>
 
 <script>
@@ -44,11 +40,16 @@ export default {
   --sidebar-background-color: #0f0e17;
   --sidebar-item-color: #fffffe;
   --sidebar-item-color-active: #ff8906;
+
+  --card-list-background-color: #ff8906;
+  --card-list-color: #fffffe;
 }
 
 body {
   font-family: "Roboto", sans-serif;
   background-color: var(--background-color);
+
+  color: var(--color);
 }
 
 button {
