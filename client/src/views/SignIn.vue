@@ -88,8 +88,8 @@ export default {
     
     h1 {
       color: var(--headline);
+      text-align: center;
     }
-
     .link {
       color: var(--link-color) !important;;
     }
