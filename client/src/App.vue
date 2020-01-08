@@ -43,13 +43,13 @@ export default {
 
   --card-list-background-color: #ff8906;
   --card-list-color: #fffffe;
+  --card-list-icon-background-color: #0f0e17;
 }
 
 body {
   font-family: "Roboto", sans-serif;
   background-color: var(--background-color);
-
-  color: var(--color);
+  // color: var(--color);
 }
 
 button {

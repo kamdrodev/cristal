@@ -1,5 +1,5 @@
 <template>
-  <vs-row>
+  <vs-row vs-w="12">
     <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
       <Lists></Lists>
     </vs-col>

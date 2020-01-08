@@ -98,11 +98,11 @@ export default {
 .menu {
   // position: absolute;
 
-  // i {
-  //   color: var(--menu-icon-color);
-  //   margin-top: 16px;
-  //   margin-left: 16px;
-  // }
+  i {
+    color: var(--menu-icon-color);
+    margin-top: 16px;
+    margin-left: 16px;
+  }
 }
 
 #parentx {
