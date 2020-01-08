@@ -8,7 +8,7 @@
     </vs-row>
     <vs-row vs-w="12">
       <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="3" >
-        <vs-button color="primary" type="filled">Create New List</vs-button>
+        <vs-button color="primary" type="filled" @click="popupCreateList=true">Create list</vs-button>
       </vs-col>
       <vs-col class="c" vs-type="flex" vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="3" >
         <vs-card class="card">
@@ -65,7 +65,19 @@
         </vs-card>
       </vs-col>
     </vs-row>
+
+
+    <div class="centerx">
+      <vs-popup classContent="popup-example" class="popup"  title="Create list" :active.sync="popupCreateList">
+        
+        
+      </vs-popup>
+    </div>
+
   </div>
+
+
+
     
 </template>
 
@@ -73,7 +85,17 @@
 export default {
   name: "lists",
   data: () => ({
-    search: ""
+    search: "",
+    select1:3,
+    options1:[
+      {text:'IT',value:0},
+      {text:'Blade Runner',value:2},
+      {text:'Thor Ragnarok',value:3},
+    ],
+    value1:'',
+    value2:'',
+    popupCreateList:false,
+    popupActivo3:false
   })
 };
 </script>
@@ -112,6 +134,20 @@ export default {
 }
 .btn-create-list {
   margin-bottom: 20px;
+}
+
+.vs-popup--title {
+  color: var(--popup-title-color);
+}
+
+.vs-popup--close {
+  background-color: var(--popup-icon-background-color) !important;
+  color: var(--popup-icon-color) !important;
+}
+
+.vs-popup {
+  background-color: var(--popup-background-color) !important;
+
 }
 
 </style>

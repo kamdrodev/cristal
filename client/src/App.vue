@@ -44,6 +44,11 @@ export default {
   --card-list-background-color: #ff8906;
   --card-list-color: #fffffe;
   --card-list-icon-background-color: #0f0e17;
+
+  --popup-title-color: #fffffe;
+  --popup-background-color: #ff8906;
+  --popup-icon-background-color: #0f0e17;
+  --popup-icon-color: #fffffe;
 }
 
 body {
