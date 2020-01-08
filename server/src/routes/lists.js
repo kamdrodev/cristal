@@ -20,50 +20,49 @@ router.get('/lists/:id',
   listsControllers.getList);
 
 router.post('/lists', 
-  // body("firstLanguage").custom(value => {
-  //   const listOfLanguages = [
-  //     "spanish",
-  //     "french",
-  //     "german",
-  //     "polish",
-  //     "russian",
-  //     "english",
-  //     "japanese",
-  //   ];
+  body("firstLanguage").custom(value => {
+    const listOfLanguages = [
+      "spanish",
+      "french",
+      "german",
+      "polish",
+      "russian",
+      "english",
+      "japanese",
+    ];
+    if (!listOfLanguages.includes(value)) {
+      throw new Error("You can't select this language");
+    }
 
-  //   if (!listOfLanguages.includes(value)) {
-  //     Promise.reject("You can't select this language");
-  //   }
+    return true;
 
-  // }),
-  // body("secondLanguage").custom(value => {
-  //   const listOfLanguages = [
-  //     "spanish",
-  //     "french",
-  //     "german",
-  //     "polish",
-  //     "russian",
-  //     "english",
-  //     "japanese",
-  //   ];
+  }),
+  body("secondLanguage").custom(value => {
+    const listOfLanguages = [
+      "spanish",
+      "french",
+      "german",
+      "polish",
+      "russian",
+      "english",
+      "japanese",
+    ];
 
-  //   if (!listOfLanguages.includes(value)) {
-  //     Promise.reject("You can't select this language");
-  //   }
-  // }),
+    if (!listOfLanguages.includes(value)) {
+      throw new Error("You can't select this language");
+    }
+
+    return true;
+  }),
   [
     check('title').trim(),
     check('title').exists(),
-    check('title').isLength({min: 6}),
     check('description').trim(),
     check('description').exists(),
-    check('description').isLength({min: 6}),
     check('firstLanguage').trim(),
     check('firstLanguage').exists(),
-    check('firstLanguage').isLength({min: 6}),
     check('secondLanguage').trim(),
     check('secondLanguage').exists(),
-    check('secondLanguage').isLength({min: 6}),
   ],
   authMiddlewares.jwtVerify,
   listsControllers.createList);
