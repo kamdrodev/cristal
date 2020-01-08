@@ -19,11 +19,7 @@ const mutations = {
 
 const actions = {
   async signUp({}, {username, email, password}) {
-    console.log(`
-      username: ${username},
-      password: ${password},
-      email: ${email}
-    `);
+  
     try {
       const signUpRequest = await axios.post("auth/sign-up", {
         username,
@@ -66,7 +62,6 @@ const actions = {
       throw new Error("You have not been logged out")
     }
     
-    // router.push("/sign-in");
   },
   async verifyToken({dispatch, commit}) {
     try {

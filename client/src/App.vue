@@ -41,6 +41,10 @@ export default {
   --sidebar-item-color: #fffffe;
   --sidebar-item-color-active: #ff8906;
 
+
+  --panel-lists-background-color: #ff8906;
+  --panel-lists-button-background-color: #0f0e17;
+
   --card-list-background-color: #ff8906;
   --card-list-color: #fffffe;
   --card-list-icon-background-color: #0f0e17;

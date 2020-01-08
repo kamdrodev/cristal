@@ -3,13 +3,15 @@
     
     <vs-row vs-w="12">
       <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="12" >
-        
+        <div class="panel-lists">
+          <vs-button class="button-create-list" @click="popupCreateList=true">Create list</vs-button>
+        </div>
       </vs-col>
     </vs-row>
     <vs-row vs-w="12">
-      <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="3" >
-        <vs-button color="primary" type="filled" @click="popupCreateList=true">Create list</vs-button>
-      </vs-col>
+<!--       <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="3" >
+        
+      </vs-col> -->
       <vs-col class="c" vs-type="flex" vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="3" >
         <vs-card class="card">
           <div slot="header">
@@ -101,6 +103,29 @@
 <script>
 export default {
   name: "lists",
+  async beforeCreate() {
+    try {
+      const createListProcess = await this.$store.dispatch("lists/getAllLists")
+
+      this.$vs.notify({
+        title:"Success",
+        text: createListProcess.message,
+        color:this.$notificationsColorSuccess
+      });
+    } catch (e) {
+      console.log(e);
+      this.$vs.notify({
+        time: 2000,
+        title:"Error",
+        text: e.message,
+        color:this.$notificationsColorError
+      });
+    }
+  },
+  created() {
+    console.log("created");
+    console.log("lists", this.lists)
+  },
   data: () => ({
     search: "",
     select1Normal:'',
@@ -140,7 +165,7 @@ export default {
         });
 
       } catch(e) {      
-        console.log(e)
+        console.log(e);
         this.$vs.notify({
           time: 2000,
           title:"Error",
@@ -149,6 +174,11 @@ export default {
         });
       }
     }
+  },
+  computed: {
+    lists() {
+      return this.$store.getters["lists/lists"];
+    },
   }
 };
 </script>
@@ -158,10 +188,19 @@ export default {
 
 .panel-lists {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   width: 100%;
-  background-color: red;
+  margin: 12px 12px;
+  padding: 26px 26px;
+  height: 76px;
+  border-radius: 16px;
+  background-color: var(--panel-lists-background-color) !important;
+
+  
+}
+.button-create-list.vs-button-primary.vs-button-filled { 
+  background-color: var(--panel-lists-button-background-color) !important;
 }
 
 .card {
@@ -185,9 +224,7 @@ export default {
 .btn-create-list-wrapper {
   text-align: center;
 }
-.btn-create-list {
-  margin-bottom: 20px;
-}
+
 
 .vs-button-primary.vs-button-filled {
   &.btn-popup {

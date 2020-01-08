@@ -1,17 +1,37 @@
 import axios from "axios";
 
 const state = {
-  
+  lists: [],
 };
 
 const getters = {
+  lists: lists => state.lists,
 };
 
 const mutations = {
-  
+  setLists: (state, lists) => {
+    state.lists = lists;
+  }
 };
 
 const actions = {
+
+  async getAllLists({dispatch, commit}) {
+    try {
+      const createListRequest = await axios.get("lists");
+
+      // console.log(createListRequest.data.lists)
+
+      commit("setLists", createListRequest.data.lists);
+
+      return {
+        message: "Lists have been fetched"
+      }
+    } catch(e) {
+      console.log(e);
+      throw new Error(e.response.data.message);
+    }
+  },
   async createList({dispatch, commit}, {title, description, firstLanguage, secondLanguage}) {
     try {
       const createListRequest = await axios.post("lists", {
