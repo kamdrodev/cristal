@@ -49,6 +49,7 @@ export default {
   --popup-background-color: #ff8906;
   --popup-icon-background-color: #0f0e17;
   --popup-icon-color: #fffffe;
+  --popup-button-background-color: #0f0e17;
 }
 
 body {

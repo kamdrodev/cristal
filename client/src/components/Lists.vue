@@ -68,9 +68,26 @@
 
 
     <div class="centerx">
-      <vs-popup classContent="popup-example" class="popup"  title="Create list" :active.sync="popupCreateList">
-        
-        
+      <vs-popup classContent="popup-example" title="Create list" :active.sync="popupCreateList">
+        <vs-input class="inputx" placeholder="Placeholder" v-model="value1"/>
+
+        <vs-select
+          autocomplete
+          class="selectExample"
+          label="Figuras"
+          v-model="select1"
+          >
+          <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item,index) in options1" />
+        </vs-select>
+        <vs-select
+          autocomplete
+          class="selectExample"
+          label="Figuras"
+          v-model="select2"
+          >
+          <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item,index) in options2" />
+        </vs-select>
+        <vs-button class="btn-popup" type="filled">Create</vs-button>
       </vs-popup>
     </div>
 
@@ -86,7 +103,9 @@ export default {
   name: "lists",
   data: () => ({
     search: "",
-    select1:3,
+    select1Normal:'',
+      select1:3,
+      select2:7,
     options1:[
       {text:'IT',value:0},
       {text:'Blade Runner',value:2},
@@ -95,7 +114,17 @@ export default {
     value1:'',
     value2:'',
     popupCreateList:false,
-    popupActivo3:false
+    popupActivo3:false,
+    options1:[
+      {text:'IT',value:0},
+      {text:'Blade Runner',value:2},
+      {text:'Thor Ragnarok',value:3},
+    ],
+    options2:[
+      {text:'IT',value:0},
+      {text:'Blade Runner',value:2},
+      {text:'Thor Ragnarok',value:3},
+    ],
   })
 };
 </script>
@@ -136,6 +165,14 @@ export default {
   margin-bottom: 20px;
 }
 
+.vs-button-primary.vs-button-filled {
+  &.btn-popup {
+    margin-top: 16px;
+    background-color: var(--popup-button-background-color) !important;
+  }
+}
+
+
 .vs-popup--title {
   color: var(--popup-title-color);
 }
@@ -149,5 +186,14 @@ export default {
   background-color: var(--popup-background-color) !important;
 
 }
+
+.vuesax-app-is-ltr .vs-popup--content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+
 
 </style>
