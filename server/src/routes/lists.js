@@ -1,5 +1,5 @@
 import express from 'express';
-import { check } from 'express-validator';
+import { body, check } from 'express-validator';
 
 import listsControllers from '../controllers/lists.js';
 import authMiddlewares from '../middlewares/auth.js';
@@ -20,10 +20,44 @@ router.get('/lists/:id',
   listsControllers.getList);
 
 router.post('/lists', 
+  body("firstLanguage").custom(value => {
+    const listOfLanguages = [
+      "spanish",
+      "french",
+      "german",
+      "polish",
+      "russian",
+      "english",
+      "japanese",
+    ];
+
+    if (!listOfLanguages.contains(value)) {
+      Promise.reject("You can't select this language");
+    }
+
+  }),
+  body("secondLanguage").custom(value => {
+    const listOfLanguages = [
+      "spanish",
+      "french",
+      "german",
+      "polish",
+      "russian",
+      "english",
+      "japanese",
+    ];
+
+    if (!listOfLanguages.contains(value)) {
+      Promise.reject("You can't select this language");
+    }
+  }),
   [
     check('title').trim(),
     check('title').exists(),
     check('title').isLength({min: 6}),
+    check('description').trim(),
+    check('description').exists(),
+    check('description').isLength({min: 6}),
     check('firstLanguage').trim(),
     check('firstLanguage').exists(),
     check('firstLanguage').isLength({min: 6}),

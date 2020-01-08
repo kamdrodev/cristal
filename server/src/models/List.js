@@ -7,6 +7,10 @@ const ListSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  description: {
+    type: String,
+    required: true,
+  },
   firstLanguage: {
     type: String,
     required: true,
@@ -16,6 +20,10 @@ const ListSchema = mongoose.Schema({
     required: true,
   },
   views: {
+    type: Number,
+    default: 0,
+  },
+  numberOfWords: {
     type: Number,
     default: 0,
   },
