@@ -20,37 +20,37 @@ router.get('/lists/:id',
   listsControllers.getList);
 
 router.post('/lists', 
-  body("firstLanguage").custom(value => {
-    const listOfLanguages = [
-      "spanish",
-      "french",
-      "german",
-      "polish",
-      "russian",
-      "english",
-      "japanese",
-    ];
+  // body("firstLanguage").custom(value => {
+  //   const listOfLanguages = [
+  //     "spanish",
+  //     "french",
+  //     "german",
+  //     "polish",
+  //     "russian",
+  //     "english",
+  //     "japanese",
+  //   ];
 
-    if (!listOfLanguages.contains(value)) {
-      Promise.reject("You can't select this language");
-    }
+  //   if (!listOfLanguages.includes(value)) {
+  //     Promise.reject("You can't select this language");
+  //   }
 
-  }),
-  body("secondLanguage").custom(value => {
-    const listOfLanguages = [
-      "spanish",
-      "french",
-      "german",
-      "polish",
-      "russian",
-      "english",
-      "japanese",
-    ];
+  // }),
+  // body("secondLanguage").custom(value => {
+  //   const listOfLanguages = [
+  //     "spanish",
+  //     "french",
+  //     "german",
+  //     "polish",
+  //     "russian",
+  //     "english",
+  //     "japanese",
+  //   ];
 
-    if (!listOfLanguages.contains(value)) {
-      Promise.reject("You can't select this language");
-    }
-  }),
+  //   if (!listOfLanguages.includes(value)) {
+  //     Promise.reject("You can't select this language");
+  //   }
+  // }),
   [
     check('title').trim(),
     check('title').exists(),

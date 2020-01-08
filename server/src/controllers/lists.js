@@ -55,6 +55,9 @@ const createList = async (req, res, next) => {
     const validationErrors = validationResult(req);
 
     if (!validationErrors.isEmpty()) {
+
+      console.log(validationErrors)
+
       const customError = new Error('Incorrect Data');
       customError.status = 400;
       
@@ -63,6 +66,7 @@ const createList = async (req, res, next) => {
 
     const newList = new List({
       title: req.body.title,
+      description: req.body.description,
       firstLanguage: req.body.firstLanguage,
       secondLanguage: req.body.secondLanguage,
       userId: req.user.id

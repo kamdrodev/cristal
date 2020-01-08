@@ -69,25 +69,25 @@
 
     <div class="centerx">
       <vs-popup classContent="popup-example" title="Create list" :active.sync="popupCreateList">
-        <vs-input class="inputx" placeholder="Placeholder" v-model="value1"/>
-
+        <vs-input label="Title" placeholder="Title" v-model="formCreateList.title"/>
+        <vs-input label="Description" placeholder="Description" v-model="formCreateList.description"/>        
         <vs-select
           autocomplete
           class="selectExample"
-          label="Figuras"
-          v-model="select1"
+          label="First language"
+          v-model="formCreateList.firstLanguage"
           >
-          <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item,index) in options1" />
+          <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item,index) in listOfLanguages" />
         </vs-select>
         <vs-select
           autocomplete
           class="selectExample"
-          label="Figuras"
-          v-model="select2"
+          label="Second language"
+          v-model="formCreateList.secondLanguage"
           >
-          <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item,index) in options2" />
+          <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item,index) in listOfLanguages" />
         </vs-select>
-        <vs-button class="btn-popup" type="filled">Create</vs-button>
+        <vs-button class="btn-popup" type="filled" @click="createList">Create</vs-button>
       </vs-popup>
     </div>
 
@@ -104,28 +104,52 @@ export default {
   data: () => ({
     search: "",
     select1Normal:'',
-      select1:3,
-      select2:7,
-    options1:[
-      {text:'IT',value:0},
-      {text:'Blade Runner',value:2},
-      {text:'Thor Ragnarok',value:3},
+    formCreateList: {
+      title: "",
+      description: "",
+      firstLanguage: "",
+      secondLanguage: "",
+    },
+    listOfLanguages: [
+      {text: "spanish", value: "spanish"},
+      {text: "french", value: "french"},
+      {text: "german", value: "german"},
+      {text: "polish", value: "polish"},
+      {text: "russian", value: "russian"},
+      {text: "english", value: "english"},
+      {text: "japanese", value: "japanese"},
     ],
-    value1:'',
-    value2:'',
-    popupCreateList:false,
-    popupActivo3:false,
-    options1:[
-      {text:'IT',value:0},
-      {text:'Blade Runner',value:2},
-      {text:'Thor Ragnarok',value:3},
-    ],
-    options2:[
-      {text:'IT',value:0},
-      {text:'Blade Runner',value:2},
-      {text:'Thor Ragnarok',value:3},
-    ],
-  })
+    popupCreateList:false,    
+  }),
+  methods: {
+    async createList() {
+      try {
+
+        console.log(this.formCreateList)
+        const createListProcess = await this.$store.dispatch("lists/createList", {
+          title: this.formCreateList.title,
+          description: this.formCreateList.description,
+          firstLanguage: this.formCreateList.firstLanguage,
+          secondLanguage: this.formCreateList.secondLanguage,
+        });
+
+        this.$vs.notify({
+          title:"Success",
+          text: createListProcess.message,
+          color:this.$notificationsColorSuccess
+        });
+
+      } catch(e) {      
+        console.log(e)
+        this.$vs.notify({
+          time: 2000,
+          title:"Error",
+          text: e.message,
+          color:this.$notificationsColorError
+        });
+      }
+    }
+  }
 };
 </script>
 
