@@ -1,6 +1,8 @@
 <template>
-  <div>
-    
+
+  <vs-row vs-w="12">
+      <vs-col vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="8" vs-offset="2">
+
     <vs-row vs-w="12">
       <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="12" >
         <div class="panel-lists">
@@ -8,85 +10,44 @@
         </div>
       </vs-col>
     </vs-row>
-    <vs-row vs-w="12">
-<!--       <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="3" >
-        
-      </vs-col> -->
-      <vs-col class="c" vs-type="flex" vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="3" >
-        <vs-card class="card">
-          <div slot="header">
-            <h3>
-              Hello world !
-            </h3>
-          </div>
-          <div>
-            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</span>
-          </div>
-          <div slot="footer">
-            <vs-row vs-justify="flex-end">
-              <vs-button class="icon" icon="edit"></vs-button>
-              <vs-button class="icon" icon="delete"></vs-button>
-            </vs-row>
-          </div>
-        </vs-card>
-      </vs-col>
-      <vs-col class="c" vs-type="flex" vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="3" >
-        <vs-card class="card">
-          <div slot="header">
-            <h3>
-              Hello world !
-            </h3>
-          </div>
-          <div>
-            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</span
->          </div>
-          <div slot="footer">
-            <vs-row vs-justify="flex-end">
-              <vs-button class="icon" icon="edit"></vs-button>
-              <vs-button class="icon" icon="delete"></vs-button>
-            </vs-row>
-          </div>
-        </vs-card>
-      </vs-col>
-      <vs-col class="c" vs-type="flex" vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="3" >
-        <vs-card class="card">
-          <div slot="header">
-            <h3>
-              Hello world !
-            </h3>
-          </div>
-          <div>
-            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</span>
-          </div>
-          <div slot="footer">
-            <vs-row vs-justify="flex-end">
-              <vs-button class="icon" icon="edit"></vs-button>
-              <vs-button class="icon" icon="delete"></vs-button>
-            </vs-row>
-          </div>
-        </vs-card>
-      </vs-col>
-      <vs-col class="c" vs-type="flex" vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="3" >
-        <vs-card class="card">
-          <div slot="header">
-            <h3>
-              Hello world !
-            </h3>
-          </div>
-          <div>
-            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</span>
-          </div>
-          <div slot="footer">
-            <vs-row vs-justify="flex-end">
-              <vs-button class="icon" icon="edit"></vs-button>
-              <vs-button class="icon" icon="delete"></vs-button>
-            </vs-row>
-          </div>
-        </vs-card>
+    <vs-row vs-type="flex" vs-w="12">
+      <vs-col class="c" vs-type="flex" vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="12" >
+        <vs-collapse :type="type" class="collapse">
+         <vs-collapse-item>
+           <div slot="header">
+             More
+           </div>
+
+           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque rhoncus eros tortor, non fringilla lectus cursus et. Fusce vel nisi ante. Aliquam sit amet lectus pharetra, luctus mi sed, aliquet felis. Mauris a tortor viverra, ornare tellus in, consectetur leo.
+            <br><br>
+            Etiam nec nunc nec nisl luctus tincidunt efficitur vitae elit. Vestibulum iaculis nibh commodo neque ultrices lobortis. Cras magna massa, pretium vitae mattis varius, pharetra nec massa. Aliquam ac ex enim. Quisque consequat dui libero, vel blandit lorem porttitor sit amet. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam sed lobortis nisl, quis eleifend metus.
+         </vs-collapse-item>
+         <vs-collapse-item>
+           <div slot="header">
+             More
+           </div>
+
+           Nunc auctor et leo vitae suscipit. Nullam aliquet purus scelerisque enim hendrerit tristique. Maecenas tincidunt dui arcu, a aliquet nisl venenatis vitae. Praesent mauris ligula, porta at maximus ac, rutrum vitae sapien. Donec a sapien id erat dapibus dignissim sodales in est. Donec gravida dapibus sapien at sollicitudin. Maecenas iaculis quam ex,
+           <br><br>
+           eu aliquam erat sagittis eget. Suspendisse mollis felis nec ipsum vehicula, at posuere libero viverra. Nam hendrerit dapibus eleifend. Aliquam elit nulla, tincidunt pellentesque enim mollis, consectetur placerat enim. Integer condimentum tristique ante et ullamcorper. Mauris placerat pretium ex. Nam aliquam sed tortor sit amet
+           <br><br>
+           efficitur. Mauris quis faucibus nulla. Pellentesque egestas non ipsum vel maximus.
+           <div class="icons-wrapper">
+
+            <vs-icon icon="edit" class="icon"></vs-icon>
+            <vs-icon icon="delete" class="icon"></vs-icon>
+            <div class="button-wrapper">
+              <vs-button type="relief">View</vs-button>
+            </div>
+           </div>
+         </vs-collapse-item>
+         
+        </vs-collapse>
       </vs-col>
     </vs-row>
 
-
+  
+    <!-- popup creat list -->
     <div class="centerx">
       <vs-popup classContent="popup-example" title="Create list" :active.sync="popupCreateList">
         <form @submit.prevent="createList">
@@ -125,16 +86,16 @@
                 v-for="(item,index) in listOfLanguages" 
               />
             </vs-select>
-            <vs-button class="btn-popup" type="filled" button="submit" :disabled="invalid">Create</vs-button>
+            <vs-button class="btn-popup" type="filled" size="large" button="submit" :disabled="invalid">Create</vs-button>
           </ValidationObserver>
         </form>
       </vs-popup>
     </div>
 
-  </div>
 
 
-
+</vs-col>
+</vs-row>
     
 </template>
 
@@ -186,6 +147,7 @@ export default {
     console.log("lists", this.lists)
   },
   data: () => ({
+    type:'margin',
     search: "",
     select1Normal:'',
     formCreateList: {
@@ -255,9 +217,9 @@ export default {
   height: 76px;
   border-radius: 16px;
   background-color: var(--panel-lists-background-color) !important;
-
-  
+  box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
 }
+
 .button-create-list.vs-button-primary.vs-button-filled { 
   background-color: var(--panel-lists-button-background-color) !important;
 }
@@ -287,8 +249,10 @@ export default {
 
 .vs-button-primary.vs-button-filled {
   &.btn-popup {
+    text-align: center;
     margin-top: 16px;
     background-color: var(--popup-button-background-color) !important;
+    width: 100%;
   }
 }
 
@@ -326,6 +290,30 @@ export default {
   flex-direction: column;
 }
 
+.collapse {
+  .vs-collapse-item--header {
+    color: var(--collapse-header-color);
+  }
+  .vs-collapse-item--content {
+    color: var(--collapse-content-color);
+  }
+  
+  .icons-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    .icon {
+      color: var(--collapse-icon-color) !important;
+      padding: 10px 10px;
+      margin-right: 10px;
+    }
+  }
 
+  .button-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  
+}
 
 </style>

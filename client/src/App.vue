@@ -42,19 +42,24 @@ export default {
   --sidebar-item-color-active: #ff8906;
 
 
-  --panel-lists-background-color: #ff8906;
-  --panel-lists-button-background-color: #0f0e17;
+  --panel-lists-background-color: #0f0e17;
+  --panel-lists-button-background-color: #ff8906;
 
   --card-list-background-color: #ff8906;
   --card-list-color: #fffffe;
   --card-list-icon-background-color: #0f0e17;
 
   --popup-title-color: #fffffe;
-  --popup-background-color: #ff8906;
+  --popup-background-color:#0f0e17;
   --popup-icon-background-color: #0f0e17;
   --popup-icon-color: #fffffe;
-  --popup-button-background-color: #0f0e17;
+  --popup-button-background-color: #ff8906;
   --popup-label-color: #fffffe;
+
+  --collapse-header-color: #ff8906;
+  --collapse-content-color: #fffffe;
+  --collapse-background-color: #0f0e17;
+  --collapse-icon-color: #ff8906;
 }
 
 body {
