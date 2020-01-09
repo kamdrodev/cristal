@@ -137,7 +137,7 @@ const updateList = async (req, res, next) => {
       secondLanguage: ${req.body.secondLanguage},
     `));
 
-    const listUpdate = await List.findOneAndUpdate({_id: id, userId: req.user.id}, {$set: {title: req.body.title}});
+    const listUpdate = await List.findOneAndUpdate({_id: id, userId: req.user.id}, {$set: {title: req.body.title, description: req.body.description}});
 
     const lists = await List.find({userId: req.user.id});
     

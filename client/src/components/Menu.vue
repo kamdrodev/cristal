@@ -37,12 +37,7 @@
           <!-- <vs-divider icon="person" position="left" class="item">
             User
           </vs-divider> -->
-          <vs-sidebar-item index="2" icon="person" class="item"  v-if="isAuthenticated">
-            Profile
-          </vs-sidebar-item>
-          <vs-sidebar-item index="3" icon="verified_user" class="item" v-if="isAuthenticated">
-            My Activity
-          </vs-sidebar-item>
+         
           <div class="footer-sidebar" slot="footer">
             <vs-button icon="reply"  type="flat" @click="signOut" v-if="isAuthenticated">log out</vs-button>
             <vs-button icon="settings" type="border" v-if="isAuthenticated"></vs-button>

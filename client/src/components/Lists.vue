@@ -22,7 +22,7 @@
            <div class="description">{{ list.description }}</div>
            <div class="icons-wrapper">
 
-            <vs-icon icon="edit" class="icon"></vs-icon>
+            <vs-icon icon="edit" class="icon" @click="popupUpdateList=true, formUpdateList.title = list.title, formUpdateList.description = list.description, formUpdateList.id = list._id"></vs-icon>
             <vs-icon icon="delete" class="icon" @click="deleteList(list._id)"></vs-icon>
             <div class="button-wrapper">
               <vs-button type="relief">View</vs-button>
@@ -75,6 +75,25 @@
               />
             </vs-select>
             <vs-button class="btn-popup" type="filled" size="large" button="submit" :disabled="invalid">Create</vs-button>
+          </ValidationObserver>
+        </form>
+      </vs-popup>
+    </div>
+
+    <!-- popup update list -->
+    <div class="centerx">
+      <vs-popup classContent="popup-example" title="Update list" :active.sync="popupUpdateList">
+        <form @submit.prevent="updateList">
+          <ValidationObserver v-slot="{invalid}">
+            <validation-provider rules="required" v-slot="{ errors }">
+              <vs-input label="Title" placeholder="Title" v-model="formUpdateList.title"/>
+              <div class="error">{{ errors[0] }}</div>
+            </validation-provider>
+            <validation-provider rules="required" v-slot="{ errors }">
+              <vs-input label="Description" placeholder="Description" v-model="formUpdateList.description"/>        
+              <div class="error">{{ errors[0] }}</div>
+            </validation-provider>
+            <vs-button class="btn-popup" type="filled" size="large" button="submit" :disabled="invalid">Delete</vs-button>
           </ValidationObserver>
         </form>
       </vs-popup>
@@ -144,6 +163,11 @@ export default {
       firstLanguage: "polish",
       secondLanguage: "french",
     },
+    formUpdateList: {
+      id: "",
+      title: "",
+      description: "",
+    },
     listOfLanguages: [
       {text: "spanish", value: "spanish"},
       {text: "french", value: "french"},
@@ -154,6 +178,7 @@ export default {
       {text: "japanese", value: "japanese"},
     ],
     popupCreateList:false,    
+    popupUpdateList:false,    
   }),
   methods: {
     async createList() {
@@ -181,6 +206,31 @@ export default {
           color:this.$notificationsColorError
         });
       }
+    },
+    async updateList(title, description) {
+      
+      try {
+        const updateListProcess = await this.$store.dispatch("lists/updateList", {
+          id: this.formUpdateList.id,
+          title: this.formUpdateList.title,
+          description: this.formUpdateList.description,
+        });
+
+        this.$vs.notify({
+          title:"Success",
+          text: updateListProcess.message,
+          color:this.$notificationsColorSuccess
+        });
+        
+      } catch (e) {
+        this.$vs.notify({
+          time: 2000,
+          title:"Error",
+          text: e.message,
+          color:this.$notificationsColorError
+        });
+      }
+
     },
     async deleteList(id) {
   
@@ -308,6 +358,7 @@ export default {
 .collapse {
 
   width: 100%;
+  box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
 
   &:hover {
     cursor: default;

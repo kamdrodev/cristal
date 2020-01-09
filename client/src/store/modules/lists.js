@@ -40,8 +40,28 @@ const actions = {
         firstLanguage,
         secondLanguage,
       });
+
+      dispatch("getAllLists");
+      
       return {
         message: "List has been created"
+      }
+    } catch(e) {
+      console.log(e);
+      throw new Error(e.response.data.message);
+    }
+  },
+  async updateList({dispatch, commit}, {id, title, description}) {
+    try {
+      const updateListRequest = await axios.put(`lists/${id}`, {
+        title,
+        description,
+      });
+
+      dispatch("getAllLists");
+      
+      return {
+        message: updateListRequest.data.message
       }
     } catch(e) {
       console.log(e);
