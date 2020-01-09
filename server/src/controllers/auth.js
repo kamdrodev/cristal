@@ -1,12 +1,17 @@
 import bcrypt from 'bcrypt';
 import { validationResult } from 'express-validator';
 import jwt from 'jsonwebtoken';
+import chalk from 'chalk';
 
 import User from '../models/User.js';
 
+
+
+
 const signUp = async (req, res, next) => {
-  console.log("Sing Up")
   try {
+    console.log(chalk.yellow('signUp'));
+
     const validationErrors = validationResult(req);
 
     if (!validationErrors.isEmpty()) {
@@ -25,6 +30,12 @@ const signUp = async (req, res, next) => {
     let salt = await bcrypt.genSalt(10);
     let hashedPassword = await bcrypt.hash(req.body.password, 10);
 
+    console.log(chalk.blue(`
+      username: ${req.body.username},
+      email: ${req.body.email},
+      password: ######,
+    `));
+
     const newUser = new User({
       username: req.body.username,
       email: req.body.email,
@@ -33,9 +44,12 @@ const signUp = async (req, res, next) => {
 
     const newUserSave = await newUser.save();
 
+    console.log(chalk.green('User has been created'));
+
     res.status(200).json({message: 'User has been created'});
   } catch (e) {
-    const customError = new Error("Something went wrong during sign-up process");
+    console.log(chalk.red(e));
+    const customError = new Error('Something went wrong during sign-up process');
     customError.status = 401;
 
     return next(customError);
@@ -44,6 +58,8 @@ const signUp = async (req, res, next) => {
 
 const signIn = async (req, res, next) => {
   try {
+    console.log(chalk.yellow('signIn'));
+
     const validationErrors = validationResult(req);
 
     if (!validationErrors.isEmpty()) {     
@@ -53,15 +69,22 @@ const signIn = async (req, res, next) => {
         errors.push(validationErrors.errors[i]);
       }
 
-      const customError = new Error("Incorrect Data");
+      const customError = new Error('Incorrect Data');
       customError.status = 400;
       customError.errors = errors;
       return next(customError);
     }
 
+    console.log(chalk.blue(`
+      email: ${req.body.email},
+      password: ######,
+    `));
+
     const user = await User.findOne({email: req.body.email});
 
     if (!user) {
+      console.log(chalk.red('Email or password is incorrect'));
+
       const customError = new Error('Email or password is incorrect');
       customError.status = 401;
 
@@ -78,15 +101,19 @@ const signIn = async (req, res, next) => {
         admin: user.isAdmin
       }, process.env.SECRET_KEY, {expiresIn: '2h'});
 
+      console.log(chalk.green('You have been signed in'));
+
       return res.status(200).json({message: 'You have been signed in', token: jwtToken});
     } else {
+      console.log(chalk.red('Email or password is incorrect'));
+
       const customError = new Error('Email or password is incorrect');
       customError.status = 401;
 
       return next(customError);
     }
   } catch(e) {
-    console.log(e);
+    console.log(chalk.red(e));
     const customError = new Error('Something went wrong during sign-in proces');
     customError.status = 401;
 
@@ -96,9 +123,13 @@ const signIn = async (req, res, next) => {
 
 const verifyToken = async (req, res, next) => {
   try {
-    return res.status(200).json({message: "Token is valid"});
+    console.log(chalk.yellow('verifyToken'));
+
+    console.log(chalk.green('Token is valid'));
+
+    return res.status(200).json({message: 'Token is valid'});
   } catch(e) {
-    console.log(e);
+    console.log(chalk.red(e));
     const customError = new Error('Email or password is incorrect');
     customError.status = 401;
 

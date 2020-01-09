@@ -6,6 +6,7 @@ import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import cors from 'cors';
 import mongoose from 'mongoose';
+import chalk from 'chalk';
 
 const app = express();
 
@@ -34,7 +35,7 @@ app.get('/api', (req, res) => {
 });
 
 app.use((err, req, res, next) => {
-  console.log(err);
+  console.log(chalk.err);
   if (!err.status) {
     err.status = 500;
   } 
@@ -53,7 +54,7 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server is running on port: ${port}`);
+  console.log(chalk.yellow(`Server is running on port: ${port}`));
 });
 
 export default app;
