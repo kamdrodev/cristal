@@ -66,30 +66,68 @@
           </div>
         </vs-card>
       </vs-col>
+      <vs-col class="c" vs-type="flex" vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="3" >
+        <vs-card class="card">
+          <div slot="header">
+            <h3>
+              Hello world !
+            </h3>
+          </div>
+          <div>
+            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</span>
+          </div>
+          <div slot="footer">
+            <vs-row vs-justify="flex-end">
+              <vs-button class="icon" icon="edit"></vs-button>
+              <vs-button class="icon" icon="delete"></vs-button>
+            </vs-row>
+          </div>
+        </vs-card>
+      </vs-col>
     </vs-row>
 
 
     <div class="centerx">
       <vs-popup classContent="popup-example" title="Create list" :active.sync="popupCreateList">
-        <vs-input label="Title" placeholder="Title" v-model="formCreateList.title"/>
-        <vs-input label="Description" placeholder="Description" v-model="formCreateList.description"/>        
-        <vs-select
-          autocomplete
-          class="selectExample"
-          label="First language"
-          v-model="formCreateList.firstLanguage"
-          >
-          <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item,index) in listOfLanguages" />
-        </vs-select>
-        <vs-select
-          autocomplete
-          class="selectExample"
-          label="Second language"
-          v-model="formCreateList.secondLanguage"
-          >
-          <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item,index) in listOfLanguages" />
-        </vs-select>
-        <vs-button class="btn-popup" type="filled" @click="createList">Create</vs-button>
+        <form @submit.prevent="createList">
+          <ValidationObserver v-slot="{invalid}">
+            <validation-provider rules="required" v-slot="{ errors }">
+              <vs-input label="Title" placeholder="Title" v-model="formCreateList.title"/>
+              <div class="error">{{ errors[0] }}</div>
+            </validation-provider>
+            <validation-provider rules="required" v-slot="{ errors }">
+              <vs-input label="Description" placeholder="Description" v-model="formCreateList.description"/>        
+              <div class="error">{{ errors[0] }}</div>
+            </validation-provider>
+            <vs-select
+              autocomplete
+              class="selectExample"
+              label="First language"
+              v-model="formCreateList.firstLanguage"
+              >
+              <vs-select-item 
+                :key="index" 
+                :value="item.value" 
+                :text="item.text" 
+                v-for="(item,index) in listOfLanguages" 
+              />
+            </vs-select>
+            <vs-select
+              autocomplete
+              class="selectExample"
+              label="Second language"
+              v-model="formCreateList.secondLanguage"
+            >
+              <vs-select-item 
+                :key="index" 
+                :value="item.value" 
+                :text="item.text" 
+                v-for="(item,index) in listOfLanguages" 
+              />
+            </vs-select>
+            <vs-button class="btn-popup" type="filled" button="submit" :disabled="invalid">Create</vs-button>
+          </ValidationObserver>
+        </form>
       </vs-popup>
     </div>
 
@@ -101,12 +139,33 @@
 </template>
 
 <script>
+
+import { ValidationProvider, ValidationObserver, extend} from "vee-validate";
+import { required, email, length, min, max } from "vee-validate/dist/rules";
+
+extend("required", {
+  ...required,
+  message: "This field is required"
+});
+extend("email", {
+  ...email,
+  message: "This is not valid email"
+});
+
+extend("minPassword", {
+  ...min,
+  message: "The field must be 6+ chars"
+});
+
 export default {
   name: "lists",
+  components: {
+    ValidationProvider,
+    ValidationObserver,
+  },
   async beforeCreate() {
     try {
       const createListProcess = await this.$store.dispatch("lists/getAllLists")
-
       this.$vs.notify({
         title:"Success",
         text: createListProcess.message,
@@ -132,8 +191,8 @@ export default {
     formCreateList: {
       title: "",
       description: "",
-      firstLanguage: "",
-      secondLanguage: "",
+      firstLanguage: "polish",
+      secondLanguage: "french",
     },
     listOfLanguages: [
       {text: "spanish", value: "spanish"},
@@ -246,6 +305,18 @@ export default {
 .vs-popup {
   background-color: var(--popup-background-color) !important;
 
+  .vs-input--label {
+    color: var(--popup-label-color) !important;
+  }
+
+  .vs-select--label {
+    color: var(--popup-label-color);
+  }
+
+  .error {
+    margin-top: 2px;
+    color: var(--validation-error-color) !important;
+  }
 }
 
 .vuesax-app-is-ltr .vs-popup--content {

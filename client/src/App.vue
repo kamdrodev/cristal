@@ -54,6 +54,7 @@ export default {
   --popup-icon-background-color: #0f0e17;
   --popup-icon-color: #fffffe;
   --popup-button-background-color: #0f0e17;
+  --popup-label-color: #fffffe;
 }
 
 body {
