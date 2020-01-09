@@ -16,7 +16,14 @@
          
          <vs-collapse-item>
            <div slot="header">
-             {{ list.title }}
+            <div class="title">
+              {{ list.title }}
+            </div>
+            <div class="languages">
+              {{ list.firstLanguage}}  -> {{ list.secondLanguage }}
+            </div>
+            
+             
            </div>
 
            <div class="description">{{ list.description }}</div>
@@ -364,12 +371,26 @@ export default {
     cursor: default;
   }
 
+  .title {
+    color: var(--collapse-header-title-color) !important;
+  }
+  
+  .languages {
+    margin-top: 12px;
+    color: var(--collapse-header-languages-color) !important;
+  }
+  
+  .icon-header.vs-collapse-item--icon-header {
+    color: var(--collapse-header-icon-color) !important;
+  }
+
+
   .description {
     padding: 20px 0px;
   }
 
   .vs-collapse-item--header {
-    color: var(--collapse-header-color);
+    
 
     &:hover {
       cursor: pointer;

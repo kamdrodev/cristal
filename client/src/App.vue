@@ -60,6 +60,11 @@ export default {
   --collapse-content-color: #fffffe;
   --collapse-background-color: #0f0e17;
   --collapse-icon-color: #ff8906;
+
+
+  --collapse-header-title-color: #ff8906;
+  --collapse-header-icon-color: #fffffe;
+  --collapse-header-languages-color: #fffffe;
 }
 
 body {
