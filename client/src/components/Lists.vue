@@ -11,31 +11,19 @@
       </vs-col>
     </vs-row>
     <vs-row vs-type="flex" vs-w="12">
-      <vs-col class="c" vs-type="flex" vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="12" >
+      <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="12" v-for="list in lists" >
         <vs-collapse :type="type" class="collapse">
+         
          <vs-collapse-item>
            <div slot="header">
-             More
+             {{ list.title }}
            </div>
 
-           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque rhoncus eros tortor, non fringilla lectus cursus et. Fusce vel nisi ante. Aliquam sit amet lectus pharetra, luctus mi sed, aliquet felis. Mauris a tortor viverra, ornare tellus in, consectetur leo.
-            <br><br>
-            Etiam nec nunc nec nisl luctus tincidunt efficitur vitae elit. Vestibulum iaculis nibh commodo neque ultrices lobortis. Cras magna massa, pretium vitae mattis varius, pharetra nec massa. Aliquam ac ex enim. Quisque consequat dui libero, vel blandit lorem porttitor sit amet. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam sed lobortis nisl, quis eleifend metus.
-         </vs-collapse-item>
-         <vs-collapse-item>
-           <div slot="header">
-             More
-           </div>
-
-           Nunc auctor et leo vitae suscipit. Nullam aliquet purus scelerisque enim hendrerit tristique. Maecenas tincidunt dui arcu, a aliquet nisl venenatis vitae. Praesent mauris ligula, porta at maximus ac, rutrum vitae sapien. Donec a sapien id erat dapibus dignissim sodales in est. Donec gravida dapibus sapien at sollicitudin. Maecenas iaculis quam ex,
-           <br><br>
-           eu aliquam erat sagittis eget. Suspendisse mollis felis nec ipsum vehicula, at posuere libero viverra. Nam hendrerit dapibus eleifend. Aliquam elit nulla, tincidunt pellentesque enim mollis, consectetur placerat enim. Integer condimentum tristique ante et ullamcorper. Mauris placerat pretium ex. Nam aliquam sed tortor sit amet
-           <br><br>
-           efficitur. Mauris quis faucibus nulla. Pellentesque egestas non ipsum vel maximus.
+           <div class="description">{{ list.description }}</div>
            <div class="icons-wrapper">
 
             <vs-icon icon="edit" class="icon"></vs-icon>
-            <vs-icon icon="delete" class="icon"></vs-icon>
+            <vs-icon icon="delete" class="icon" @click="deleteList(list._id)"></vs-icon>
             <div class="button-wrapper">
               <vs-button type="relief">View</vs-button>
             </div>
@@ -186,7 +174,6 @@ export default {
         });
 
       } catch(e) {      
-        console.log(e);
         this.$vs.notify({
           time: 2000,
           title:"Error",
@@ -194,6 +181,34 @@ export default {
           color:this.$notificationsColorError
         });
       }
+    },
+    async deleteList(id) {
+  
+      try {
+
+        let conf = confirm("Do you really want to delete this list?");
+
+        if (conf) {
+          const deleteListProcess = await this.$store.dispatch("lists/deleteList", {
+            id
+          });
+
+          this.$vs.notify({
+            title:"Success",
+            text: deleteListProcess.message,
+            color:this.$notificationsColorSuccess
+          });
+        } 
+        
+      } catch (e) {
+        this.$vs.notify({
+          time: 2000,
+          title:"Error",
+          text: e.message,
+          color:this.$notificationsColorError
+        });
+      }
+
     }
   },
   computed: {
@@ -291,8 +306,23 @@ export default {
 }
 
 .collapse {
+
+  width: 100%;
+
+  &:hover {
+    cursor: default;
+  }
+
+  .description {
+    padding: 20px 0px;
+  }
+
   .vs-collapse-item--header {
     color: var(--collapse-header-color);
+
+    &:hover {
+      cursor: pointer;
+    }
   }
   .vs-collapse-item--content {
     color: var(--collapse-content-color);
@@ -300,15 +330,16 @@ export default {
   
   .icons-wrapper {
     display: flex;
-    justify-content: flex-end;
     .icon {
       color: var(--collapse-icon-color) !important;
       padding: 10px 10px;
       margin-right: 10px;
+      cursor: pointer;
     }
   }
 
   .button-wrapper {
+    width: 100%;
     display: flex;
     justify-content: flex-end;
     align-items: center;

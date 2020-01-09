@@ -41,7 +41,22 @@ const actions = {
         secondLanguage,
       });
       return {
-        message: "Your account has been created"
+        message: "List has been created"
+      }
+    } catch(e) {
+      console.log(e);
+      throw new Error(e.response.data.message);
+    }
+  },
+  async deleteList({dispatch, commit}, {id}) {
+    try {
+      console.log(id)
+      const deleteListRequest = await axios.delete(`lists/${id}`);
+
+      dispatch("getAllLists");
+
+      return {
+        message: "List has been deleted"
       }
     } catch(e) {
       console.log(e);

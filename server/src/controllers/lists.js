@@ -157,6 +157,8 @@ const deleteList = async (req, res, next) => {
   try {
     console.log(chalk.yellow('deleteList'));
 
+    console.log(req.params)
+
     const validationErrors = validationResult(req);
 
     if (!validationErrors.isEmpty()) {
@@ -176,11 +178,9 @@ const deleteList = async (req, res, next) => {
 
     const listDelete = await List.findOneAndDelete({_id: id, userId: req.user.id});
 
-    const lists = await List.find({userId: req.user.id});
-
     console.log(chalk.green(`List have been deleted`));
 
-    return res.status(200).json({message: `List have been deleted`, lists: lists});
+    return res.status(200).json({message: `List have been deleted`});
   } catch(e) {
     console.log(chalk.red(e));
 
