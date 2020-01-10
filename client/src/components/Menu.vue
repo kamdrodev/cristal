@@ -4,7 +4,6 @@
       <div id="parentx" >
         <vs-icon icon="menu" @click="active=!active, notExpand = true" type="filled" class="menu" v-if="isAuthenticated"></vs-icon>
         <vs-sidebar parent="body" default-index="1"  color="primary" class="sidebarx" spacer v-model="active"  >
-
           <div class="header-sidebar" slot="header">
            <svg width="100%" height="100%" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
               <g transform="matrix(0.165728,0.165728,-0.165728,0.165728,12.0998,-14.7538)">
@@ -31,9 +30,13 @@
               </defs>
           </svg>
           </div>
-          <vs-sidebar-item index="1" to="dashboard" icon="question_answer" class="item" v-if="isAuthenticated">
+          <vs-sidebar-item index="1" to="/dashboard" icon="question_answer" class="item" v-if="isAuthenticated">
             Dashboard
           </vs-sidebar-item>
+          <vs-sidebar-item index="2" to="/lists" icon="question_answer" class="item" v-if="isAuthenticated">
+            Lists
+          </vs-sidebar-item>
+
           <!-- <vs-divider icon="person" position="left" class="item">
             User
           </vs-divider> -->
@@ -47,7 +50,7 @@
     </vs-col>
   </vs-row>
 
-</template>http://localhost:8080/#
+</template>
 
 <script>
 export default {

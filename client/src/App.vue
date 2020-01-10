@@ -45,7 +45,7 @@ export default {
   --panel-lists-background-color: #0f0e17;
   --panel-lists-button-background-color: #ff8906;
 
-  --card-list-background-color: #ff8906;
+  --card-list-background-color: #0f0e17;
   --card-list-color: #fffffe;
   --card-list-icon-background-color: #0f0e17;
 

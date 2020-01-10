@@ -6,13 +6,13 @@
     <vs-row vs-w="12">
       <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="12" >
         <div class="panel-lists">
-          <vs-button class="button-create-list" @click="popupCreateList=true">Create list</vs-button>
+          <vs-button class="button-create-list" @click="openCreatePopupList">Create list</vs-button>
         </div>
       </vs-col>
     </vs-row>
     <vs-row vs-type="flex" vs-w="12">
-      <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="12" v-for="list in lists" >
-        <vs-collapse :type="type" class="collapse">
+      <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="4" v-for="list in lists" >
+        <!-- <vs-collapse :type="type" class="collapse">
          
          <vs-collapse-item>
            <div slot="header">
@@ -37,7 +37,37 @@
            </div>
          </vs-collapse-item>
          
-        </vs-collapse>
+        </vs-collapse> -->
+        <vs-card class="card">
+          <div slot="header">
+            <h3>
+              {{ list.title }}
+            </h3>
+          </div>
+          <div>
+            <span>{{ list.description }} </span>
+          </div>
+          <div slot="footer">
+            <vs-row vs-justify="flex-end">
+              <vs-button 
+                class="icon" 
+                icon="view_module"
+                @click="viewList(list._id)"
+              ></vs-button>
+              <vs-button 
+                class="icon" 
+                icon="edit"
+                @click="openPopupEditList(list.title, list.description, list._id)"
+              ></vs-button>
+              <vs-button 
+              class="icon" 
+              icon="delete"
+              @click="deleteList(list._id)">
+                
+              </vs-button>
+            </vs-row>
+          </div>
+        </vs-card>
       </vs-col>
     </vs-row>
 
@@ -133,7 +163,7 @@ extend("minPassword", {
 });
 
 export default {
-  name: "lists",
+  name: "Lists",
   components: {
     ValidationProvider,
     ValidationObserver,
@@ -188,10 +218,50 @@ export default {
     popupUpdateList:false,    
   }),
   methods: {
+    async openCreatePopupList() {
+      try {
+        this.popupCreateList = true;
+      } catch (e) {
+        this.$vs.notify({
+          time: 2000,
+          title:"Error",
+          text: e.message,
+          color:this.$notificationsColorError
+        });
+      }
+      
+    },
+    async openPopupEditList(title, description, id) {
+      try {
+        this.popupUpdateList = true;
+        this.formUpdateList.title = title;
+        this.formUpdateList.description = description;
+        this.formUpdateList.id = id;
+      } catch (e) {
+        this.$vs.notify({
+          time: 2000,
+          title:"Error",
+          text: e.message,
+          color:this.$notificationsColorError
+        });
+      }
+      
+    },
+    async viewList(id) {
+      try {
+        this.$router.push(`/list/${id}`);
+      } catch (e) {
+        this.$vs.notify({
+          time: 2000,
+          title:"Error",
+          text: e.message,
+          color:this.$notificationsColorError
+        });
+      }
+      
+    },
     async createList() {
       try {
-
-        console.log(this.formCreateList)
         const createListProcess = await this.$store.dispatch("lists/createList", {
           title: this.formCreateList.title,
           description: this.formCreateList.description,
@@ -215,7 +285,6 @@ export default {
       }
     },
     async updateList(title, description) {
-      
       try {
         const updateListProcess = await this.$store.dispatch("lists/updateList", {
           id: this.formUpdateList.id,
@@ -240,9 +309,7 @@ export default {
 
     },
     async deleteList(id) {
-  
       try {
-
         let conf = confirm("Do you really want to delete this list?");
 
         if (conf) {
@@ -265,7 +332,28 @@ export default {
           color:this.$notificationsColorError
         });
       }
+    },
+    async getList(id) {
+      try {
+        const updateListProcess = await this.$store.dispatch("lists/getList", {
+          id: this.formUpdateList.id,
+          title: this.formUpdateList.title,
+          description: this.formUpdateList.description,
+        });
 
+        this.$vs.notify({
+          title:"Success",
+          text: updateListProcess.message,
+          color:this.$notificationsColorSuccess
+        });
+      } catch (e) {
+        this.$vs.notify({
+          time: 2000,
+          title:"Error",
+          text: e.message,
+          color:this.$notificationsColorError
+        });
+      }
     }
   },
   computed: {
@@ -292,9 +380,6 @@ export default {
   box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
 }
 
-.button-create-list.vs-button-primary.vs-button-filled { 
-  background-color: var(--panel-lists-button-background-color) !important;
-}
 
 .card {
   background-color: var(--card-list-background-color) !important;
@@ -305,6 +390,15 @@ export default {
   display: flex;
   flex-wrap: wrap;
   min-height: 200px;
+
+  position: relative;
+  
+  .vs-card--footer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+
   
   .vs-button-primary.vs-button-filled {
     background-color: var(--card-list-icon-background-color) !important;

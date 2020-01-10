@@ -2,6 +2,7 @@ import axios from "axios";
 
 const state = {
   lists: [],
+  list: {},
 };
 
 const getters = {
@@ -31,6 +32,9 @@ const actions = {
       console.log(e);
       throw new Error(e.response.data.message);
     }
+  },
+  async getList({dispatch, commit}, {id}) {
+    console.log("getList");
   },
   async createList({dispatch, commit}, {title, description, firstLanguage, secondLanguage}) {
     try {
