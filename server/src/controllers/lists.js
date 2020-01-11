@@ -44,6 +44,19 @@ const getAllLists = async (req, res, next) => {
   try {
     console.log(chalk.yellow('getAllLists'));
 
+    console.log(req.body)
+    console.log(req.params)
+    console.log(req.query)
+    console.log(chalk.blue(`
+      Query:
+
+      secondLanguage: ${req.query.secondLanguage} ${req.params.secondLanguage}
+    `));
+
+    let queryOptions = {
+      "secondLanguage": req.query.secondLanguage ? req.query.secondLanguage : null,
+    }
+
     const validationErrors = validationResult(req);
 
     if (!validationErrors.isEmpty()) {
@@ -53,7 +66,9 @@ const getAllLists = async (req, res, next) => {
       return next(customError);
     }
 
-    const lists = await List.find();
+
+    console.log(queryOptions)
+    const lists = await List.find(queryOptions);
 
     console.log(chalk.green(`Lists have been fetched`));
 

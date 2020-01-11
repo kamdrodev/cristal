@@ -5,38 +5,24 @@
 
     <vs-row vs-w="12">
       <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="12" >
-        <div class="panel-lists">
-          <vs-button class="button-create-list" @click="openCreatePopupList">Create list</vs-button>
-        </div>
+          <vs-row vs-w="12" class="panel-lists">
+            <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="8" >
+              <vs-select
+                class="selectExample"
+                v-model="listsQueryOptions.secondLanguage"
+                @change="getAllLists"
+              >
+              <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="item,index in listOfLanguages" />
+            </vs-select>
+            </vs-col>
+            <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="4" >
+              <vs-button class="button-create-list" icon="post_add" @click="openCreatePopupList">Create list</vs-button>
+            </vs-col>         
+          </vs-row>
       </vs-col>
     </vs-row>
     <vs-row vs-type="flex" vs-w="12">
-      <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="4" v-for="list in lists" >
-        <!-- <vs-collapse :type="type" class="collapse">
-         
-         <vs-collapse-item>
-           <div slot="header">
-            <div class="title">
-              {{ list.title }}
-            </div>
-            <div class="languages">
-              {{ list.firstLanguage}}  -> {{ list.secondLanguage }}
-            </div>
-            
-             
-           </div>
-
-           <div class="description">{{ list.description }}</div>
-           <div class="icons-wrapper">
-
-            <vs-icon icon="edit" class="icon" @click="popupUpdateList=true, formUpdateList.title = list.title, formUpdateList.description = list.description, formUpdateList.id = list._id"></vs-icon>
-            <vs-icon icon="delete" class="icon" @click="deleteList(list._id)"></vs-icon>
-            <div class="button-wrapper">
-              <vs-button type="relief">View</vs-button>
-            </div>
-           </div>
-         </vs-collapse-item>
-         
+      <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="4" v-for="list in lists">
         </vs-collapse> -->
         <vs-card class="card">
           <div slot="header">
@@ -169,11 +155,21 @@ export default {
     ValidationObserver,
   },
   async beforeCreate() {
+    console.log("beforeCreate")
     try {
-      const createListProcess = await this.$store.dispatch("lists/getAllLists")
+
+      // before create
+
+      let defaultListsQueryOptions = {
+        secondLanguage: "french",
+      };
+
+      const getAllListsProcess = await this.$store.dispatch("lists/getAllLists", {
+        listsQueryOptions: defaultListsQueryOptions,
+      })
       this.$vs.notify({
         title:"Success",
-        text: createListProcess.message,
+        text: getAllListsProcess.message,
         color:this.$notificationsColorSuccess
       });
     } catch (e) {
@@ -187,13 +183,13 @@ export default {
     }
   },
   created() {
-    console.log("created");
-    console.log("lists", this.lists)
   },
   data: () => ({
     type:'margin',
     search: "",
-    select1Normal:'',
+    listsQueryOptions: {
+      secondLanguage: "french"
+    },
     formCreateList: {
       title: "",
       description: "",
@@ -260,6 +256,28 @@ export default {
       }
       
     },
+    async getAllLists() {
+      try {
+
+        const getAllListsProcess = await this.$store.dispatch("lists/getAllLists", {
+          listsQueryOptions: this.listsQueryOptions
+        });
+
+        this.$vs.notify({
+          title:"Success",
+          text: getAllListsProcess.message,
+          color:this.$notificationsColorSuccess
+        });
+
+      } catch(e) {      
+        this.$vs.notify({
+          time: 2000,
+          title:"Error",
+          text: e.message,
+          color:this.$notificationsColorError
+        });
+      }
+    },
     async createList() {
       try {
         const createListProcess = await this.$store.dispatch("lists/createList", {
@@ -274,6 +292,8 @@ export default {
           text: createListProcess.message,
           color:this.$notificationsColorSuccess
         });
+
+        await this.getAllLists();
 
       } catch(e) {      
         this.$vs.notify({
@@ -297,6 +317,8 @@ export default {
           text: updateListProcess.message,
           color:this.$notificationsColorSuccess
         });
+
+        await this.getAllLists();
         
       } catch (e) {
         this.$vs.notify({
@@ -322,6 +344,8 @@ export default {
             text: deleteListProcess.message,
             color:this.$notificationsColorSuccess
           });
+
+          await this.getAllLists();
         } 
         
       } catch (e) {
@@ -359,7 +383,7 @@ export default {
   computed: {
     lists() {
       return this.$store.getters["lists/lists"];
-    },
+    }
   }
 };
 </script>
@@ -371,13 +395,14 @@ export default {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  width: 100%;
-  margin: 12px 12px;
-  padding: 26px 26px;
-  height: 76px;
+  height: 126px;
   border-radius: 16px;
   background-color: var(--panel-lists-background-color) !important;
   box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+
+  .vs-select--label {
+    color: var(--popup-label-color) !important;
+  }
 }
 
 

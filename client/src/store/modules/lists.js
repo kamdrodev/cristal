@@ -17,11 +17,15 @@ const mutations = {
 
 const actions = {
 
-  async getAllLists({dispatch, commit}) {
+  async getAllLists({dispatch, commit}, {listsQueryOptions}) {
     try {
-      const createListRequest = await axios.get("lists");
 
-      // console.log(createListRequest.data.lists)
+      console.log(`vuex`, listsQueryOptions)
+      const createListRequest = await axios.get("lists", {
+        params: {
+          "secondLanguage": listsQueryOptions.secondLanguage ? listsQueryOptions.secondLanguage : "",
+        }
+      });
 
       commit("setLists", createListRequest.data.lists);
 
@@ -44,8 +48,6 @@ const actions = {
         firstLanguage,
         secondLanguage,
       });
-
-      dispatch("getAllLists");
       
       return {
         message: "List has been created"
@@ -62,8 +64,6 @@ const actions = {
         description,
       });
 
-      dispatch("getAllLists");
-      
       return {
         message: updateListRequest.data.message
       }
@@ -74,10 +74,8 @@ const actions = {
   },
   async deleteList({dispatch, commit}, {id}) {
     try {
-      console.log(id)
-      const deleteListRequest = await axios.delete(`lists/${id}`);
 
-      dispatch("getAllLists");
+      const deleteListRequest = await axios.delete(`lists/${id}`);
 
       return {
         message: "List has been deleted"
