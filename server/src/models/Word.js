@@ -4,12 +4,24 @@ const Schema = mongoose.Schema;
 
 const WordSchema = mongoose.Schema({
   firstLanguage: {
-    type: String,
-    required: true,
+    language: {
+      type: String,
+      required: true,
+    },
+    word: {
+      type: String,
+      required: true,
+    }    
   },
   secondLanguage: {
-    type: String,
-    required: true,
+    language: {
+      type: String,
+      required: true,
+    },
+    word: {
+      type: String,
+      required: true,
+    }    
   },
   createdAt: {
     type: Date,

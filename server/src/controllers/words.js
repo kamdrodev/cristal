@@ -38,9 +38,19 @@ const createWords = async (req, res, next) => {
 
     const list = await List.findOne({_id: req.body.listId, userId: req.user.id});
     
+    console.log('12321312')
+    console.log(req.body.firstLanguage);
+    console.log(req.body.secondLanguage);
+
     const word = new Word({
-      firstLanguage: req.body.firstLanguage,
-      secondLanguage: req.body.secondLanguage,
+      firstLanguage: {
+        language: list.firstLanguage,
+        word: req.body.firstLanguage,
+      },
+      secondLanguage: {
+        language: list.secondLanguage,
+        word: req.body.secondLanguage,
+      },
       listId: list._id,
       userId: req.user.id,
     });
@@ -49,6 +59,7 @@ const createWords = async (req, res, next) => {
 
     return res.status(200).json({message: `Words have been created`});
   } catch(e) {
+    console.log(e)
     const customError = new Error('Something went wrong during create words process');
     customError.status = 401;
 

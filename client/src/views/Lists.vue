@@ -18,7 +18,7 @@
             </vs-select>
             </vs-col>
             <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="4" class="panel-lists">
-              <vs-button class="button-create-list" type="border" icon="post_add" size="large" @click="openCreatePopupList">Create list</vs-button>
+              <vs-button class="button-create-list" type="border" icon="post_add" size="large" @click="openPopupCreateList">Create list</vs-button>
             </vs-col>         
           </vs-row>
       </vs-col>
@@ -62,7 +62,7 @@
     </vs-row>
 
   
-    <!-- popup creat list -->
+    <!-- popup create list -->
     <div class="centerx">
       <vs-popup classContent="popup-example" title="Create list" :active.sync="popupCreateList">
         <form @submit.prevent="createList">
@@ -160,11 +160,7 @@ export default {
     ValidationObserver,
   },
   async beforeCreate() {
-    console.log("beforeCreate")
     try {
-
-      // before create
-
       let defaultListsQueryOptions = {
         secondLanguage: "french",
       };
@@ -219,7 +215,7 @@ export default {
     popupUpdateList:false,    
   }),
   methods: {
-    async openCreatePopupList() {
+    async openPopupCreateList() {
       try {
         this.popupCreateList = true;
       } catch (e) {
@@ -263,7 +259,6 @@ export default {
     },
     async getAllLists() {
       try {
-
         const getAllListsProcess = await this.$store.dispatch("lists/getAllLists", {
           listsQueryOptions: this.listsQueryOptions
         });

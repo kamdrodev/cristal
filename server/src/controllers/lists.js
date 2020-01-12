@@ -29,6 +29,7 @@ const getList = async (req, res, next) => {
     const words = await Word.find({listId: id, userId: req.user.id});
 
     console.log(chalk.green(`List have been fetched`));
+    console.log(chalk.green(list));
 
     return res.status(200).json({message: `List have been fetched`, list: list, words: words});
   } catch(e) {
