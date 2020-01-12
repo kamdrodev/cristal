@@ -1,12 +1,14 @@
 <template>
-
+  
+  <div class="container">
+  
   <vs-row vs-w="12">
-      <vs-col vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="8" vs-offset="2">
+      <vs-col vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="12" >
 
     <vs-row vs-w="12">
       <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="12" >
-          <vs-row vs-w="12" class="panel-lists">
-            <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="8" >
+          <vs-row vs-w="12" >
+            <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="8" class="panel-lists" >
               <vs-select
                 class="selectExample"
                 v-model="listsQueryOptions.secondLanguage"
@@ -15,18 +17,20 @@
               <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="item,index in listOfLanguages" />
             </vs-select>
             </vs-col>
-            <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="4" >
-              <vs-button class="button-create-list" icon="post_add" @click="openCreatePopupList">Create list</vs-button>
+            <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="4" class="panel-lists">
+              <vs-button class="button-create-list" type="border" icon="post_add" size="large" @click="openCreatePopupList">Create list</vs-button>
             </vs-col>         
           </vs-row>
       </vs-col>
     </vs-row>
     <vs-row vs-type="flex" vs-w="12">
       <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="4" v-for="list in lists">
-        </vs-collapse> -->
+        </vs-collapse>
         <vs-card class="card">
-          <div slot="header">
+          <div slot="header" class="header">
+            <img src="../../public/svg/logo.svg" alt="" class="logo">
             <h3>
+
               {{ list.title }}
             </h3>
           </div>
@@ -126,7 +130,8 @@
 
 </vs-col>
 </vs-row>
-    
+      
+  </div>
 </template>
 
 <script>
@@ -395,35 +400,46 @@ export default {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  height: 126px;
+  height: 100px;
   border-radius: 16px;
   background-color: var(--panel-lists-background-color) !important;
-  box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+  box-shadow:0 1px 4px rgba(55, 25, 22, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+  margin-bottom: 26px;
 
   .vs-select--label {
     color: var(--popup-label-color) !important;
   }
-}
 
+  .vs-select--input {
+    padding: 16px !important;
+  }
+}
 
 .card {
   background-color: var(--card-list-background-color) !important;
   color: var(--card-list-color) !important;
+  width: 300px !important;
   max-width: 400px;
-  // padding: 12px 12px;
-  margin: 12px 12px;
   display: flex;
   flex-wrap: wrap;
   min-height: 200px;
 
+  .logo {
+    width: 20px;
+  }
+
   position: relative;
   
+
+  .header {
+    text-align: center;
+  }
+
   .vs-card--footer {
     position: absolute;
     bottom: 0;
     right: 0;
   }
-
   
   .vs-button-primary.vs-button-filled {
     background-color: var(--card-list-icon-background-color) !important;

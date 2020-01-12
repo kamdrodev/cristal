@@ -95,7 +95,6 @@ export default {
 
 .menu {
   // position: absolute;
-
   i {
     color: var(--menu-icon-color);
     margin-top: 16px;
