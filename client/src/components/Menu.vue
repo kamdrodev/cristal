@@ -1,55 +1,7 @@
 <template lang="html">
-  <vs-row class="menu">
-    <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12" class="sidebar">
-      <div id="parentx" >
-        <vs-icon icon="menu" @click="active=!active, notExpand = true" type="filled" class="menu" v-if="isAuthenticated"></vs-icon>
-        <vs-sidebar parent="body" default-index="1"  color="primary" class="sidebarx" spacer v-model="active"  >
-          <div class="header-sidebar" slot="header">
-           <svg width="100%" height="100%" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
-              <g transform="matrix(0.165728,0.165728,-0.165728,0.165728,12.0998,-14.7538)">
-                  <path d="M118,78L95.5,142L73,78L95.5,14L118,78Z" style="fill:url(#_Linear1);"/>
-              </g>
-              <g transform="matrix(-0.165728,0.165728,-0.165728,-0.165728,43.7538,11.0998)">
-                  <path d="M118,78L95.5,142L73,78L95.5,14L118,78Z" style="fill:url(#_Linear2);"/>
-              </g>
-              <g transform="matrix(-0.165728,0.165728,-0.165728,-0.165728,43.7538,11.0998)">
-                  <path d="M118,78L95.5,142L73,78L95.5,14L118,78Z" style="fill:url(#_Linear3);"/>
-              </g>
-              <g transform="matrix(0.234375,0,0,0.234375,-7.38281,-3.88785)">
-                  <path d="M118,78L95.5,142L73,78L95.5,14L118,78Z" style="fill:url(#_Linear4);"/>
-              </g>
-              <g transform="matrix(1.43513e-17,-0.234375,0.234375,1.43513e-17,-3.28125,36.3828)">
-                  <path d="M118,78L95.5,142L73,78L95.5,14L118,78Z" style="fill:url(#_Linear5);"/>
-              </g>
-              <defs>
-                  <linearGradient id="_Linear1" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0.991157,-124.981,124.981,0.991157,95.5,142)"><stop offset="0" style="stop-color:rgb(255,137,6);stop-opacity:1"/><stop offset="1" style="stop-color:rgb(255,137,6);stop-opacity:0"/></linearGradient>
-                  <linearGradient id="_Linear2" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0.991157,-124.981,124.981,0.991157,95.5,142)"><stop offset="0" style="stop-color:rgb(255,137,6);stop-opacity:1"/><stop offset="1" style="stop-color:rgb(255,137,6);stop-opacity:0"/></linearGradient>
-                  <linearGradient id="_Linear3" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0.991157,-124.981,124.981,0.991157,95.5,142)"><stop offset="0" style="stop-color:rgb(255,137,6);stop-opacity:1"/><stop offset="1" style="stop-color:rgb(255,137,6);stop-opacity:0"/></linearGradient>
-                  <linearGradient id="_Linear4" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0.991157,-124.981,124.981,0.991157,95.5,142)"><stop offset="0" style="stop-color:rgb(239,69,101);stop-opacity:1"/><stop offset="1" style="stop-color:rgb(239,69,101);stop-opacity:0"/></linearGradient>
-                  <linearGradient id="_Linear5" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0.991157,-124.981,124.981,0.991157,95.5,142)"><stop offset="0" style="stop-color:rgb(239,69,101);stop-opacity:1"/><stop offset="1" style="stop-color:rgb(239,69,101);stop-opacity:0"/></linearGradient>
-              </defs>
-          </svg>
-          </div>
-          <vs-sidebar-item index="1" to="/dashboard" icon="question_answer" class="item" v-if="isAuthenticated">
-            Dashboard
-          </vs-sidebar-item>
-          <vs-sidebar-item index="2" to="/lists" icon="question_answer" class="item" v-if="isAuthenticated">
-            Lists
-          </vs-sidebar-item>
-
-          <!-- <vs-divider icon="person" position="left" class="item">
-            User
-          </vs-divider> -->
-         
-          <div class="footer-sidebar" slot="footer">
-            <vs-button icon="reply"  type="flat" @click="signOut" v-if="isAuthenticated">log out</vs-button>
-            <vs-button icon="settings" type="border" v-if="isAuthenticated"></vs-button>
-          </div>
-        </vs-sidebar>
-      </div>
-    </vs-col>
-  </vs-row>
-
+  <div>
+    
+  </div>
 </template>
 
 <script>

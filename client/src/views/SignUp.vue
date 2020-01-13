@@ -1,5 +1,5 @@
 <template>
-  <vs-row class="form-sign-up">
+  <!-- <vs-row class="form-sign-up">
     <vs-col class="full-center" vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
     <ValidationObserver v-slot="{invalid}">
       <form @submit.prevent="signUp">
@@ -23,7 +23,10 @@
       <span class="link">I have an account yet</span>
     </router-link>
     </vs-col>
-  </vs-row>
+  </vs-row> -->
+
+
+  
 </template>
 
 <script>
@@ -104,41 +107,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.link {
-  color: var(--link-color);
-}
-
-.form-sign-up {
-    
-    h1 {
-      color: var(--headline);
-      text-align: center;
-    }
-
-    
-    
-    .error {
-      overflow-wrap: break-word;
-      max-width: 200px;
-      height:100%;
-      margin-top: 10px;
-      color: var(--validation-error-color) !important;
-    }
-
-    input, button {
-      width: 200px;
-      margin-top: 20px;
-      margin-bottom: 20px;
-    }
-
-    button {
-      background-color: var(--button-background-color) !important;
-    }
-
-    .full-center {
-      flex-direction: column;
-      height: 100vh;
-    }
-  }
 
 </style>

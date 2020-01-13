@@ -1,38 +1,6 @@
 <template>
-  <div class="container">
-    <vs-row vs-w="12">
-    <vs-col vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="12">
-        <vs-row vs-w="12">
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="8" class="panel-list">
-
-          </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-xs="12" vs-sm="12" vs-lg="4" class="panel-list">
-              <vs-button class="btn" @click="openPopupCreateWord" type="border" icon="post_add" size="large">New word</vs-button>
-          </vs-col>
-        </vs-row>
-      </vs-col>
-    </vs-row>
-
-     <!-- popup create list -->
-    <div class="centerx">
-      <vs-popup classContent="popup-example" title="Create word" :active.sync="popupCreateWord">
-        <form @submit.prevent="createWord">
-          <ValidationObserver v-slot="{invalid}">
-            <validation-provider rules="required" v-slot="{ errors }">
-              <vs-input label="First language" placeholder="First language" v-model="formCreateWord.firstLanguage"/>
-              <div class="error">{{ errors[0] }}</div>
-            </validation-provider>
-            <validation-provider rules="required" v-slot="{ errors }">
-              <vs-input label="Second language" placeholder="Second language" v-model="formCreateWord.secondLanguage"/>        
-              <div class="error">{{ errors[0] }}</div>
-            </validation-provider>
-            
-            <vs-button class="btn-popup" type="filled" size="large" button="submit" :disabled="invalid">Create</vs-button>
-          </ValidationObserver>
-        </form>
-      </vs-popup>
-    </div>
-
+  <div>
+    
   </div>
 </template>
 
