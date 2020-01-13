@@ -1,67 +1,27 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
-import Dashboard from "../views/Dashboard.vue";
-import SignIn from "../views/SignIn.vue";
-import SignUp from "../views/SignUp.vue";
-import List from "../views/List.vue";
-import Lists from "../views/Lists.vue";
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import Home from '../views/Home.vue'
 
-import store from "../store/index.js";
+Vue.use(VueRouter)
 
-Vue.use(VueRouter);
+const routes = [
+  {
+    path: '/',
+    name: 'home',
+    component: Home
+  },
+  {
+    path: '/about',
+    name: 'about',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+  }
+]
 
 const router = new VueRouter({
-  routes: [
-    {
-      path: "/dashboard",
-      name: "dashboard",
-      component: Dashboard,
-      meta: { requiresAuth: true}
-    },
-    {
-      path: "/sign-up",
-      name: "signup",
-      component: SignUp
-    },
-    {
-      path: "/sign-in",
-      name: "signin",
-      component: SignIn
-    },
-    {
-      path: "/list/:id",
-      name: "list",
-      component: List,
-      meta: { requiresAuth: true},
-    },
-    {
-      path: "/lists",
-      name: "lists",
-      component: Lists,
-      meta: { requiresAuth: true},
-    },
-  ]
-});
+  routes
+})
 
-router.beforeEach(async (to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    console.log("Dashboard test")
-    try {
-      const verifyTokenRequest = await store.dispatch("auth/verifyToken");
-      console.log(localStorage.getItem("token"));
-      console.log("Good")
-      next();
-    } catch (e) {
-      console.log(e);
-      next({
-        path: "/sign-in"
-      })
-    }
-  } else {
-    next();    
-  }
-});
-
-
-
-export default router;
+export default router
