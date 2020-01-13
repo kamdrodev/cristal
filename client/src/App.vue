@@ -11,6 +11,7 @@
       expand-on-hover
       app
       overflow
+      v-if="isAuthenticated"
     >
       
       <template v-slot:prepend>
@@ -89,6 +90,7 @@
     <v-app-bar
       :clipped-left="primaryDrawer.clipped"
       app
+      v-if="isAuthenticated"
     >
       <v-app-bar-nav-icon
         v-if="primaryDrawer.type !== 'permanent'"
@@ -105,26 +107,16 @@
       />
     </v-app-bar>
 
-
-     <v-content>
-      <v-container fluid>
-        <v-row
-          align="center"
-          justify="center"
-        >
-          <v-col cols="12">
-            <v-card>
-              <router-view />
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-container>
+    <v-content>
+      <router-view></router-view>
     </v-content>
+        
    
 
     <v-footer
       :inset="footer.inset"
       app
+      v-if="isAuthenticated"
     >
       <span class="px-4">&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
@@ -162,7 +154,8 @@ export default {
   }),
   computed: {
     isAuthenticated() {
-      return this.$store.getters['auth/token'];
+      // return this.$store.getters['auth/token'];
+      return true;
     }
   }
 };

@@ -1,7 +1,14 @@
 <template>
-  <div class=''>
-    <h1>This is an signIn page</h1>
-  </div>
+  <v-container class="sign-in">
+    <v-row>
+      <v-col cols="12">
+        <form>
+          
+        </form>
+      </v-col>
+    </v-row>
+  </v-container>
+  
 </template>
 
 <script>
@@ -12,5 +19,9 @@ export default {
 
 
 <style lang='scss'>
+
+.sign-in {
+
+}
 
 </style>
