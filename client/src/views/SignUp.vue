@@ -1,12 +1,12 @@
 <template>
-  <div class=''>
-    <h1>This is an signIn page</h1>
-  </div>
+  <v-card>
+              
+  </v-card>
 </template>
 
 <script>
 export default {
-  name: 'SignIn',
+  name: 'SignUp',
 };
 </script>
 
