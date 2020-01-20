@@ -6,7 +6,21 @@ const routes = [
     children: [
       { path: '', component: () => import('pages/Index.vue') }
     ]
+  },
+  {
+    path: '/sign-up',
+    component: () => import('layouts/MyLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/SignUp.vue') }
+    ]
+  },{
+    path: '/sign-in',
+    component: () => import('layouts/MyLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/SignIn.vue') }
+    ]
   }
+
 ]
 
 // Always leave this as last one

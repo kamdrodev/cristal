@@ -30,9 +30,15 @@ $primary   : #f25f4c;
 $secondary : #ff8906;
 $accent    : #f25f4c;
 
-$dark      : #16161a;
+$dark      : #0f0e17;
 
 $positive  : #2cb67d;
 $negative  : #ef4565;
 $info      : #3da9fc;
 $warning   : #ffd803;
+
+
+$input-font-size                : 14px !default
+$input-text-color               : rgba(2, 222, 2,.87) !default
+$input-label-color              : rgba(0,0,0,.6) !default
+$input-autofill-color           : inherit !default

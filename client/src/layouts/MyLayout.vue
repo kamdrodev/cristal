@@ -1,7 +1,10 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
+    <q-header class="">
+      <q-toolbar
+        class="toolbar"
+      >
+
         <q-btn
           flat
           dense
@@ -9,6 +12,7 @@
           @click="leftDrawerOpen = !leftDrawerOpen"
           icon="menu"
           aria-label="Menu"
+          
         />
 
         <q-toolbar-title>
@@ -20,10 +24,7 @@
     </q-header>
 
     <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-      content-class="bg-grey-2"
+      v-model="leftDrawerOpen"      
     >
       <q-list>
         <q-item-label header>Essential Links</q-item-label>
@@ -101,3 +102,7 @@ export default {
   }
 }
 </script>
+
+<style lang="sass">
+ 
+</style>
