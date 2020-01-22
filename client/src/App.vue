@@ -8,7 +8,16 @@
 export default {
   name: 'App',
   created() {
+
+    // Theme
     this.$q.dark.set(true)
+    
+    // Notifications
+    this.$q.notify.setDefaults({
+      position: 'top-right',
+    })
+
+
   }
 }
 </script>

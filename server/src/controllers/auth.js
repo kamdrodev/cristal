@@ -21,6 +21,8 @@ const signUp = async (req, res, next) => {
         errors.push(validationErrors.errors[i]);
       }
 
+      console.log(errors);
+
       const customError = new Error(validationErrors);
       customError.status = 400;
       customError.errors = errors;
@@ -48,7 +50,9 @@ const signUp = async (req, res, next) => {
 
     res.status(200).json({message: 'User has been created'});
   } catch (e) {
-    console.log(chalk.red(e));
+    console.log(chalk.red(e.message));
+
+    console.log("error")
     const customError = new Error('Something went wrong during sign-up process');
     customError.status = 401;
 

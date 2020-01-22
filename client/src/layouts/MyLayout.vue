@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header class="">
+    <q-header class="header">
       <q-toolbar
         class="toolbar"
       >
@@ -104,5 +104,6 @@ export default {
 </script>
 
 <style lang="sass">
- 
+  .header
+    background-color: $dark
 </style>

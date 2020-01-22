@@ -21,7 +21,7 @@
           </q-input>
           <q-btn
             type="submit"
-            label="Save"
+            label="Send"
             size="lg"
             class="button-submit"
           >
@@ -32,7 +32,7 @@
           <div>
             <router-link :to="{ hash: '#Handling-links' }">
               <template v-slot="props">
-                <q-btn to="/sign-in" flat label="Already have an account?"/>
+                <q-btn to="/sign-in" flat label="Already have an account?" class="link" />
               </template>
             </router-link>
           </div>
@@ -71,13 +71,25 @@ export default {
   },
   methods: {
     async signUp() {
-      this.$v.formSignUp.$touch()
+      try {
 
-      if (this.$v.formSignUp.$error) {
-        this.$q.notify({message: 'Please review fields again.', color: 'negative'})
-        return
+        this.$v.formSignUp.$touch()
+
+        if (this.$v.formSignUp.$error) {
+          throw new Error('Please review fields again.')
+        }
+        
+        const signUpProcess = await this.$store.dispatch('auth/signUp', {
+          username: this.formSignUp.username,
+          email: this.formSignUp.email,
+          password: this.formSignUp.password,
+        })
+
+        
+        this.$q.notify({message: signUpProcess.message, color: 'positive'})
+      } catch (e) {
+        this.$q.notify({message: e.message, color: 'negative'})
       }
-
     }
   }
 }
@@ -87,4 +99,6 @@ export default {
   .form-sign-up
     .button-submit
       width: 300px
+  .link 
+    width: 100%
 </style>
