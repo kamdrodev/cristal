@@ -27,7 +27,7 @@
           <div>
             <router-link :to="{ hash: '#Handling-links' }">
               <template v-slot="props">
-                <q-btn to="/sign-up" flat label="Create account" class="link" />
+                <q-btn to="/sign-up" flat label="Create account" :disable="$v.formSignIn.$invalid" class="link" />
               </template>
             </router-link>
           </div>

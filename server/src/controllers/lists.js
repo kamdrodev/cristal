@@ -26,12 +26,11 @@ const getList = async (req, res, next) => {
 
     const listViews = await List.findOneAndUpdate({_id: id, userId: req.user.id}, {$inc: {views: 1}});
     const list = await List.findOne({_id: id, userId: req.user.id});
-    const words = await Word.find({listId: id, userId: req.user.id});
 
     console.log(chalk.green(`List have been fetched`));
     console.log(chalk.green(list));
 
-    return res.status(200).json({message: `List have been fetched`, list: list, words: words});
+    return res.status(200).json({message: `List have been fetched`, list: list});
   } catch(e) {
     console.log(chalk.red(e));
     const customError = new Error('Something went wrong during get list process');
