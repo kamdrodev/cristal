@@ -1,7 +1,55 @@
 <template>
   <div class="row q-col-gutter-xs"">
-    <div class="col-xs-12 col-sm-12 offset-md col-md-4 offset-md-4 col-lg-4 offset-lg-4 col-xl-4  offset-xl-4">
+    <div class="col-xs-12 col-sm-12 offset-md col-md-4 offset-md-4 col-lg-6 offset-lg-3 col-xl-6  offset-xl-3">
       <q-select outlined v-model="listsQueryOptions.secondLanguage" :options="languages" label="I want to learn..." />
+
+
+
+
+    <q-list bordered class="rounded-borders" v-for='list in lists'>
+      <q-item-label header>Lists</q-item-label>
+
+      <q-item>
+        <q-item-section avatar top>
+          <q-icon name="account_tree" color="black" size="34px" />
+        </q-item-section>
+
+        <q-item-section top class="col-2 gt-sm">
+          <q-item-label class="q-mt-sm">GitHub</q-item-label>
+        </q-item-section>
+
+        <q-item-section top>
+          <q-item-label lines="1">
+            <span class="text-weight-medium">[quasarframework/quasar]</span>
+            <span class="text-grey-8"> - GitHub repository</span>
+          </q-item-label>
+          <q-item-label caption lines="1">
+            @rstoenescu in #3: > Generic type parameter for props
+          </q-item-label>
+          <q-item-label lines="1" class="q-mt-xs text-body2 text-weight-bold text-primary text-uppercase">
+            <span class="cursor-pointer">Open in GitHub</span>
+          </q-item-label>
+        </q-item-section>
+
+        <q-item-section top side>
+          <div class="text-grey-8 q-gutter-xs">
+            <q-btn class="gt-xs" size="12px" flat dense round icon="edit" />
+            <q-btn class="gt-xs" size="12px" flat dense round icon="delete" />
+            <q-btn size="12px" flat dense round icon="more_vert" />
+          </div>
+        </q-item-section>
+      </q-item>
+
+
+
+      
+
+     
+    </q-list>
+
+
+
+
       <q-page-sticky position="bottom-right" :offset="[18, 18]">
         <q-btn fab icon="post_add" @click="promptCreateList = true" />
       </q-page-sticky>
@@ -60,7 +108,6 @@ export default {
     listsQueryOptions: {
       secondLanguage: 'french',
     },
-    lists: [],
     languages: [
       'spanish',
       'french',
@@ -98,6 +145,7 @@ export default {
       const getAllListsProcess = await this.$store.dispatch('lists/getAllLists', {
         listsQueryOptions: this.listsQueryOptions,
       })
+
       this.$q.notify({message: getAllListsProcess.message, color: 'positive'})
     } catch (e) {
       console.log(e)
@@ -125,6 +173,11 @@ export default {
       } catch (e) {
         this.$q.notify({message: e.message, color: 'negative'})
       }
+    }
+  },
+  computed: {
+    lists() {
+      return this.$store.getters['lists/lists']
     }
   }
 }
