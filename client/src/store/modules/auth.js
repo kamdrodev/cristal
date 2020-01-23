@@ -31,7 +31,7 @@ const actions = {
       throw new Error(e.response.data.message)
     }
   },
-  signIn: async function({commit}, {email, password}) {
+  signIn: async function({dispatch, commit}, {email, password}) {
     try {
       const signInRequest = await axios.post('auth/sign-in', {
         email,
@@ -40,10 +40,12 @@ const actions = {
       
       localStorage.setItem('token', signInRequest.data.token)
       commit('setToken', signInRequest.data.token)
+      dispatch('router/routerPush', {path: '/dashboard'}, {root: true})
       return {
         message: 'You are logged in'
       }
     } catch(e) {
+      console.log(e);
       throw new Error(e.response.data.message)
     }
   },
@@ -51,7 +53,6 @@ const actions = {
     try {
       localStorage.removeItem('token')
       commit('setToken', null)
-
       return {
         message: 'You have been logged out'
       }

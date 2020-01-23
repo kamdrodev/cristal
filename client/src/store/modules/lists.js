@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 const state = {
   lists: [],
@@ -23,28 +23,29 @@ const actions = {
 
   async getAllLists({dispatch, commit}, {listsQueryOptions}) {
     try {
-      const getAllListsRequest = await axios.get("lists", {
+      const getAllListsRequest = await axios.get('lists', {
         params: {
-          "secondLanguage": listsQueryOptions.secondLanguage ? listsQueryOptions.secondLanguage : "",
+          'secondLanguage': listsQueryOptions.secondLanguage ? listsQueryOptions.secondLanguage : '',
         }
       });
 
-      commit("setLists", getAllListsRequest.data.lists);
+      commit('setLists', getAllListsRequest.data.lists);
 
       return {
-        message: "Lists have been fetched"
+        message: 'Lists have been fetched'
       }
     } catch(e) {
+      console.log(e)
       throw new Error(e.response.data.message);
     }
   },
   async getList({dispatch, commit}, {id}) {
     try {
       const getListRequest = await axios.get(`lists/${id}`);
-      commit("setList", getListRequest.data.list)
+      commit('setList', getListRequest.data.list)
       
       return {
-        message: "List has been fetched"
+        message: 'List has been fetched'
       }
     } catch(e) {
       console.log(e);
@@ -53,7 +54,7 @@ const actions = {
   },
   async createList({dispatch, commit}, {title, description, firstLanguage, secondLanguage}) {
     try {
-      const createListRequest = await axios.post("lists", {
+      const createListRequest = await axios.post('lists', {
         title,
         description,
         firstLanguage,
@@ -61,7 +62,7 @@ const actions = {
       });
       
       return {
-        message: "List has been created"
+        message: 'List has been created'
       }
     } catch(e) {
       console.log(e);
@@ -89,7 +90,7 @@ const actions = {
       const deleteListRequest = await axios.delete(`lists/${id}`);
 
       return {
-        message: "List has been deleted"
+        message: 'List has been deleted'
       }
     } catch(e) {
       console.log(e);

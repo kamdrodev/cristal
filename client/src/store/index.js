@@ -2,6 +2,9 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import auth from './modules/auth.js'
+import router from './modules/router.js'
+import lists from './modules/lists.js'
+import words from './modules/words.js'
 
 // import example from './module-example'
 
@@ -18,7 +21,10 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   modules: {
-    auth
+    auth,
+    router,
+    lists,
+    words,
   },
 
   // enable strict mode (adds overhead!)
