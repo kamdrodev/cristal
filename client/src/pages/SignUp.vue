@@ -14,7 +14,7 @@
               <q-icon name="mail" />
             </template>
           </q-input>
-          <q-input filled v-model="formSignUp.password" label="Password" :error="$v.formSignUp.email.$error">
+          <q-input filled v-model="formSignUp.password" type="password" label="Password" :error="$v.formSignUp.email.$error">
             <template v-slot:prepend>
               <q-icon name="security" />
             </template>

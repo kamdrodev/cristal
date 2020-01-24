@@ -1,7 +1,7 @@
 <template>
   <div class="row q-col-gutter-xs"">
     <div class="col-xs-12 col-sm-12 offset-md col-md-4 offset-md-4 col-lg-6 offset-lg-3 col-xl-6  offset-xl-3">
-      <q-select outlined v-model="listsQueryOptions.secondLanguage" :options="languages" label="I want to learn..." />
+      <q-select outlined v-model="listsQueryOptions.secondLanguage" :options="languages" @input="changeQueryOptions" label="I want to learn..." />
 
 
 
@@ -154,8 +154,8 @@ export default {
     formCreateList: {
       title: '',
       description: '',
-      firstLanguage: 'polish',
-      secondLanguage: 'french',
+      firstLanguage: '',
+      secondLanguage: '',
     },
     formUpdateList: {
       id: '',
@@ -232,6 +232,10 @@ export default {
         this.$q.notify({message: e.message, color: 'negative'})
       }
     },
+    async changeQueryOptions() {
+      console.log('change query options')
+      await this.getAllLists()
+    },
     async createList() {
       try {
         console.log('Create list')
@@ -247,6 +251,9 @@ export default {
           title: this.formCreateList.title,
           description: this.formCreateList.description,
         })
+
+        this.formCreateList = {}
+        this.promptCreateList = false
 
         await this.getAllLists()
 
@@ -269,6 +276,9 @@ export default {
           title: this.formUpdateList.title,
           description: this.formUpdateList.description,
         })
+
+        this.formUpdateList = {}
+        this.promptUpdateList = false
 
         await this.getAllLists()
 

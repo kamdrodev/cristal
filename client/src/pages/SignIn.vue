@@ -9,7 +9,7 @@
               <q-icon name="mail" />
             </template>
           </q-input>
-          <q-input filled v-model="formSignIn.password" label="Password" :error="$v.formSignIn.password.$error">
+          <q-input filled v-model="formSignIn.password" type="password" label="Password" :error="$v.formSignIn.password.$error">
             <template v-slot:prepend>
               <q-icon name="security" />
             </template>
