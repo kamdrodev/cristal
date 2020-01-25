@@ -24,6 +24,7 @@ const actions = {
         email,
         password,
       })
+      dispatch('router/routerPush', {path: '/sign-up'}, {root: true})
       return {
         message: 'Your account has been created'
       }
@@ -40,7 +41,7 @@ const actions = {
       
       localStorage.setItem('token', signInRequest.data.token)
       commit('setToken', signInRequest.data.token)
-      dispatch('router/routerPush', {path: '/dashboard'}, {root: true})
+      dispatch('router/routerPush', {path: '/lists'}, {root: true})
       return {
         message: 'You are logged in'
       }

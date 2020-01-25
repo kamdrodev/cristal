@@ -30,6 +30,26 @@ const routes = [
     meta: {
       requiresAuth: true,
     }
+  },
+  {
+    path: '/lists',
+    component: () => import('layouts/MyLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/Lists.vue') }
+    ],
+    meta: {
+      requiresAuth: true,
+    }
+  },
+  {
+    path: '/list/:id',
+    component: () => import('layouts/MyLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/List.vue') }
+    ],
+    meta: {
+      requiresAuth: true,
+    }
   }
 
 ]
