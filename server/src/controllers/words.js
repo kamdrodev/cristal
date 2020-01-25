@@ -14,8 +14,11 @@ const getWords = async (req, res, next) => {
       return next(customError);
     }
 
-    const words = await Word.findOne({_id: req.params.id, userId: req.user.id});
+    console.log(req.params.listId)
+    console.log(req.user.id)
+    const words = await Word.find({listId: req.params.listId, userId: req.user.id});
 
+    console.log('words', words);
     return res.status(200).json({message: `Words have been fetched`, words: words});
   } catch(e) {
     const customError = new Error('Something went wrong during get words process');

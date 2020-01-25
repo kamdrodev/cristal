@@ -3,20 +3,26 @@
     <div class="col-xs-12 col-sm-12 offset-md col-md-4 offset-md-4 col-lg-6 offset-lg-3 col-xl-6  offset-xl-3">
  
 
-    <q-list bordered class="rounded-borders">
-      <q-item-label header>{{list.title}}</q-item-label>
+    <q-list bordered class="rounded-borders" v-for="word in words">
+      <!-- <q-item-label header>{{list.title}}</q-item-label> -->
       <q-item>
         <q-item-section avatar top>
           <q-icon name="list" size="34px" />
         </q-item-section>
 
         <q-item-section top class="col-2 gt-sm">
-          <q-item-label class="q-mt-sm">{{list.firstLanguage.substring(0,3)}} <-> {{list.secondLanguage.substring(0,3)}}</q-item-label>
+          <q-item-label class="q-mt-sm">{{word.firstLanguage.language.substring(0,3)}} <-> {{word.secondLanguage.language.substring(0,3)}}</q-item-label>
         </q-item-section>
 
-        <q-item-section top>
+        <q-item-section bottom>
           <q-item-label lines="1">
-            <span class="text-weight-medium">{{list.description}}</span>
+            <span class="text-weight-medium">{{word.firstLanguage.word}}</span>
+            <span class="text-grey-8"></span>
+          </q-item-label>
+        </q-item-section>
+        <q-item-section bottom>
+          <q-item-label lines="1">
+            <span class="text-weight-medium">{{word.secondLanguage.word}}</span>
             <span class="text-grey-8"></span>
           </q-item-label>
         </q-item-section>
@@ -31,7 +37,7 @@
     </q-list>
 
 
-
+<!-- <h1 v-for='word in words'>Word</h1> -->
 
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <q-btn fab icon="post_add" @click="openPromptCreateWord" />
@@ -77,13 +83,12 @@ import { required, email } from 'vuelidate/lib/validators';
 
 export default {
   name: 'PageList',
-  created() {
-    console.log(this.$route.params.id)
-
-    this.getList(this.$route.params.id)
+  async created() {
     this.formCreateWord.listId = this.$route.params.id
-    console.log('',this.formCreateWord.listId)
 
+
+    await this.getList()
+    await this.getAllWords()
   },
   data: () => ({
     promptCreateWord: false,
@@ -110,10 +115,11 @@ export default {
     openPromptCreateWord() {
       this.promptCreateWord = true
     },
-    async getWords() {
+    async getAllWords() {
       try {
-        const getWordsProcess = await this.$store.dispatch('lists/getWords', {
-          id: this.$route.params.id,
+        console.log('LLL')
+        const getWordsProcess = await this.$store.dispatch('words/getWords', {
+          listId: this.$route.params.id,
         })
 
         this.$q.notify({message: getWordsProcess.message, color: 'positive'})
@@ -141,7 +147,7 @@ export default {
         this.formCreateWord.secondLanguage = ''
         this.promptCreateWord = false
 
-        // await this.getAllLists()
+        await this.getAllWords()
         this.$v.formCreateWord.$reset()
 
         this.$q.notify({message: createWordProcess.message, color: 'positive'})
@@ -149,13 +155,27 @@ export default {
         this.$q.notify({message: e.message, color: 'negative'})
       }
     },
-    async getList(id) {
+    async getList() {
       try {
+        console.log('getlist')
+        console.log(this.$route.params.id)
         const getListProcess = await this.$store.dispatch('lists/getList', {
-          id
+          id: this.$route.params.id,
         })
 
         this.$q.notify({message: getListProcess.message, color: 'positive'})
+      } catch (e) {
+        console.log(e)
+        this.$q.notify({message: e.message, color: 'negative'})
+      }
+    },
+    async getWords() {
+      try {
+        const getWordsProcess = await this.$store.dispatch('words/getWords', {
+          listId: this.$route.params.id,
+        })
+
+        this.$q.notify({message: getWordsProcess.message, color: 'positive'})
       } catch (e) {
         console.log(e)
         this.$q.notify({message: e.message, color: 'negative'})
@@ -165,6 +185,9 @@ export default {
   computed: {
     list() {
       return this.$store.getters['lists/list']
+    },
+    words() {
+      return this.$store.state.words.words
     }
   }
 }

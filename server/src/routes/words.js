@@ -6,10 +6,10 @@ import authMiddlewares from '../middlewares/auth.js';
 
 const router = express.Router();
 
-router.get('/words/:id', 
+router.get('/words/:listId', 
   [
-    check('listId').trim(),
-    check('listId').exists(),
+    // check('listId').trim(),
+    // check('listId').exists(),
   ],
   authMiddlewares.jwtVerify,
   wordsControllers.getWords);

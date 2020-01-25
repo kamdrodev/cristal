@@ -36,8 +36,8 @@
 
 
 
-      <q-page-sticky position="bottom-right" :offset="[18, 18]">
-        <q-btn fab icon="post_add" @click="openPromptCreateList" />
+    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+      <q-btn fab icon="post_add" @click="openPromptCreateList" />
       </q-page-sticky>
     </div>
 
@@ -117,12 +117,12 @@
       <q-card>
         <q-card-section class="row items-center">
           <q-avatar icon="signal_wifi_off" color="primary" text-color="white" />
-          <span class="q-ml-sm">You are currently not connected to any network.</span>
+          <span class="q-ml-sm">Do you really want to delete this list?</span>
         </q-card-section>
 
         <q-card-actions align="right">
           <q-btn flat label="Cancel" color="primary" v-close-popup />
-          <q-btn flat label="Turn on Wifi" color="primary" @click="deleteList" v-close-popup />
+          <q-btn flat label="Delete list" color="primary" @click="deleteList" v-close-popup />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -201,6 +201,7 @@ export default {
       console.log(e)
       this.$q.notify({message: e.message, color: 'negative'})
     }
+
   },
   methods: {
     openPromptCreateList() {
@@ -307,7 +308,7 @@ export default {
   },
   computed: {
     lists() {
-      return this.$store.getters['lists/lists']
+      return this.$store.state.lists.lists
     }
   }
 }
