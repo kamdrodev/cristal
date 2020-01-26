@@ -5,7 +5,7 @@
 
 
 
-
+<!-- 
     <q-list bordered class="rounded-borders" v-for="list in lists" :key="list._id" @click="selectElementOfList(list._id)">
       <q-item-label header>{{list.title}}</q-item-label>
       <q-item>
@@ -31,8 +31,47 @@
           </div>
         </q-item-section>
       </q-item>     
-    </q-list>
+    </q-list> -->
 
+    <q-card flat bordered class="my-card " v-for="list in lists" :key="list._id">
+      <q-card-section>
+        <div class="row items-center no-wrap">
+          <div class="col">
+            <div class="text-h6">{{list.title}}</div>
+            <div class="text-subtitle2">{{list.description}}</div>
+          </div>
+
+          <div class="col-auto">
+            <q-btn color="grey-7" round flat icon="more_vert">
+              <q-menu cover auto-close>
+                <q-list>
+                  <q-item clickable @click="openPromptUpdateList(list)">
+                    <q-item-section>Update list</q-item-section>
+                  </q-item>
+                  <q-item clickable>
+                    <q-item-section @click="openPromptDeleteList(list)">Delete list</q-item-section>
+                  </q-item>
+                  <q-item clickable>
+                    <q-item-section>Share</q-item-section>
+                  </q-item>
+                </q-list>
+              </q-menu>
+            </q-btn>
+          </div>
+        </div>
+      </q-card-section>
+
+      <q-card-section>
+        {{ lorem }}
+      </q-card-section>
+
+      <q-separator />
+
+      <q-card-actions>
+        <q-btn flat @click="viewList(list)">Go to list</q-btn>
+        <!-- <q-btn flat>Action 2</q-btn> -->
+      </q-card-actions>
+    </q-card>
 
 
 
@@ -299,8 +338,8 @@ export default {
         this.$q.notify({message: e.message, color: 'negative'})
       }
     },
-    async viewList(id) {
-      this.$router.push(`list/${id}`)
+    async viewList(list) {
+      this.$router.push(`list/${list._id}`)
     }
   },
   computed: {

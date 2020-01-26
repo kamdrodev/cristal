@@ -2,40 +2,48 @@
   <div class="row q-col-gutter-xs"">
     <div class="col-xs-12 col-sm-12 offset-md col-md-4 offset-md-4 col-lg-6 offset-lg-3 col-xl-6  offset-xl-3">
     
-    <h4>{{list.title}}</h4>
-    <h6>{{list.description}}</h6>
+    <h4 class="text-center">{{list.title}}</h4>
+    <h6 class="text-center">{{list.description}}</h6>
 
-    <q-list bordered class="rounded-borders" v-for="flashcard in flashcards">
-      
-      <q-item>
-        <q-item-section avatar top>
-          <q-icon name="list" size="34px" />
-        </q-item-section>
-
-        <q-item-section top class="col-2 gt-sm">
-          <q-item-label class="q-mt-sm">{{flashcard.firstLanguage.language.substring(0,3)}} <-> {{flashcard.secondLanguage.language.substring(0,3)}}</q-item-label>
-        </q-item-section>
-
-        <q-item-section bottom>
-          <q-item-label lines="1">
-            <span class="text-weight-medium">{{flashcard.firstLanguage.text}}</span>
-            <span class="text-grey-8"></span>
-          </q-item-label>
-        </q-item-section>
-        <q-item-section bottom>
-          <q-item-label lines="1">
-            <span class="text-weight-medium">{{flashcard.secondLanguage.text}}</span>
-            <span class="text-grey-8"></span>
-          </q-item-label>
-        </q-item-section>
-        <q-item-section top side>
-          <div class="text-grey-8 q-gutter-xs">
-            <q-btn class="gt-xs" size="12px" flat dense round icon="edit" @click="openPromptUpdateFlashcard" />
-            <q-btn class="gt-xs" size="12px" flat dense round icon="delete" @click="openPromptDeleteFlashcard"/>
+    <q-card flat bordered class="my-card " v-for="flashcard in flashcards" :key="flashcard._id">
+      <q-card-section>
+        <div class="row items-center no-wrap">
+          <div class="col">
+            <div class="text-h6">{{flashcard.firstLanguage.text}}</div>
+            <div class="text-subtitle2">{{flashcard.secondLanguage.text}}</div>
           </div>
-        </q-item-section>
-      </q-item>     
-    </q-list>
+
+          <div class="col-auto">
+            <q-btn color="grey-7" round flat icon="more_vert">
+              <q-menu cover auto-close>
+                <q-list>
+                  <q-item clickable>
+                    <q-item-section>Update flashcard</q-item-section>
+                  </q-item>
+                  <q-item clickable>
+                    <q-item-section>Delete flashcard</q-item-section>
+                  </q-item>
+                  <q-item clickable>
+                    <q-item-section>Share</q-item-section>
+                  </q-item>
+                </q-list>
+              </q-menu>
+            </q-btn>
+          </div>
+        </div>
+      </q-card-section>
+
+      <q-card-section>
+        {{ lorem }}
+      </q-card-section>
+
+      <q-separator />
+
+      <q-card-actions>
+        <!-- <q-btn flat @click="viewList(list)">Go to list</q-btn> -->
+        <!-- <q-btn flat>Action 2</q-btn> -->
+      </q-card-actions>
+    </q-card>
 
 
     <!-- <h1 v-for='word in flashcards'>Flashcard</h1> -->
@@ -66,7 +74,7 @@
 
         <q-card-actions align="right" class="text-primary">
           <q-btn flat label="Cancel" v-close-popup />
-          <q-btn flat label="Create word" @click="createFlashcard" />
+          <q-btn flat label="Create flashcard" @click="createFlashcard" />
         </q-card-actions>
       </form>
       </q-card>
