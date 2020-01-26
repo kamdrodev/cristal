@@ -18,7 +18,7 @@ app.use(cors());
 
 import authRoutes from './routes/auth.js';
 import listsRoutes from './routes/lists.js';
-import wordsRoutes from './routes/words.js';
+import flashcardsRoutes from './routes/flashcards.js';
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -26,7 +26,7 @@ app.use(helmet());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/', listsRoutes);
-app.use('/api/', wordsRoutes);
+app.use('/api/', flashcardsRoutes);
 
 app.get('/api', (req, res) => {
   return res.status(200).json({

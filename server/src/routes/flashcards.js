@@ -1,20 +1,20 @@
 import express from 'express';
 import { check } from 'express-validator';
 
-import wordsControllers from '../controllers/words.js';
+import flashcardControllers from '../controllers/flashcards.js';
 import authMiddlewares from '../middlewares/auth.js';
 
 const router = express.Router();
 
-router.get('/words/:listId', 
+router.get('/flashcards/:listId', 
   [
     // check('listId').trim(),
     // check('listId').exists(),
   ],
   authMiddlewares.jwtVerify,
-  wordsControllers.getWords);
+  flashcardControllers.getAllFlashcards);
 
-router.post('/words', 
+router.post('/flashcards', 
   [
     check('firstLanguage').trim(),
     check('firstLanguage').exists(),
@@ -24,9 +24,9 @@ router.post('/words',
     check('listId').exists(),
   ],
   authMiddlewares.jwtVerify,
-  wordsControllers.createWords);
+  flashcardControllers.createFlashcard);
 
-router.put('/words/:id', 
+router.put('/flashcards/:id', 
   [
     check('firstLanguage').trim(),
     check('firstLanguage').exists(),
@@ -34,15 +34,15 @@ router.put('/words/:id',
     check('secondLanguage').exists(),
   ],
   authMiddlewares.jwtVerify,
-  wordsControllers.updateWords);
+  flashcardControllers.updateFlashcard);
 
-router.delete('/words/:id', 
+router.delete('/flashcards/:id', 
   [
     check('id').trim(),
     check('id').exists(),
     check('id').isLength({min: 6}),
   ],
   authMiddlewares.jwtVerify,
-  wordsControllers.deleteWords);
+  flashcardControllers.deleteFlashcard);
 
 export default router;

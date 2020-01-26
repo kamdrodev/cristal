@@ -1,5 +1,4 @@
 import List from '../models/List.js';
-import Word from '../models/Word.js';
 import { validationResult } from 'express-validator';
 import chalk from 'chalk';
 

@@ -1,9 +1,9 @@
 import List from '../models/List.js';
-import Word from '../models/Word.js';
+import Flashcard from '../models/Flashcard.js';
 import { validationResult } from 'express-validator';
 
 
-const getWords = async (req, res, next) => {
+const getAllFlashcards = async (req, res, next) => {
   try {
     const validationErrors = validationResult(req);
 
@@ -16,19 +16,19 @@ const getWords = async (req, res, next) => {
 
     console.log(req.params.listId)
     console.log(req.user.id)
-    const words = await Word.find({listId: req.params.listId, userId: req.user.id});
+    const flashcards = await Flashcard.find({listId: req.params.listId, userId: req.user.id});
 
-    console.log('words', words);
-    return res.status(200).json({message: `Words have been fetched`, words: words});
+    console.log('flashcards', flashcards);
+    return res.status(200).json({message: `Flashcards have been fetched`, flashcards: flashcards});
   } catch(e) {
-    const customError = new Error('Something went wrong during get words process');
+    const customError = new Error('Something went wrong during get flashcards process');
     customError.status = 401;
 
     return next(customError);
   }
 }
 
-const createWords = async (req, res, next) => {
+const createFlashcard = async (req, res, next) => {
   try {
     const validationErrors = validationResult(req);
 
@@ -45,32 +45,32 @@ const createWords = async (req, res, next) => {
     console.log(req.body.firstLanguage);
     console.log(req.body.secondLanguage);
 
-    const word = new Word({
+    const flashcard = new Flashcard({
       firstLanguage: {
         language: list.firstLanguage,
-        word: req.body.firstLanguage,
+        text: req.body.firstLanguage,
       },
       secondLanguage: {
         language: list.secondLanguage,
-        word: req.body.secondLanguage,
+        text: req.body.secondLanguage,
       },
       listId: list._id,
       userId: req.user.id,
     });
 
-    const newWordSave = await word.save();
+    const newFlashcardSave = await flashcard.save();
 
-    return res.status(200).json({message: `Words have been created`});
+    return res.status(200).json({message: `Flashcard have been created`});
   } catch(e) {
     console.log(e)
-    const customError = new Error('Something went wrong during create words process');
+    const customError = new Error('Something went wrong during create flashcards process');
     customError.status = 401;
 
     return next(customError);
   }
 };
 
-const updateWords = async (req, res, next) => {
+const updateFlashcard = async (req, res, next) => {
   try {
     const validationErrors = validationResult(req);
 
@@ -81,19 +81,19 @@ const updateWords = async (req, res, next) => {
       return next(customError);
     }
   
-    const word = await Word.findOneAndUpdate({_id: req.params.id, userId: req.user.id}, { $set: {firstLanguage: req.body.firstLanguage, secondLanguage: req.body.secondLanguage}});
+    const flashcard = await Flashcard.findOneAndUpdate({_id: req.params.id, userId: req.user.id}, { $set: {firstLanguage: req.body.firstLanguage, secondLanguage: req.body.secondLanguage}});
     
     return res.status(200).json({
-      message: "Word has been updated"
+      message: "Flashcard has been updated"
     });
   } catch(e) {
-    const customError = "Something went wrong during get wrong during update words process";
+    const customError = "Something went wrong during get wrong during update flashcards process";
     customError.status = 400;
     next(customError);
   }
 }
 
-const deleteWords = async (req, res, next) => {
+const deleteFlashcard = async (req, res, next) => {
   try {
     
     const validationErrors = validationResult(req);
@@ -105,23 +105,23 @@ const deleteWords = async (req, res, next) => {
       return next(customError);
     }
   
-    const word = await Word.findOneAndDelete({_id: req.params.id, userId: req.user.id});;
+    const flashcard = await Flashcard.findOneAndDelete({_id: req.params.id, userId: req.user.id});;
     
     return res.status(200).json({
-      message: "Word has been deleted"
+      message: "Flashcard has been deleted"
     });
   } catch(e) {
-    const customError = "Something went wrong during get wrong during update words process";
+    const customError = "Something went wrong during get wrong during update flashcards process";
     customError.status = 400;
     next(customError);
   }
 }
 
-const words = {
-  getWords,
-  createWords,
-  updateWords,
-  deleteWords,
+const flashcards = {
+  getAllFlashcards,
+  createFlashcard,
+  updateFlashcard,
+  deleteFlashcard,
 };
 
-export default words;
+export default flashcards;

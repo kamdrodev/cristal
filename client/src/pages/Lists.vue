@@ -6,7 +6,7 @@
 
 
 
-    <q-list bordered class="rounded-borders" v-for='list in lists'>
+    <q-list bordered class="rounded-borders" v-for="list in lists" :key="list._id" @click="selectElementOfList(list._id)">
       <q-item-label header>{{list.title}}</q-item-label>
       <q-item>
         <q-item-section avatar top>
@@ -25,8 +25,8 @@
         </q-item-section>
         <q-item-section top side>
           <div class="text-grey-8 q-gutter-xs">
-            <q-btn class="gt-xs" size="12px" flat dense round icon="edit" @click="openPromptUpdateList(list._id, list.title, list.description)" />
-            <q-btn class="gt-xs" size="12px" flat dense round icon="delete" @click="openPromptDeleteList(list._id)" />
+            <q-btn class="gt-xs" size="12px" flat dense round icon="edit" @click="openPromptUpdateList(list)" />
+            <q-btn class="gt-xs" size="12px" flat dense round icon="delete" @click="openPromptDeleteList(list)" />
             <q-btn size="12px" flat dense round icon="dashboard" @click="viewList(list._id)" />
           </div>
         </q-item-section>
@@ -106,7 +106,7 @@
 
         <q-card-actions align="right" class="text-primary">
           <q-btn flat label="Cancel" v-close-popup />
-          <q-btn flat label="Create list" @click="updateList" />
+          <q-btn flat label="Update list" @click="updateList" />
         </q-card-actions>
       </form>
       </q-card>
@@ -116,7 +116,7 @@
      <q-dialog v-model="promptDeleteList" persistent>
       <q-card>
         <q-card-section class="row items-center">
-          <q-avatar icon="signal_wifi_off" color="primary" text-color="white" />
+          <q-avatar icon="delete" color="primary" text-color="white" />
           <span class="q-ml-sm">Do you really want to delete this list?</span>
         </q-card-section>
 
@@ -204,22 +204,19 @@ export default {
 
   },
   methods: {
+    selectElementOfList(id) {
+      console.log('selectElementOfList)', id)
+    },
     openPromptCreateList() {
       this.promptCreateList = true
     },
-    openPromptUpdateList(id, title, description) {
+    openPromptUpdateList(list) {
       this.promptUpdateList = true
-      this.formUpdateList = {
-        id,
-        title,
-        description,
-      }
+      this.formUpdateList = list
     },
-    openPromptDeleteList(id) {
+    openPromptDeleteList(list) {
       this.promptDeleteList = true
-      this.formDeleteList = {
-        id,
-      }
+      this.formDeleteList = list
     },
     async getAllLists() {
       try {
@@ -273,7 +270,7 @@ export default {
         }
         
         const updateListProfcess = await this.$store.dispatch('lists/updateList', {
-          id: this.formUpdateList.id,
+          id: this.formUpdateList._id,
           title: this.formUpdateList.title,
           description: this.formUpdateList.description,
         })
@@ -292,7 +289,7 @@ export default {
       try {
         
         const deleteListProcess = await this.$store.dispatch('lists/deleteList', {
-          id: this.formDeleteList.id
+          id: this.formDeleteList._id
         })
 
         await this.getAllLists()

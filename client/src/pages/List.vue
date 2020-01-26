@@ -1,62 +1,63 @@
 <template>
   <div class="row q-col-gutter-xs"">
     <div class="col-xs-12 col-sm-12 offset-md col-md-4 offset-md-4 col-lg-6 offset-lg-3 col-xl-6  offset-xl-3">
- 
+    
+    <h4>{{list.title}}</h4>
+    <h6>{{list.description}}</h6>
 
-    <q-list bordered class="rounded-borders" v-for="word in words">
-      <!-- <q-item-label header>{{list.title}}</q-item-label> -->
+    <q-list bordered class="rounded-borders" v-for="flashcard in flashcards">
+      
       <q-item>
         <q-item-section avatar top>
           <q-icon name="list" size="34px" />
         </q-item-section>
 
         <q-item-section top class="col-2 gt-sm">
-          <q-item-label class="q-mt-sm">{{word.firstLanguage.language.substring(0,3)}} <-> {{word.secondLanguage.language.substring(0,3)}}</q-item-label>
+          <q-item-label class="q-mt-sm">{{flashcard.firstLanguage.language.substring(0,3)}} <-> {{flashcard.secondLanguage.language.substring(0,3)}}</q-item-label>
         </q-item-section>
 
         <q-item-section bottom>
           <q-item-label lines="1">
-            <span class="text-weight-medium">{{word.firstLanguage.word}}</span>
+            <span class="text-weight-medium">{{flashcard.firstLanguage.text}}</span>
             <span class="text-grey-8"></span>
           </q-item-label>
         </q-item-section>
         <q-item-section bottom>
           <q-item-label lines="1">
-            <span class="text-weight-medium">{{word.secondLanguage.word}}</span>
+            <span class="text-weight-medium">{{flashcard.secondLanguage.text}}</span>
             <span class="text-grey-8"></span>
           </q-item-label>
         </q-item-section>
         <q-item-section top side>
           <div class="text-grey-8 q-gutter-xs">
-            <q-btn class="gt-xs" size="12px" flat dense round icon="edit"/>
-            <q-btn class="gt-xs" size="12px" flat dense round icon="delete"/>
-            <q-btn size="12px" flat dense round icon="dashboard"/>
+            <q-btn class="gt-xs" size="12px" flat dense round icon="edit" @click="openPromptUpdateFlashcard" />
+            <q-btn class="gt-xs" size="12px" flat dense round icon="delete" @click="openPromptDeleteFlashcard"/>
           </div>
         </q-item-section>
       </q-item>     
     </q-list>
 
 
-<!-- <h1 v-for='word in words'>Word</h1> -->
+    <!-- <h1 v-for='word in flashcards'>Flashcard</h1> -->
 
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
-      <q-btn fab icon="post_add" @click="openPromptCreateWord" />
+      <q-btn fab icon="post_add" @click="openPromptCreateFlashcard" />
     </q-page-sticky>
       
-      <!-- // Dialog - Create Word -->
-    <q-dialog v-model="promptCreateWord" persistent>
+    <!-- // Dialog - Create Flashcard -->
+    <q-dialog v-model="promptCreateFlashcard" persistent>
       <q-card style="min-width: 350px">
         <form c>
         <q-card-section>
           <div class="text-h6">Create word</div>
         </q-card-section>
         <q-card-section class="q-pt-none">          
-          <q-input filled v-model="formCreateWord.firstLanguage" label="First language" :error="$v.formCreateWord.firstLanguage.$error" class="q-pb-lg">
+          <q-input filled v-model="formCreateFlashcard.firstLanguage" label="First language" :error="$v.formCreateFlashcard.firstLanguage.$error" class="q-pb-lg">
             <template v-slot:prepend>
               <q-icon name="mail" />
             </template>
           </q-input>
-          <q-input filled v-model="formCreateWord.secondLanguage" label="Second language" :error="$v.formCreateWord.secondLanguage.$error" class="q-pb-lg">
+          <q-input filled v-model="formCreateFlashcard.secondLanguage" label="Second language" :error="$v.formCreateFlashcard.secondLanguage.$error" class="q-pb-lg">
             <template v-slot:prepend>
               <q-icon name="mail" />
             </template>
@@ -65,7 +66,35 @@
 
         <q-card-actions align="right" class="text-primary">
           <q-btn flat label="Cancel" v-close-popup />
-          <q-btn flat label="Create word" @click="createWord" />
+          <q-btn flat label="Create word" @click="createFlashcard" />
+        </q-card-actions>
+      </form>
+      </q-card>
+    </q-dialog>
+
+     <!-- // Dialog - Update Flashcard -->
+    <q-dialog v-model="promptUpdateFlashcard" persistent>
+      <q-card style="min-width: 350px">
+        <form c>
+        <q-card-section>
+          <div class="text-h6">Update word</div>
+        </q-card-section>
+        <q-card-section class="q-pt-none">          
+          <q-input filled v-model="formCreateFlashcard.firstLanguage" label="First language" :error="$v.formCreateFlashcard.firstLanguage.$error" class="q-pb-lg">
+            <template v-slot:prepend>
+              <q-icon name="mail" />
+            </template>
+          </q-input>
+          <q-input filled v-model="formCreateFlashcard.secondLanguage" label="Second language" :error="$v.formCreateFlashcard.secondLanguage.$error" class="q-pb-lg">
+            <template v-slot:prepend>
+              <q-icon name="mail" />
+            </template>
+          </q-input>
+        </q-card-section>
+
+        <q-card-actions align="right" class="text-primary">
+          <q-btn flat label="Cancel" v-close-popup />
+          <q-btn flat label="Update word" @click="updateFlashcard" />
         </q-card-actions>
       </form>
       </q-card>
@@ -84,22 +113,29 @@ import { required, email } from 'vuelidate/lib/validators';
 export default {
   name: 'PageList',
   async created() {
-    this.formCreateWord.listId = this.$route.params.id
+    this.formCreateFlashcard.listId = this.$route.params.id
 
 
     await this.getList()
-    await this.getAllWords()
+    await this.getAllFlashcards()
   },
   data: () => ({
-    promptCreateWord: false,
-    formCreateWord: {
+    promptCreateFlashcard: false,
+    promptUpdateFlashcard: false,
+    promptDeleteFlashcard: false,
+    flashcard: {},
+    formCreateFlashcard: {
       listId: '',
+      firstLanguage: '',
+      secondLanguage: '',
+    },
+    formUpdateFlashcard: {
       firstLanguage: '',
       secondLanguage: '',
     },
   }),
   validations: {
-    formCreateWord: {
+    formCreateFlashcard: {
       listId: {
 
       },
@@ -112,45 +148,82 @@ export default {
     },
   },
   methods: {
-    openPromptCreateWord() {
-      this.promptCreateWord = true
+    openPromptCreateFlashcard() {
+      this.promptCreateFlashcard = true
     },
-    async getAllWords() {
+    openPromptUpdateFlashcard(flashcard) {
+      this.promptUpdateFlashcard = true
+
+      this.flashcard = flashcard
+    },
+    openPromptDeleteFlashcard() {
+      this.promptDeleteFlashcard = true
+
+      this.flashcard = flashcard
+    },
+    async getAllFlashcards() {
       try {
-        console.log('LLL')
-        const getWordsProcess = await this.$store.dispatch('words/getWords', {
+        const getFlashcardsProcess = await this.$store.dispatch('flashcards/getAllFlashcards', {
           listId: this.$route.params.id,
         })
 
-        this.$q.notify({message: getWordsProcess.message, color: 'positive'})
+        this.$q.notify({message: getFlashcardsProcess.message, color: 'positive'})
       } catch (e) {
         console.log(e)
         this.$q.notify({message: e.message, color: 'negative'})
       }
     },
-    async createWord() {
+    async createFlashcard() {
       try {
         console.log('Create word')
-        this.$v.formCreateWord.$touch()
+        this.$v.formCreateFlashcard.$touch()
 
-        if (this.$v.formCreateWord.$error) {
+        if (this.$v.formCreateFlashcard.$error) {
+          throw new Error('Please review fields again.')
+        }
+
+        console.log(this.formCreateFlashcard)
+        
+        const createFlashcardProcess = await this.$store.dispatch('flashcards/createFlashcard', {
+          listId: this.formCreateFlashcard.listId,
+          firstLanguage: this.formCreateFlashcard.firstLanguage,
+          secondLanguage: this.formCreateFlashcard.secondLanguage,
+        })
+
+        this.formCreateFlashcard.firstLanguage = ''
+        this.formCreateFlashcard.secondLanguage = ''
+        this.promptCreateFlashcard = false
+
+        await this.getAllFlashcards()
+        this.$v.formCreateFlashcard.$reset()
+
+        this.$q.notify({message: createFlashcardProcess.message, color: 'positive'})
+      } catch (e) {
+        this.$q.notify({message: e.message, color: 'negative'})
+      }
+    },
+    async updateFlashcard() {
+      try {
+        console.log('Update word')
+        this.$v.formUpdateFlashcard.$touch()
+
+        if (this.$v.formUpdateFlashcard.$error) {
           throw new Error('Please review fields again.')
         }
         
-        const createWordProcess = await this.$store.dispatch('words/createWord', {
-          listId: this.formCreateWord.listId,
-          firstLanguage: this.formCreateWord.firstLanguage,
-          secondLanguage: this.formCreateWord.secondLanguage,
+        const updateFlashcardProcess = await this.$store.dispatch('flashcards/updateFlashcard', {
+          listId: this.word.listId,
+          firstLanguage: this.word.firstLanguage,
+          secondLanguage: this.word.secondLanguage,
         })
 
-        this.formCreateWord.firstLanguage = ''
-        this.formCreateWord.secondLanguage = ''
-        this.promptCreateWord = false
+        this.word = {}
+        this.promptUpdateFlashcard = false
 
-        await this.getAllWords()
-        this.$v.formCreateWord.$reset()
+        await this.getAllFlashcards()
+        this.$v.formCreateFlashcard.$reset()
 
-        this.$q.notify({message: createWordProcess.message, color: 'positive'})
+        this.$q.notify({message: updateFlashcardProcess.message, color: 'positive'})
       } catch (e) {
         this.$q.notify({message: e.message, color: 'negative'})
       }
@@ -169,13 +242,13 @@ export default {
         this.$q.notify({message: e.message, color: 'negative'})
       }
     },
-    async getWords() {
+    async getFlashcards() {
       try {
-        const getWordsProcess = await this.$store.dispatch('words/getWords', {
+        const getFlashcardsProcess = await this.$store.dispatch('flashcards/getFlashcards', {
           listId: this.$route.params.id,
         })
 
-        this.$q.notify({message: getWordsProcess.message, color: 'positive'})
+        this.$q.notify({message: getFlashcardsProcess.message, color: 'positive'})
       } catch (e) {
         console.log(e)
         this.$q.notify({message: e.message, color: 'negative'})
@@ -186,8 +259,8 @@ export default {
     list() {
       return this.$store.getters['lists/list']
     },
-    words() {
-      return this.$store.state.words.words
+    flashcards() {
+      return this.$store.state.flashcards.flashcards
     }
   }
 }

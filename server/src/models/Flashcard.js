@@ -2,13 +2,13 @@ import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
-const WordSchema = mongoose.Schema({
+const FlashcardSchema = mongoose.Schema({
   firstLanguage: {
     language: {
       type: String,
       required: true,
     },
-    word: {
+    text: {
       type: String,
       required: true,
     }    
@@ -18,7 +18,7 @@ const WordSchema = mongoose.Schema({
       type: String,
       required: true,
     },
-    word: {
+    text: {
       type: String,
       required: true,
     }    
@@ -49,4 +49,4 @@ const WordSchema = mongoose.Schema({
   }
 });
 
-export default mongoose.model('Word', WordSchema);
+export default mongoose.model('Flashcard', FlashcardSchema);
