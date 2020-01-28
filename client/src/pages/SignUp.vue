@@ -85,9 +85,9 @@ export default {
           password: this.formSignUp.password,
         })
 
-        
         this.$q.notify({message: signUpProcess.message, color: 'positive'})
       } catch (e) {
+        console.log(`##############`, e.message)
         this.$q.notify({message: e.message, color: 'negative'})
       }
     }

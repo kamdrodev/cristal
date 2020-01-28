@@ -14,11 +14,8 @@ const getAllFlashcards = async (req, res, next) => {
       return next(customError);
     }
 
-    console.log(req.params.listId)
-    console.log(req.user.id)
     const flashcards = await Flashcard.find({listId: req.params.listId, userId: req.user.id});
 
-    console.log('flashcards', flashcards);
     return res.status(200).json({message: `Flashcards have been fetched`, flashcards: flashcards});
   } catch(e) {
     const customError = new Error('Something went wrong during get flashcards process');
@@ -40,10 +37,6 @@ const createFlashcard = async (req, res, next) => {
     }
 
     const list = await List.findOne({_id: req.body.listId, userId: req.user.id});
-    
-    console.log('12321312')
-    console.log(req.body.firstLanguage);
-    console.log(req.body.secondLanguage);
 
     const flashcard = new Flashcard({
       firstLanguage: {
@@ -62,7 +55,6 @@ const createFlashcard = async (req, res, next) => {
 
     return res.status(200).json({message: `Flashcard have been created`});
   } catch(e) {
-    console.log(e)
     const customError = new Error('Something went wrong during create flashcards process');
     customError.status = 401;
 

@@ -16,19 +16,19 @@ const mutations = {
 }
 
 const actions = {
-  async signUp({}, {username, email, password}) {
-    console.log(username, email, password)
+  async signUp({dispatch}, {username, email, password}) {
     try {
       const signUpRequest = await axios.post('auth/sign-up', {
         username,
         email,
         password,
       })
-      dispatch('router/routerPush', {path: '/sign-up'}, {root: true})
+      dispatch('router/routerPush', {path: '/sign-in'}, {root: true})
       return {
-        message: 'Your account has been created'
+        message: signUpRequest.data.message
       }
     } catch(e) {
+      console.log(e)
       throw new Error(e.response.data.message)
     }
   },
@@ -43,7 +43,7 @@ const actions = {
       commit('setToken', signInRequest.data.token)
       dispatch('router/routerPush', {path: '/lists'}, {root: true})
       return {
-        message: 'You are logged in'
+        message: signInRequest.data.message
       }
     } catch(e) {
       console.log(e);
