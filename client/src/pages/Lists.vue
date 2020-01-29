@@ -62,7 +62,7 @@
       </q-card-section>
 
       <q-card-section>
-        {{ lorem }}
+        <!-- {{ lorem }} -->
       </q-card-section>
 
       <q-separator />
@@ -161,7 +161,7 @@
 
         <q-card-actions align="right">
           <q-btn flat label="Cancel" color="primary" v-close-popup />
-          <q-btn flat label="Delete list" color="primary" @click="deleteList" v-close-popup />
+          <q-btn flat label="Delete list" color="primary" @click="deleteList"/>
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -171,6 +171,8 @@
 
 <script>
 import { required, email } from 'vuelidate/lib/validators';
+
+import { mapState } from 'vuex';
 
 export default {
   name: 'Lists',
@@ -191,6 +193,7 @@ export default {
       'japanese',
     ],
     formCreateList: {
+      id: '',
       title: '',
       description: '',
       firstLanguage: '',
@@ -249,9 +252,15 @@ export default {
     openPromptCreateList() {
       this.promptCreateList = true
     },
-    openPromptUpdateList(list) {
+    async openPromptUpdateList(list) {
+
+      console.log(list);      
       this.promptUpdateList = true
-      this.formUpdateList = list
+      this.formUpdateList = {
+        id: list._id,
+        title: list.title,
+        description: list.description,
+      }
     },
     openPromptDeleteList(list) {
       this.promptDeleteList = true
@@ -275,7 +284,6 @@ export default {
     },
     async createList() {
       try {
-        console.log('Create list')
         this.$v.formCreateList.$touch()
 
         if (this.$v.formCreateList.$error) {
@@ -289,8 +297,15 @@ export default {
           description: this.formCreateList.description,
         })
 
+
+        // Clear form
         this.formCreateList = {}
+        
+        // Close dialog
         this.promptCreateList = false
+
+        // Resert form validation
+        this.$v.formCreateList.$reset()
 
         await this.getAllLists()
 
@@ -308,18 +323,21 @@ export default {
           throw new Error('Please review fields again.')
         }
         
-        const updateListProfcess = await this.$store.dispatch('lists/updateList', {
-          id: this.formUpdateList._id,
+        const updateListProcess = await this.$store.dispatch('lists/updateList', {
+          id: this.formUpdateList.id,
           title: this.formUpdateList.title,
           description: this.formUpdateList.description,
         })
 
+        // Clear form
         this.formUpdateList = {}
+
+        // Close dialog
         this.promptUpdateList = false
 
         await this.getAllLists()
 
-        this.$q.notify({message: updateListProfcess.message, color: 'positive'})
+        this.$q.notify({message: updateListProcess.message, color: 'positive'})
       } catch (e) {
         this.$q.notify({message: e.message, color: 'negative'})
       }
@@ -330,6 +348,9 @@ export default {
         const deleteListProcess = await this.$store.dispatch('lists/deleteList', {
           id: this.formDeleteList._id
         })
+
+        // Close dialog
+        this.promptDeleteList = false
 
         await this.getAllLists()
 
@@ -343,9 +364,7 @@ export default {
     }
   },
   computed: {
-    lists() {
-      return this.$store.state.lists.lists
-    }
+    ...mapState('lists', ['lists'])
   }
 }
 </script>

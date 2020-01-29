@@ -106,6 +106,8 @@ const updateList = async (req, res, next) => {
     
     return res.status(200).json({message: `Lists have been fetched`, lists: lists});
   } catch(e) {
+
+    console.log(e);
     const customError = new Error('Something went wrong during update list process');
     customError.status = 401;
 
