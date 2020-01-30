@@ -1,7 +1,7 @@
 <template>
   <div class="row q-col-gutter-xs"">
     <div class="col-xs-12 col-sm-12 offset-md col-md-4 offset-md-4 col-lg-6 offset-lg-3 col-xl-6  offset-xl-3">
-    
+      
     <h4 class="text-center">{{list.title}}</h4>
     <h6 class="text-center">{{list.description}}</h6>
 
