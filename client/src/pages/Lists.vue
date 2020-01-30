@@ -48,8 +48,8 @@
                   <q-item clickable @click="openPromptUpdateList(list)">
                     <q-item-section>Update list</q-item-section>
                   </q-item>
-                  <q-item clickable>
-                    <q-item-section @click="openPromptDeleteList(list)">Delete list</q-item-section>
+                  <q-item clickable @click="openPromptDeleteList(list)">
+                    <q-item-section>Delete list</q-item-section>
                   </q-item>
                   <q-item clickable>
                     <q-item-section>Share</q-item-section>
@@ -264,7 +264,9 @@ export default {
     },
     openPromptDeleteList(list) {
       this.promptDeleteList = true
-      this.formDeleteList = list
+      this.formDeleteList = {
+        id: list._id
+      }
     },
     async getAllLists() {
       try {
@@ -346,7 +348,7 @@ export default {
       try {
         
         const deleteListProcess = await this.$store.dispatch('lists/deleteList', {
-          id: this.formDeleteList._id
+          id: this.formDeleteList.id
         })
 
         // Close dialog

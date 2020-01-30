@@ -35,7 +35,6 @@ app.get('/api', (req, res) => {
 });
 
 app.use((err, req, res, next) => {
-  console.log(err);
   if (!err.status) {
     err.status = 500;
   } 

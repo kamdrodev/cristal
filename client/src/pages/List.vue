@@ -17,10 +17,10 @@
             <q-btn color="grey-7" round flat icon="more_vert">
               <q-menu cover auto-close>
                 <q-list>
-                  <q-item clickable>
+                  <q-item clickable @click="openPromptUpdateFlashcard(flashcard)">
                     <q-item-section>Update flashcard</q-item-section>
                   </q-item>
-                  <q-item clickable>
+                  <q-item clickable @click="openPromptDeleteFlashcard(flashcard)">
                     <q-item-section>Delete flashcard</q-item-section>
                   </q-item>
                   <q-item clickable>
@@ -34,7 +34,7 @@
       </q-card-section>
 
       <q-card-section>
-        {{ lorem }}
+
       </q-card-section>
 
       <q-separator />
@@ -52,7 +52,7 @@
       <q-btn fab icon="post_add" @click="openPromptCreateFlashcard" />
     </q-page-sticky>
       
-    <!-- // Dialog - Create Flashcard -->
+    <!--  Dialog - Create flashcard -->
     <q-dialog v-model="promptCreateFlashcard" persistent>
       <q-card style="min-width: 350px">
         <form c>
@@ -80,7 +80,7 @@
       </q-card>
     </q-dialog>
 
-     <!-- // Dialog - Update Flashcard -->
+     <!--  Dialog - Update flashcard -->
     <q-dialog v-model="promptUpdateFlashcard" persistent>
       <q-card style="min-width: 350px">
         <form c>
@@ -88,12 +88,12 @@
           <div class="text-h6">Update word</div>
         </q-card-section>
         <q-card-section class="q-pt-none">          
-          <q-input filled v-model="formCreateFlashcard.firstLanguage" label="First language" :error="$v.formCreateFlashcard.firstLanguage.$error" class="q-pb-lg">
+          <q-input filled v-model="formUpdateFlashcard.firstLanguage" label="First language" :error="$v.formUpdateFlashcard.firstLanguage.$error" class="q-pb-lg">
             <template v-slot:prepend>
               <q-icon name="mail" />
             </template>
           </q-input>
-          <q-input filled v-model="formCreateFlashcard.secondLanguage" label="Second language" :error="$v.formCreateFlashcard.secondLanguage.$error" class="q-pb-lg">
+          <q-input filled v-model="formUpdateFlashcard.secondLanguage" label="Second language" :error="$v.formUpdateFlashcard.secondLanguage.$error" class="q-pb-lg">
             <template v-slot:prepend>
               <q-icon name="mail" />
             </template>
@@ -108,6 +108,21 @@
       </q-card>
     </q-dialog>
 
+
+    <!-- Dialog - Delete flashcard -->
+     <q-dialog v-model="promptDeleteFlashcard" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-avatar icon="delete" color="primary" text-color="white" />
+          <span class="q-ml-sm">Do you really want to delete this flashcard?</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Cancel" color="primary" v-close-popup />
+          <q-btn flat label="Delete flashcard" color="primary" @click="deleteFlashcard"/>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
     
 
     </div>
@@ -121,9 +136,6 @@ import { required, email } from 'vuelidate/lib/validators';
 export default {
   name: 'PageList',
   async created() {
-    this.formCreateFlashcard.listId = this.$route.params.id
-
-
     await this.getList()
     await this.getAllFlashcards()
   },
@@ -138,15 +150,24 @@ export default {
       secondLanguage: '',
     },
     formUpdateFlashcard: {
+      id: '',
       firstLanguage: '',
       secondLanguage: '',
+    },
+    formDeleteFlashcard: {
+      id: '',
     },
   }),
   validations: {
     formCreateFlashcard: {
-      listId: {
-
+      firstLanguage: {
+        required,
       },
+      secondLanguage: {
+        required,
+      },
+    },
+    formUpdateFlashcard: {
       firstLanguage: {
         required,
       },
@@ -158,16 +179,28 @@ export default {
   methods: {
     openPromptCreateFlashcard() {
       this.promptCreateFlashcard = true
+
+      this.formCreateFlashcard = {
+        listId: this.$route.params.id,
+        firstLanguage: '',
+        secondLanguage: '',
+      }
     },
     openPromptUpdateFlashcard(flashcard) {
       this.promptUpdateFlashcard = true
 
-      this.flashcard = flashcard
+      this.formUpdateFlashcard = {
+        id: flashcard._id,
+        firstLanguage: flashcard.firstLanguage.text,
+        secondLanguage: flashcard.secondLanguage.text,
+      }
     },
-    openPromptDeleteFlashcard() {
+    openPromptDeleteFlashcard(flashcard) {
       this.promptDeleteFlashcard = true
 
-      this.flashcard = flashcard
+      this.formDeleteFlashcard = {
+        id: flashcard._id,
+      }
     },
     async getAllFlashcards() {
       try {
@@ -183,14 +216,11 @@ export default {
     },
     async createFlashcard() {
       try {
-        console.log('Create word')
         this.$v.formCreateFlashcard.$touch()
 
         if (this.$v.formCreateFlashcard.$error) {
           throw new Error('Please review fields again.')
         }
-
-        console.log(this.formCreateFlashcard)
         
         const createFlashcardProcess = await this.$store.dispatch('flashcards/createFlashcard', {
           listId: this.formCreateFlashcard.listId,
@@ -198,8 +228,7 @@ export default {
           secondLanguage: this.formCreateFlashcard.secondLanguage,
         })
 
-        this.formCreateFlashcard.firstLanguage = ''
-        this.formCreateFlashcard.secondLanguage = ''
+        this.formCreateFlashcard = {}
         this.promptCreateFlashcard = false
 
         await this.getAllFlashcards()
@@ -212,7 +241,6 @@ export default {
     },
     async updateFlashcard() {
       try {
-        console.log('Update word')
         this.$v.formUpdateFlashcard.$touch()
 
         if (this.$v.formUpdateFlashcard.$error) {
@@ -220,14 +248,15 @@ export default {
         }
         
         const updateFlashcardProcess = await this.$store.dispatch('flashcards/updateFlashcard', {
-          listId: this.word.listId,
-          firstLanguage: this.word.firstLanguage,
-          secondLanguage: this.word.secondLanguage,
+          id: this.formUpdateFlashcard.id,
+          firstLanguage: this.formUpdateFlashcard.firstLanguage,
+          secondLanguage: this.formUpdateFlashcard.secondLanguage,
         })
 
         this.word = {}
         this.promptUpdateFlashcard = false
 
+        this.formUpdateFlashcard = {}
         await this.getAllFlashcards()
         this.$v.formCreateFlashcard.$reset()
 
@@ -236,10 +265,24 @@ export default {
         this.$q.notify({message: e.message, color: 'negative'})
       }
     },
+    async deleteFlashcard() {
+      try {
+        const deleteFlashcardProcess = await this.$store.dispatch('flashcards/deleteFlashcard', {
+          id: this.formDeleteFlashcard.id,
+        })
+
+        this.promptDeleteFlashcard = {}
+        this.promptDeleteFlashcard = false
+
+        await this.getAllFlashcards()
+
+        this.$q.notify({message: deleteFlashcardProcess.message, color: 'positive'})
+      } catch (e) {
+        this.$q.notify({message: e.message, color: 'negative'})
+      }
+    },
     async getList() {
       try {
-        console.log('getlist')
-        console.log(this.$route.params.id)
         const getListProcess = await this.$store.dispatch('lists/getList', {
           id: this.$route.params.id,
         })
@@ -258,7 +301,6 @@ export default {
 
         this.$q.notify({message: getFlashcardsProcess.message, color: 'positive'})
       } catch (e) {
-        console.log(e)
         this.$q.notify({message: e.message, color: 'negative'})
       }
     }

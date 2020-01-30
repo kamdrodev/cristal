@@ -15,7 +15,9 @@ router.get('/flashcards/:listId',
   flashcardControllers.getAllFlashcards);
 
 router.post('/flashcards', 
-  [
+  [ 
+    check('id').trim(),
+    check('id').exists(),
     check('firstLanguage').trim(),
     check('firstLanguage').exists(),
     check('secondLanguage').trim(),
@@ -40,7 +42,6 @@ router.delete('/flashcards/:id',
   [
     check('id').trim(),
     check('id').exists(),
-    check('id').isLength({min: 6}),
   ],
   authMiddlewares.jwtVerify,
   flashcardControllers.deleteFlashcard);

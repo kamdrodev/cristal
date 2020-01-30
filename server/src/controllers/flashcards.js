@@ -64,6 +64,8 @@ const createFlashcard = async (req, res, next) => {
 
 const updateFlashcard = async (req, res, next) => {
   try {
+
+    console.log("updateFlashcard");
     const validationErrors = validationResult(req);
 
     if (!validationErrors.isEmpty()) {
@@ -72,13 +74,17 @@ const updateFlashcard = async (req, res, next) => {
       
       return next(customError);
     }
+
+    
   
-    const flashcard = await Flashcard.findOneAndUpdate({_id: req.params.id, userId: req.user.id}, { $set: {firstLanguage: req.body.firstLanguage, secondLanguage: req.body.secondLanguage}});
+    const flashcard = await Flashcard.findOneAndUpdate({_id: req.params.id, userId: req.user.id}, { $set: {'firstLanguage.text': req.body.firstLanguage, 'secondLanguage.text': req.body.secondLanguage}});
     
     return res.status(200).json({
       message: "Flashcard has been updated"
     });
   } catch(e) {
+
+    console.log("EEE", e);
     const customError = "Something went wrong during get wrong during update flashcards process";
     customError.status = 400;
     next(customError);

@@ -28,7 +28,6 @@ const actions = {
         message: "Word  has been created"
       }
     } catch(e) {
-      console.log(e);
       throw new Error(e.response.data.message);
     }
   },
@@ -43,21 +42,32 @@ const actions = {
         message: getFlashcardsRequest.data.message,
       }
     } catch(e) {
-      console.log(e);
       throw new Error(e.response.data.message);
     }
   },
-  async updateWords({dispatch, commit}, {listId}) {
+  async updateFlashcard({dispatch, commit}, {id, firstLanguage, secondLanguage}) {
     try {
-      const getWordsRequest = await axios.get(`flashcards/${listId}`, {
-        
+      const updateFlashcardRequest = await axios.put(`flashcards/${id}`, {
+          firstLanguage,
+          secondLanguage,
       });
       
       return {
-        message: getWordsRequest.data.message
+        message: updateFlashcardRequest.data.message
       }
     } catch(e) {
-      console.log(e);
+      throw new Error(e.response.data.message);
+    }
+  },
+  async deleteFlashcard({dispatch, commit}, {id}) {
+    try {
+
+      const updateFlashcardRequest = await axios.delete(`flashcards/${id}`);
+      
+      return {
+        message: updateFlashcardRequest.data.message
+      }
+    } catch(e) {
       throw new Error(e.response.data.message);
     }
   },
