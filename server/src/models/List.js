@@ -27,7 +27,25 @@ const ListSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
-  solved: [{
+  flashcards: {
+    firstLanguage: {
+      language: {
+        type: String,
+      },
+      word: {
+        type: String,
+      },
+    },
+    secondLanguage: {
+      language: {
+        type: String,
+      },
+      word: {
+        type: String,
+      },
+    }
+  },
+  statistics: [{
     date: {
       type: Date,
       default: new Date(),
