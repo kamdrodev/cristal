@@ -101,5 +101,29 @@ router.post(`/lists/:listId/flashcards`,
   authMiddlewares.jwtVerify,
   listsControllers.createFlashcard);
 
+router.put(`/lists/:listId/flashcards/:flashcardId`, 
+  [ 
+    check('listId').trim(),
+    check('listId').exists(),
+    check('flashcardId').trim(),
+    check('flashcardId').exists(),
+    check('firstLanguage').trim(),
+    check('firstLanguage').exists(),
+    check('secondLanguage').trim(),
+    check('secondLanguage').exists(),
+  ],
+  authMiddlewares.jwtVerify,
+  listsControllers.updateFlashcard);
+
+router.delete(`/lists/:listId/flashcards/:flashcardId`, 
+  [ 
+    check('listId').trim(),
+    check('listId').exists(),
+    check('flashcardId').trim(),
+    check('flashcardId').exists(),
+  ],
+  authMiddlewares.jwtVerify,
+  listsControllers.deleteFlashcard);
+
 
 export default router;

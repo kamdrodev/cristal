@@ -12,14 +12,12 @@ const getList = async (req, res, next) => {
       
       return next(customError);
     }
-    console.log('~~~~~~~~~~~~~~~~', req.params.listId);
 
     const listViews = await List.findOneAndUpdate({_id: req.params.listId, userId: req.user.id}, {$inc: {views: 1}});
     const list = await List.findOne({_id: req.params.listId, userId: req.user.id});
 
     return res.status(200).json({message: `List have been fetched`, list: list});
   } catch(e) {
-    console.log(e);
     const customError = new Error('Something went wrong during get list process');
     customError.status = 401;
 
@@ -98,8 +96,6 @@ const updateList = async (req, res, next) => {
     
     return res.status(200).json({message: `Lists have been updated`});
   } catch(e) {
-
-    console.log(e);
     const customError = new Error('Something went wrong during update list process');
     customError.status = 401;
 
@@ -140,7 +136,7 @@ const createFlashcard = async (req, res, next) => {
       return next(customError);
     }
 
-    const listUpdate = await List.findOneAndUpdate(
+    const createFlashcard = await List.findOneAndUpdate(
       {_id: req.params.listId, userId: req.user.id}, 
       {$push: {'flashcards': {'firstLanguage': req.body.firstLanguage, 'secondLanguage': req.body.secondLanguage}}},
     );
@@ -148,8 +144,6 @@ const createFlashcard = async (req, res, next) => {
     
     return res.status(200).json({message: `Flashcard has been created`});
   } catch(e) {
-
-    console.log(e);
     const customError = new Error('Something went wrong during create flashcard process');
     customError.status = 401;
 
@@ -157,6 +151,55 @@ const createFlashcard = async (req, res, next) => {
   }
 };
 
+const updateFlashcard = async (req, res, next) => {
+  try {
+    const validationErrors = validationResult(req);
+
+    if (!validationErrors.isEmpty()) {
+      const customError = new Error('Incorrect Data');
+      customError.status = 400;
+      
+      return next(customError);
+    }
+
+    const updateFLashcard = await List.findOneAndUpdate(
+      {_id: req.params.listId, userId: req.user.id, "flashcards._id": req.params.flashcardId}, 
+      {$set: {'flashcards.$.firstLanguage': req.body.firstLanguage, 'flashcards.$.secondLanguage': req.body.secondLanguage }},
+    );
+
+    return res.status(200).json({message: `Flashcard has been updated`});
+  } catch(e) {
+    const customError = new Error('Something went wrong during update flashcard process');
+    customError.status = 401;
+
+    return next(customError);
+  }
+};
+
+const deleteFlashcard = async (req, res, next) => {
+  try {
+    const validationErrors = validationResult(req);
+
+    if (!validationErrors.isEmpty()) {
+      const customError = new Error('Incorrect Data');
+      customError.status = 400;
+      
+      return next(customError);
+    }
+
+    const createFlashcard = await List.findOneAndUpdate(
+      {_id: req.params.listId, userId: req.user.id}, 
+      {$pull: {'flashcards': {_id: req.params.flashcardId}}},
+    );
+
+    return res.status(200).json({message: `Flashcard has been deleted`});
+  } catch(e) {
+    const customError = new Error('Something went wrong during delete flashcard process');
+    customError.status = 401;
+
+    return next(customError);
+  }
+};
 
 const lists = {
   getList,
@@ -165,6 +208,8 @@ const lists = {
   updateList,
   deleteList,
   createFlashcard,
+  updateFlashcard,
+  deleteFlashcard,
 };
 
 export default lists;

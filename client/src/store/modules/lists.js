@@ -69,9 +69,9 @@ const actions = {
       throw new Error(e.response.data.message);
     }
   },
-  async updateList({dispatch, commit}, {id, title, description}) {
+  async updateList({dispatch, commit}, {listId, title, description}) {
     try {
-      const updateListRequest = await axios.put(`lists/${id}`, {
+      const updateListRequest = await axios.put(`lists/${listId}`, {
         title,
         description,
       });
@@ -84,10 +84,10 @@ const actions = {
       throw new Error(e.response.data.message);
     }
   },
-  async deleteList({dispatch, commit}, {id}) {
+  async deleteList({dispatch, commit}, {listId}) {
     try {
 
-      const deleteListRequest = await axios.delete(`lists/${id}`);
+      const deleteListRequest = await axios.delete(`lists/${listId}`);
 
       return {
         message: 'List has been deleted'
@@ -108,6 +108,34 @@ const actions = {
 
       return {
         message: "Word  has been created"
+      }
+    } catch(e) {
+      throw new Error(e.response.data.message);
+    }
+  },
+  async updateFlashcard({dispatch, commit}, {listId, flashcardId, firstLanguage, secondLanguage}) {
+    try {
+
+      console.log(listId, flashcardId, )
+      const updateFlashcardRequest = await axios.put(`lists/${listId}/flashcards/${flashcardId}`, {
+          firstLanguage,
+          secondLanguage,
+      });
+      
+      return {
+        message: updateFlashcardRequest.data.message
+      }
+    } catch(e) {
+      throw new Error(e.response.data.message);
+    }
+  },
+  async deleteFlashcard({dispatch, commit}, {listId, flashcardId,}) {
+    try {
+
+      const deleteFlashcardRequest = await axios.delete(`lists/${listId}/flashcards/${flashcardId}`);
+      
+      return {
+        message: deleteFlashcardRequest.data.message
       }
     } catch(e) {
       throw new Error(e.response.data.message);

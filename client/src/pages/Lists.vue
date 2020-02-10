@@ -326,7 +326,7 @@ export default {
         }
         
         const updateListProcess = await this.$store.dispatch('lists/updateList', {
-          id: this.formUpdateList.id,
+          listId: this.formUpdateList.id,
           title: this.formUpdateList.title,
           description: this.formUpdateList.description,
         })
@@ -348,7 +348,7 @@ export default {
       try {
         
         const deleteListProcess = await this.$store.dispatch('lists/deleteList', {
-          id: this.formDeleteList.id
+          listId: this.formDeleteList.id
         })
 
         // Close dialog

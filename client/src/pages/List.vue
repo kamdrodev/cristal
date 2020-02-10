@@ -146,7 +146,6 @@ export default {
     promptDeleteFlashcard: false,
     flashcard: {},
     formCreateFlashcard: {
-      listId: '',
       firstLanguage: '',
       secondLanguage: '',
     },
@@ -182,7 +181,6 @@ export default {
       this.promptCreateFlashcard = true
 
       this.formCreateFlashcard = {
-        listId: this.$route.params.id,
         firstLanguage: '',
         secondLanguage: '',
       }
@@ -192,8 +190,8 @@ export default {
 
       this.formUpdateFlashcard = {
         id: flashcard._id,
-        firstLanguage: flashcard.firstLanguage.text,
-        secondLanguage: flashcard.secondLanguage.text,
+        firstLanguage: flashcard.firstLanguage,
+        secondLanguage: flashcard.secondLanguage,
       }
     },
     openPromptDeleteFlashcard(flashcard) {
@@ -212,7 +210,7 @@ export default {
         }
         
         const createFlashcardProcess = await this.$store.dispatch('lists/createFlashcard', {
-          listId: this.formCreateFlashcard.listId,
+          listId: this.$route.params.id,
           firstLanguage: this.formCreateFlashcard.firstLanguage,
           secondLanguage: this.formCreateFlashcard.secondLanguage,
         })
@@ -237,8 +235,9 @@ export default {
           throw new Error('Please review fields again.')
         }
         
-        const updateFlashcardProcess = await this.$store.dispatch('flashcards/updateFlashcard', {
-          id: this.formUpdateFlashcard.id,
+        const updateFlashcardProcess = await this.$store.dispatch('lists/updateFlashcard', {
+          listId: this.$route.params.id,
+          flashcardId: this.formUpdateFlashcard.id,
           firstLanguage: this.formUpdateFlashcard.firstLanguage,
           secondLanguage: this.formUpdateFlashcard.secondLanguage,
         })
@@ -247,7 +246,7 @@ export default {
         this.promptUpdateFlashcard = false
 
         this.formUpdateFlashcard = {}
-        await this.getAllFlashcards()
+        await this.getList()
         this.$v.formCreateFlashcard.$reset()
 
         this.$q.notify({message: updateFlashcardProcess.message, color: 'positive'})
@@ -257,14 +256,18 @@ export default {
     },
     async deleteFlashcard() {
       try {
-        const deleteFlashcardProcess = await this.$store.dispatch('flashcards/deleteFlashcard', {
-          id: this.formDeleteFlashcard.id,
+
+        console.log(this.$route.params.id)
+        console.log(this.formDeleteFlashcard.id);
+        const deleteFlashcardProcess = await this.$store.dispatch('lists/deleteFlashcard', {
+          listId: this.$route.params.id,
+          flashcardId: this.formDeleteFlashcard.id,
         })
 
         this.promptDeleteFlashcard = {}
         this.promptDeleteFlashcard = false
 
-        await this.getAllFlashcards()
+        await this.getList()
 
         this.$q.notify({message: deleteFlashcardProcess.message, color: 'positive'})
       } catch (e) {
