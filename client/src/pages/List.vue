@@ -5,12 +5,12 @@
     <h4 class="text-center">{{list.title}}</h4>
     <h6 class="text-center">{{list.description}}</h6>
 
-    <q-card flat bordered class="my-card " v-for="flashcard in flashcards" :key="flashcard._id">
+    <q-card flat bordered class="my-card " v-for="flashcard in list.flashcards" :key="flashcard._id">
       <q-card-section>
         <div class="row items-center no-wrap">
           <div class="col">
-            <div class="text-h6">{{flashcard.firstLanguage.text}}</div>
-            <div class="text-subtitle2">{{flashcard.secondLanguage.text}}</div>
+            <div class="text-h6">{{flashcard.firstLanguage}}</div>
+            <div class="text-subtitle2">{{flashcard.secondLanguage}}</div>
           </div>
 
           <div class="col-auto">
@@ -137,7 +137,8 @@ export default {
   name: 'PageList',
   async created() {
     await this.getList()
-    await this.getAllFlashcards()
+
+    console.log(`list ${this.list}`)
   },
   data: () => ({
     promptCreateFlashcard: false,
@@ -202,18 +203,6 @@ export default {
         id: flashcard._id,
       }
     },
-    async getAllFlashcards() {
-      try {
-        const getFlashcardsProcess = await this.$store.dispatch('flashcards/getAllFlashcards', {
-          listId: this.$route.params.id,
-        })
-
-        this.$q.notify({message: getFlashcardsProcess.message, color: 'positive'})
-      } catch (e) {
-        console.log(e)
-        this.$q.notify({message: e.message, color: 'negative'})
-      }
-    },
     async createFlashcard() {
       try {
         this.$v.formCreateFlashcard.$touch()
@@ -222,7 +211,7 @@ export default {
           throw new Error('Please review fields again.')
         }
         
-        const createFlashcardProcess = await this.$store.dispatch('flashcards/createFlashcard', {
+        const createFlashcardProcess = await this.$store.dispatch('lists/createFlashcard', {
           listId: this.formCreateFlashcard.listId,
           firstLanguage: this.formCreateFlashcard.firstLanguage,
           secondLanguage: this.formCreateFlashcard.secondLanguage,
@@ -231,7 +220,8 @@ export default {
         this.formCreateFlashcard = {}
         this.promptCreateFlashcard = false
 
-        await this.getAllFlashcards()
+        await this.getList();
+
         this.$v.formCreateFlashcard.$reset()
 
         this.$q.notify({message: createFlashcardProcess.message, color: 'positive'})
@@ -284,12 +274,10 @@ export default {
     async getList() {
       try {
         const getListProcess = await this.$store.dispatch('lists/getList', {
-          id: this.$route.params.id,
+          listId: this.$route.params.id,
         })
-
         this.$q.notify({message: getListProcess.message, color: 'positive'})
       } catch (e) {
-        console.log(e)
         this.$q.notify({message: e.message, color: 'negative'})
       }
     },
@@ -309,9 +297,6 @@ export default {
     list() {
       return this.$store.getters['lists/list']
     },
-    flashcards() {
-      return this.$store.state.flashcards.flashcards
-    }
   }
 }
 </script>

@@ -10,11 +10,11 @@ router.get('/lists',
   authMiddlewares.jwtVerify,
   listsControllers.getAllLists);
 
-router.get('/lists/:id', 
+router.get('/lists/:listId', 
   [
-    check('id').trim(),
-    check('id').exists(),
-    check('id').isLength({min: 6}),
+    check('listId').trim(),
+    check('listId').exists(),
+    check('listId').isLength({min: 6}),
   ],
   authMiddlewares.jwtVerify,
   listsControllers.getList);
@@ -67,11 +67,11 @@ router.post('/lists',
   authMiddlewares.jwtVerify,
   listsControllers.createList);
 
-router.put('/lists/:id', 
+router.put('/lists/:listId', 
   [
-    check('id').trim(),
-    check('id').exists(),
-    check('id').isLength({min: 6}),
+    check('listId').trim(),
+    check('listId').exists(),
+    check('listId').isLength({min: 6}),
     check('title').trim(),
     check('title').exists(),
     check('description').trim(),
@@ -80,13 +80,26 @@ router.put('/lists/:id',
   authMiddlewares.jwtVerify,
   listsControllers.updateList);
 
-router.delete('/lists/:id', 
+router.delete('/lists/:listId', 
   [
-    check('id').trim(),
-    check('id').exists(),
-    check('id').isLength({min: 6}),
+    check('listId').trim(),
+    check('listId').exists(),
+    check('listId').isLength({min: 6}),
   ],
   authMiddlewares.jwtVerify,
   listsControllers.deleteList);
+
+router.post(`/lists/:listId/flashcards`, 
+  [ 
+    check('listId').trim(),
+    check('listId').exists(),
+    check('firstLanguage').trim(),
+    check('firstLanguage').exists(),
+    check('secondLanguage').trim(),
+    check('secondLanguage').exists(),
+  ],
+  authMiddlewares.jwtVerify,
+  listsControllers.createFlashcard);
+
 
 export default router;

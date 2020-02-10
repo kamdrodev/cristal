@@ -4,7 +4,6 @@ import Vuex from 'vuex'
 import auth from './modules/auth.js'
 import router from './modules/router.js'
 import lists from './modules/lists.js'
-import flashcards from './modules/flashcards.js'
 
 // import example from './module-example'
 
@@ -24,7 +23,6 @@ const store = new Vuex.Store({
     auth,
     router,
     lists,
-    flashcards,
   },
 
   // enable strict mode (adds overhead!)

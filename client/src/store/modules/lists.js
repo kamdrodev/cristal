@@ -39,9 +39,9 @@ const actions = {
       throw new Error(e.response.data.message);
     }
   },
-  async getList({dispatch, commit}, {id}) {
+  async getList({dispatch, commit}, {listId}) {
     try {
-      const getListRequest = await axios.get(`lists/${id}`);
+      const getListRequest = await axios.get(`lists/${listId}`);
       commit('setList', getListRequest.data.list)
       
       return {
@@ -96,7 +96,23 @@ const actions = {
       console.log(e);
       throw new Error(e.response.data.message);
     }
-  }
+  },
+  async createFlashcard({dispatch, commit}, {listId, firstLanguage, secondLanguage}) {
+
+    try {
+      const createFlashcardRequest = await axios.post(`lists/${listId}/flashcards`, {
+        listId,
+        firstLanguage,
+        secondLanguage,
+      });
+
+      return {
+        message: "Word  has been created"
+      }
+    } catch(e) {
+      throw new Error(e.response.data.message);
+    }
+  },
 };
 
 

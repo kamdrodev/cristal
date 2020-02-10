@@ -5,9 +5,6 @@ import chalk from 'chalk';
 
 import User from '../models/User.js';
 
-
-
-
 const signUp = async (req, res, next) => {
   try {
 
