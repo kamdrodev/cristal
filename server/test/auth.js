@@ -44,9 +44,6 @@ describe('sign-up', () => {
       });
   }).timeout(10000);
 
-});
-
-describe('sign-in', () => {
   it('process sign in - it should has status 200', (done) => {
     supertest(app)
       .post(`${config.prefix}/auth/sign-in`) 
@@ -61,4 +58,8 @@ describe('sign-in', () => {
         }
       });
   }).timeout(10000);
+  
 });
+
+
+  
