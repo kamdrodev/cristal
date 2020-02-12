@@ -4,7 +4,15 @@
       
     <h4 class="text-center">{{list.title}}</h4>
     <h6 class="text-center">{{list.description}}</h6>
-
+    <h6 class="text-center">{{list.firstLanguage}} <-> {{list.secondLanguage}}</h6>
+    <h6 class="text-center">Flashcards: {{list.flashcards.length}}</h6>
+      
+    <div class="row q-col-qutter-xs q-mb-xl">
+      <div class="col-xs-12 text-center">
+        <q-btn flat class="button-quiz" @click="viewQuiz" size="large">Start Quiz</q-btn>
+      </div>
+    </div>
+    
     <q-card flat bordered class="my-card " v-for="flashcard in list.flashcards" :key="flashcard._id">
       <q-card-section>
         <div class="row items-center no-wrap">
@@ -14,7 +22,7 @@
           </div>
 
           <div class="col-auto">
-            <q-btn color="grey-7" round flat icon="more_vert">
+            <q-btn color="" round flat icon="more_vert">
               <q-menu cover auto-close>
                 <q-list>
                   <q-item clickable @click="openPromptUpdateFlashcard(flashcard)">
@@ -294,7 +302,10 @@ export default {
       } catch (e) {
         this.$q.notify({message: e.message, color: 'negative'})
       }
-    }
+    },
+    viewQuiz() {
+    this.$router.push(`/quiz/${this.list._id}`)
+    },
   },
   computed: {
     list() {
@@ -303,3 +314,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+  
+  .button-quiz {
+    width: 300px;
+  }
+
+</style>

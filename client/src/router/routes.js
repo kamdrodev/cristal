@@ -9,7 +9,7 @@ const routes = [
   },
   {
     path: '/sign-up',
-    component: () => import('layouts/MyLayout.vue'),
+    component: () => import('layouts/MyLayout.vue'), 
     children: [
       { path: '', component: () => import('pages/SignUp.vue') }
     ]
@@ -46,6 +46,16 @@ const routes = [
     component: () => import('layouts/MyLayout.vue'),
     children: [
       { path: '', component: () => import('pages/List.vue') }
+    ],
+    meta: {
+      requiresAuth: true,
+    }
+  },
+  {
+    path: '/quiz/:id',
+    component: () => import('layouts/MyLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/Quiz.vue') }
     ],
     meta: {
       requiresAuth: true,
