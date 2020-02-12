@@ -89,7 +89,18 @@ router.delete('/lists/:listId',
   authMiddlewares.jwtVerify,
   listsControllers.deleteList);
 
-router.post(`/lists/:listId/flashcards`, 
+
+router.get("/lists/:listId/flashcards/:flashcardId",
+  [
+    check('listId').trim(),
+    check('listId').exists(),
+    check('flashcardId').trim(),
+    check('flashcardId').exists(),
+  ],
+  authMiddlewares.jwtVerify,
+  listsControllers.getFlashcard)
+
+router.post('/lists/:listId/flashcards', 
   [ 
     check('listId').trim(),
     check('listId').exists(),
@@ -101,7 +112,7 @@ router.post(`/lists/:listId/flashcards`,
   authMiddlewares.jwtVerify,
   listsControllers.createFlashcard);
 
-router.put(`/lists/:listId/flashcards/:flashcardId`, 
+router.put('/lists/:listId/flashcards/:flashcardId', 
   [ 
     check('listId').trim(),
     check('listId').exists(),
@@ -115,7 +126,7 @@ router.put(`/lists/:listId/flashcards/:flashcardId`,
   authMiddlewares.jwtVerify,
   listsControllers.updateFlashcard);
 
-router.delete(`/lists/:listId/flashcards/:flashcardId`, 
+router.delete('/lists/:listId/flashcards/:flashcardId', 
   [ 
     check('listId').trim(),
     check('listId').exists(),
@@ -124,6 +135,18 @@ router.delete(`/lists/:listId/flashcards/:flashcardId`,
   ],
   authMiddlewares.jwtVerify,
   listsControllers.deleteFlashcard);
+
+router.post('/lists/:listId/statistics',
+  [ 
+    check('listId').trim(),
+    check('listId').exists(),
+    check('accuracy').trim(),
+    check('accuracy').exists(),
+  ],
+  authMiddlewares.jwtVerify,
+  listsControllers.saveQuizResult);
+
+
 
 
 export default router;

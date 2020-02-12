@@ -36,14 +36,16 @@ const ListSchema = mongoose.Schema({
     },
   }],
   statistics: [{
-    date: {
-      type: Date,
-      default: new Date(),
-    },
-    accuracy: {
-      type: Number,
-      required: true,
-    },
+    quizzes: {
+      date: {
+        type: Date,
+        default: new Date(),
+      },
+      accuracy: {
+        type: Number,
+        required: true,
+      },
+    }
   }],
   createdAt: {
     type: Date,
