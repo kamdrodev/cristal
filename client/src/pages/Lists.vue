@@ -172,7 +172,7 @@
 <script>
 import { required, email } from 'vuelidate/lib/validators';
 
-import { mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Lists',
@@ -366,7 +366,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('lists', ['lists'])
+    ...mapGetters('lists', ['lists'])
   }
 }
 </script>
