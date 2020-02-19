@@ -304,7 +304,12 @@ export default {
       }
     },
     viewQuiz() {
-    this.$router.push(`/quiz/${this.list._id}`)
+      if (this.list.flashcards.length === 0) {
+        this.$q.notify({message: 'You do not have any flashcards', color: 'negative'})
+      } else {
+        this.$router.push(`/quiz/${this.list._id}`)
+      }
+      
     },
   },
   computed: {

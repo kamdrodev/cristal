@@ -35,18 +35,18 @@ const ListSchema = mongoose.Schema({
       type: String,
     },
   }],
-  statistics: [{
-    quizzes: {
-      date: {
-        type: Date,
-        default: new Date(),
-      },
-      accuracy: {
-        type: Number,
-        required: true,
-      },
-    }
-  }],
+  statistics: {
+      quizzes: [{
+        createdAt: {
+          type: Date,
+          default: new Date(),
+        },
+        accuracy: {
+          type: Number,
+          required: true,
+        },
+      }]
+  },
   createdAt: {
     type: Date,
     default: new Date(),

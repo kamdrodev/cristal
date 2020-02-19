@@ -20,7 +20,6 @@ const mutations = {
 };
 
 const actions = {
-
   async getAllLists({dispatch, commit}, {listsQueryOptions}) {
     try {
       const getAllListsRequest = await axios.get('lists', {
@@ -86,7 +85,6 @@ const actions = {
   },
   async deleteList({dispatch, commit}, {listId}) {
     try {
-
       const deleteListRequest = await axios.delete(`lists/${listId}`);
 
       return {
@@ -98,7 +96,6 @@ const actions = {
     }
   },
   async createFlashcard({dispatch, commit}, {listId, firstLanguage, secondLanguage}) {
-
     try {
       const createFlashcardRequest = await axios.post(`lists/${listId}/flashcards`, {
         listId,
@@ -115,8 +112,6 @@ const actions = {
   },
   async updateFlashcard({dispatch, commit}, {listId, flashcardId, firstLanguage, secondLanguage}) {
     try {
-
-      console.log(listId, flashcardId, )
       const updateFlashcardRequest = await axios.put(`lists/${listId}/flashcards/${flashcardId}`, {
           firstLanguage,
           secondLanguage,
@@ -136,6 +131,19 @@ const actions = {
       
       return {
         message: deleteFlashcardRequest.data.message
+      }
+    } catch(e) {
+      throw new Error(e.response.data.message);
+    }
+  },
+  async saveQuizResult({dispatch, commit}, {listId, accuracy}) {
+    try {
+
+      const saveQuizResultRequest = await axios.post(`lists/${listId}/statistics`, {
+        accuracy,
+      });      
+      return {
+        message: saveQuizResultRequest.data.message
       }
     } catch(e) {
       throw new Error(e.response.data.message);

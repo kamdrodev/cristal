@@ -362,7 +362,7 @@ export default {
       }
     },
     async viewList(list) {
-      this.$router.push(`list/${list._id}`)
+      this.$router.push(`/list/${list._id}`)
     }
   },
   computed: {

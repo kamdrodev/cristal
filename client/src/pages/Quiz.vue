@@ -1,25 +1,37 @@
 <template>
-  <q-page class="flex flex-center">
     <div class="row">
       <div class="col-xs-12 text-center">
-         <q-card class="card ">
-
+         <q-card class="card col-xs-12" >
           <q-card-section>
             <div class="flex flex-start">
-              {{ this.counter }} / {{this.list.flashcards.length}}
+              {{ this.temporaryFlashcardIndex }} / {{this.temporaryList.flashcards.length}}
+              ---
+              {{ this.temporaryList.firstLanguage }} <-> {{ this.temporaryList.secondLanguage }}
             </div>
-            <form @submit.prevent="nextFlashcard" class="form-sign-in q-gutter-xs">
-              <h5>{{this.currentFlashcardFirstLanguage}}</h5>
-              <q-input filled v-model="flashcard" label="" :error="$v.flashcard.$error" class="input">
+          </q-card-section>
+          <q-card-section>
+            
+              <div class="first-language">{{this.temporaryFlashcardFirstLanguage}}</div>
+              <q-input filled v-model="inputFlashcard" @keyup.enter="nextFlashcard" label="Type" :error="$v.inputFlashcard.$error" class="input">
                 <template v-slot:prepend>
                 </template>
               </q-input>
-            </form>
           </q-card-section>
         </q-card>
       </div>
+      <!-- <div class="col-xs-12 text-center">
+        <div class="row">
+          <div class="col-xs-6"><span class="languages">{{this.temporaryList.firstLanguage}}</span></div>
+          <div class="col-xs-6"><span class="languages">{{this.temporaryList.secondLanguage}}</span></div>
+        </div>
+      </div> -->
+      <div class="col-xs-12 text-center list" v-for="flashcard in this.temporaryList.flashcards">
+        <div class="row">
+          <div class="col-xs-12 col-md-6">{{flashcard.firstLanguage}}</div>
+          <div class="col-xs-12 col-md-6">{{flashcard.secondLanguage}}</div>
+        </div>
+      </div>
     </div>
-  </q-page>
 </template>
 
 <script>
@@ -31,38 +43,93 @@ import { mapGetters } from 'vuex';
 export default {
   name: 'Quiz',
   async created() {
-    this.currentList = Object.assign({}, this.list)
-    console.log(this.currentList);
-    console.log(this.counter);
-    this.currentFlashcardFirstLanguage = this.currentList.flashcards[this.counter].firstLanguage
-    this.currentFlashcardSecondLanguage = this.currentList.flashcards[this.counter].secondLanguage
+
+    this.getList()
+
+    this.temporaryList = Object.assign({}, this.list)
+    this.temporaryFlashcardFirstLanguage = this.temporaryList.flashcards[this.temporaryFlashcardIndex].firstLanguage
+    this.temporaryFlashcardSecondLanguage = this.temporaryList.flashcards[this.temporaryFlashcardIndex].secondLanguage
   },
   validations: {
     
-    flashcard: required,
+    inputFlashcard: required,
     
   },
   data: () => ({
-    counter: 0,
-    flashcard: "",
-    currentList: {},
-    currentFlashcardFirstLanguage: '',
-    currentFlashcardSecondLanguage: '',
+    // counter: 0,
+    // flashcard: "",
+    // currentList: {},
+    // currentFlashcardFirstLanguage: '',
+    // currentFlashcardSecondLanguage: '',
+    // to refactor
+    accuracy: 0,
+    correctAnswers: 0,
+    incorrectAnswers: 0,
+    temporaryList: {},
+    temporaryFlashcardFirstLanguage: '',
+    temporaryFlashcardSecondLanguage: '',
+    temporaryFlashcardIndex: 0,
+    inputFlashcard: '',
   }),
   methods: {
-    async nextFlashcard() {
-      if (this.flashcard === this.currentFlashcardSecondLanguage) {
-        this.counter++;
-        this.currentFlashcardFirstLanguage = this.currentList.flashcards[this.counter].firstLanguage
-        this.currentFlashcardSecondLanguage = this.currentList.flashcards[this.counter].secondLanguage
-        this.flashcard = '';
-
-        this.$q.notify({message: "Correct answer", color: 'positive'})
-      }  else {
-        this.$q.notify({message: "Incorrect answer", color: 'negative'})
+    async getList() {
+      try {
+        const getListProcess = await this.$store.dispatch('lists/getList', {
+          listId: this.$route.params.id,
+        })
+        this.$q.notify({message: getListProcess.message, color: 'positive'})
+      } catch (e) {
+        this.$q.notify({message: e.message, color: 'negative'})
       }
+    },
+    async nextFlashcard() { 
+    // it is weird ---> refactor
+      if (this.temporaryFlashcardIndex >= this.temporaryList.flashcards.length - 1) {
+        this.temporaryFlashcardIndex = 0;
+        this.correctAnswers = 0;
+        this.incorrectAnswers = 0;
+
+        if (this.inputFlashcard === this.temporaryFlashcardSecondLanguage) {
+          this.correctAnswers++;
+          this.temporaryFlashcardFirstLanguage = this.temporaryList.flashcards[this.temporaryFlashcardIndex].firstLanguage
+          this.temporaryFlashcardSecondLanguage = this.temporaryList.flashcards[this.temporaryFlashcardIndex].secondLanguage
+          this.inputFlashcard = '';
+          this.$q.notify({message: "Correct answer", color: 'positive'})
+        }  else {
+          this.incorrectAnswers++;
+          // this.$q.notify({message: "Incorrect answer", color: 'negative'})
+        }
+
+        this.saveQuizResult()
+      } else {
+        this.temporaryFlashcardIndex++;
+
+        if (this.inputFlashcard === this.temporaryFlashcardSecondLanguage) {
+          
+          this.correctAnswers++;
+          this.temporaryFlashcardFirstLanguage = this.temporaryList.flashcards[this.temporaryFlashcardIndex].firstLanguage
+          this.temporaryFlashcardSecondLanguage = this.temporaryList.flashcards[this.temporaryFlashcardIndex].secondLanguage
+          this.inputFlashcard = '';
+          this.$q.notify({message: "Correct answer", color: 'positive'})
+        }  else {
+          this.incorrectAnswers++;
+          // this.$q.notify({message: "Incorrect answer", color: 'negative'})
+        }
+      }
+
       
-    }
+    },
+    async saveQuizResult() {
+      try {
+        const saveQuizResultProcess = await this.$store.dispatch('lists/saveQuizResult', {
+          listId: this.$route.params.id,
+          accuracy: this.correctAnswers / this.list.flashcards.length * 100,
+        })
+        this.$q.notify({message: saveQuizResultProcess.message, color: 'positive'})
+      } catch (e) {
+        this.$q.notify({message: e.message, color: 'negative'})
+      }
+    },
   },
   computed: {
     ...mapGetters('lists', ['list'])
@@ -73,10 +140,23 @@ export default {
 
 <style lang="sass">
   .card
-    width: 500px
     height: 300px
     background-color: $dark
+    // border: 1px solid $accent
     .input  
       width: 100%
 
+  .languages
+    font-weight: bold
+    font-size: 24px
+
+  .list
+    .row 
+      // border-bottom: 1px solid $accent
+      font-size: 20px
+      padding: 20px 0
+  .first-language
+    font-size: 26px
+    font-weight: bold
+    padding-bottom: 20px
 </style>

@@ -218,7 +218,8 @@ const deleteFlashcard = async (req, res, next) => {
       {$pull: {'flashcards': {_id: req.params.flashcardId}}},
     );
 
-    return res.status(200).json({message: `Flashcard has been deleted`});
+
+    return res.status(200).json({message: `Flashcard has been updated`});
   } catch(e) {
     const customError = new Error('Something went wrong during delete flashcard process');
     customError.status = 401;
@@ -228,6 +229,8 @@ const deleteFlashcard = async (req, res, next) => {
 };
 
 const saveQuizResult = async (req, res, next) => {
+
+  console.log("SAVE  QUIZ RESULT ")
   try {
     const validationErrors = validationResult(req);
 
@@ -238,13 +241,18 @@ const saveQuizResult = async (req, res, next) => {
       return next(customError);
     }
 
+    console.log(req.params.listId)
+    console.log(req.body.accuracy)
+
     const saveQuizResult = await List.findOneAndUpdate(
       {_id: req.params.listId, userId: req.user.id}, 
-      {$push: {'statistics.$.quizzes': {'accuracy': req.body.accuracy}}},
+      {$push: {'statistics.quizzes': {'accuracy': req.body.accuracy}}},
     );
 
+    return res.status(200).json({message: `Statistics have been updated`});
+
   } catch(e) {
-    const customError = new Error('Something went wrong during save quiz result process');
+    const customError = new Error('Something went wrong during update statistics process');
   }
 };
 
