@@ -7,51 +7,66 @@
     <h6 class="text-center">{{list.firstLanguage}} <-> {{list.secondLanguage}}</h6>
     <h6 class="text-center">Flashcards: {{list.flashcards.length}}</h6>
       
-    <div class="row q-col-qutter-xs q-mb-xl">
+    <div class="row ">
       <div class="col-xs-12 text-center">
         <q-btn flat class="button-quiz" @click="viewQuiz" size="large">Start Quiz</q-btn>
       </div>
     </div>
     
-    <q-card flat bordered class="my-card q-mb-md" v-for="flashcard in list.flashcards" :key="flashcard._id">
-      <q-card-section>
-        <div class="row items-center no-wrap">
-          <div class="col">
-            <div class="text-h6">{{flashcard.firstLanguage}}</div>
-            <div class="text-subtitle2">{{flashcard.secondLanguage}}</div>
-          </div>
 
-          <div class="col-auto">
-            <q-btn color="" round flat icon="more_vert">
-              <q-menu cover auto-close>
-                <q-list>
-                  <q-item clickable @click="openPromptUpdateFlashcard(flashcard)">
-                    <q-item-section>Update flashcard</q-item-section>
-                  </q-item>
-                  <q-item clickable @click="openPromptDeleteFlashcard(flashcard)">
-                    <q-item-section>Delete flashcard</q-item-section>
-                  </q-item>
-                </q-list>
-              </q-menu>
-            </q-btn>
-          </div>
-        </div>
-      </q-card-section>
+    <div class="row">
+      <div class="col-xs-12">
+        <trend
+          class="trend"
+          :data="chart"
+          :gradient="['#6fa8dc', '#42b983', '#2c3e50']"
+          auto-draw
+          smooth
+        >
+        </trend>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <q-card flat bordered class="my-card q-mb-md" v-for="flashcard in list.flashcards" :key="flashcard._id">
+          <q-card-section>
+            <div class="row items-center no-wrap">
+              <div class="col">
+                <div class="text-h6">{{flashcard.firstLanguage}}</div>
+                <div class="text-subtitle2">{{flashcard.secondLanguage}}</div>
+              </div>
 
-      <q-card-section>
+              <div class="col-auto">
+                <q-btn color="" round flat icon="more_vert">
+                  <q-menu cover auto-close>
+                    <q-list>
+                      <q-item clickable @click="openPromptUpdateFlashcard(flashcard)">
+                        <q-item-section>Update flashcard</q-item-section>
+                      </q-item>
+                      <q-item clickable @click="openPromptDeleteFlashcard(flashcard)">
+                        <q-item-section>Delete flashcard</q-item-section>
+                      </q-item>
+                    </q-list>
+                  </q-menu>
+                </q-btn>
+              </div>
+            </div>
+          </q-card-section>
 
-      </q-card-section>
+          <q-card-section>
 
-      <q-separator />
+          </q-card-section>
 
-      <q-card-actions>
-        <!-- <q-btn flat @click="viewList(list)">Go to list</q-btn> -->
-        <!-- <q-btn flat>Action 2</q-btn> -->
-      </q-card-actions>
-    </q-card>
+          <q-separator />
+
+          <q-card-actions>
+          </q-card-actions>
+        </q-card>
+      </div>
+    </div>
+    
 
 
-    <!-- <h1 v-for='word in flashcards'>Flashcard</h1> -->
 
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <q-btn fab icon="post_add" @click="openPromptCreateFlashcard" />
@@ -136,12 +151,17 @@
 
 <script>
 
-import { required, email } from 'vuelidate/lib/validators';
+import { required, email } from 'vuelidate/lib/validators'
 
 export default {
   name: 'PageList',
   async created() {
     await this.getList()
+
+
+    this.chart = this.list.statistics.quizzes.map(a => a.accuracy);
+
+    console.log(this.list.statistics.quizzes.map(a => a.accuracy))
 
     console.log(`list ${this.list}`)
   },
@@ -162,6 +182,7 @@ export default {
     formDeleteFlashcard: {
       id: '',
     },
+    chart: [],
   }),
   validations: {
     formCreateFlashcard: {
@@ -317,10 +338,12 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="sass">
   
-  .button-quiz {
-    width: 300px;
-  }
+  .button-quiz
+    width: 300px
+
+  .trend
+    height: 300px
 
 </style>

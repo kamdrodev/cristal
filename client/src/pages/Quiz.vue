@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-      <div class="col-xs-12 col-lg-6 offset-lg-3">
+      <div class="col-xs-12 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
          <q-card class="card col-xs-12" >
           <q-card-section>
             <div class="flex flex-start">
@@ -25,18 +25,18 @@
           <div class="col-xs-6"><span class="languages">{{this.temporaryList.secondLanguage}}</span></div>
         </div>
       </div> -->
-      <div class="col-xs-12 text-center list">
+      <!-- <div class="col-xs-12 text-center list desktop-only">
 
         <div class="row">
-          <div class="col-xs-12 col-md-6 q-mb-md">{{this.temporaryList.firstLanguage.toUpperCase()}}</div>
-          <div class="col-xs-12 col-md-6 q-mb-md">{{this.temporaryList.secondLanguage.toUpperCase()}}</div>
+          <div class="col-xs-12 col-sm-6 col-md-6 q-mb-md ">{{this.temporaryList.firstLanguage.toUpperCase()}}</div>
+          <div class="col-xs-12 col-sm-6 col-md-6 q-mb-md ">{{this.temporaryList.secondLanguage.toUpperCase()}}</div>
         </div>
-      </div>
+      </div> -->
       <div class="col-xs-12 text-center list" v-for="flashcard in this.temporaryList.flashcards">
 
         <div class="row">
-          <div class="col-xs-12 col-md-6 q-mt-md q-mb-md">{{flashcard.firstLanguage}}</div>
-          <div class="col-xs-12 col-md-6 q-mt-md q-mb-md">{{flashcard.secondLanguage}}</div>
+          <div class="col-xs-12 col-md-6 q-mt-md q-mb-md text-weight-bold">{{flashcard.firstLanguage}}</div>
+          <div class="col-xs-12 col-md-6 q-mt-md q-mb-md text-weight-bold">{{flashcard.secondLanguage}}</div>
         </div>
       </div>
     </div>
@@ -52,7 +52,7 @@ export default {
   name: 'Quiz',
   async created() {
 
-    this.getList()
+    await this.getList()
 
     this.temporaryList = Object.assign({}, this.list)
     this.temporaryFlashcardFirstLanguage = this.temporaryList.flashcards[this.temporaryFlashcardIndex].firstLanguage

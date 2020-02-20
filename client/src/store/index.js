@@ -1,13 +1,16 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import Trend from 'vuetrend'
+
 
 import auth from './modules/auth.js'
 import router from './modules/router.js'
 import lists from './modules/lists.js'
 
 // import example from './module-example'
-
+Vue.use(Trend)
 Vue.use(Vuex)
+
 
 /*
  * If not building with SSR mode, you can
