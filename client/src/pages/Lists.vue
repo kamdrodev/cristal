@@ -1,39 +1,8 @@
 <template>
-  <div class="row q-col-gutter-xs"">
-    <div class="col-xs-12 col-sm-12 offset-md col-md-4 offset-md-4 col-lg-6 offset-lg-3 col-xl-6  offset-xl-3">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 offset-md col-md-8 offset-md-2 col-lg-6 offset-lg-3 col-xl-6  offset-xl-3">
       <q-select outlined v-model="listsQueryOptions.secondLanguage" :options="languages" @input="changeQueryOptions" label="I want to learn..." />
-
-
-
-<!-- 
-    <q-list bordered class="rounded-borders" v-for="list in lists" :key="list._id" @click="selectElementOfList(list._id)">
-      <q-item-label header>{{list.title}}</q-item-label>
-      <q-item>
-        <q-item-section avatar top>
-          <q-icon name="list" size="34px" />
-        </q-item-section>
-
-        <q-item-section top class="col-2 gt-sm">
-          <q-item-label class="q-mt-sm">{{list.firstLanguage.substring(0,3)}} <-> {{list.secondLanguage.substring(0,3)}}</q-item-label>
-        </q-item-section>
-
-        <q-item-section top>
-          <q-item-label lines="1">
-            <span class="text-weight-medium">{{list.description}}</span>
-            <span class="text-grey-8"></span>
-          </q-item-label>
-        </q-item-section>
-        <q-item-section top side>
-          <div class="text-grey-8 q-gutter-xs">
-            <q-btn class="gt-xs" size="12px" flat dense round icon="edit" @click="openPromptUpdateList(list)" />
-            <q-btn class="gt-xs" size="12px" flat dense round icon="delete" @click="openPromptDeleteList(list)" />
-            <q-btn size="12px" flat dense round icon="dashboard" @click="viewList(list._id)" />
-          </div>
-        </q-item-section>
-      </q-item>     
-    </q-list> -->
-
-    <q-card flat bordered class="my-card " v-for="list in lists" :key="list._id">
+    <q-card flat bordered class="my-card q-mt-md" v-for="list in lists" :key="list._id">
       <q-card-section>
         <div class="row items-center no-wrap">
           <div class="col">

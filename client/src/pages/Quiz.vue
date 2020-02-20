@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-      <div class="col-xs-12 text-center">
+      <div class="col-xs-12 col-lg-6 offset-lg-3">
          <q-card class="card col-xs-12" >
           <q-card-section>
             <div class="flex flex-start">
@@ -11,7 +11,7 @@
           </q-card-section>
           <q-card-section>
             
-              <div class="first-language">{{this.temporaryFlashcardFirstLanguage}}</div>
+              <div class="first-language text-center q-mb-lg">{{this.temporaryFlashcardFirstLanguage}}</div>
               <q-input filled v-model="inputFlashcard" @keyup.enter="nextFlashcard" label="Type" :error="$v.inputFlashcard.$error" class="input">
                 <template v-slot:prepend>
                 </template>
@@ -25,10 +25,18 @@
           <div class="col-xs-6"><span class="languages">{{this.temporaryList.secondLanguage}}</span></div>
         </div>
       </div> -->
-      <div class="col-xs-12 text-center list" v-for="flashcard in this.temporaryList.flashcards">
+      <div class="col-xs-12 text-center list">
+
         <div class="row">
-          <div class="col-xs-12 col-md-6">{{flashcard.firstLanguage}}</div>
-          <div class="col-xs-12 col-md-6">{{flashcard.secondLanguage}}</div>
+          <div class="col-xs-12 col-md-6 q-mb-md">{{this.temporaryList.firstLanguage.toUpperCase()}}</div>
+          <div class="col-xs-12 col-md-6 q-mb-md">{{this.temporaryList.secondLanguage.toUpperCase()}}</div>
+        </div>
+      </div>
+      <div class="col-xs-12 text-center list" v-for="flashcard in this.temporaryList.flashcards">
+
+        <div class="row">
+          <div class="col-xs-12 col-md-6 q-mt-md q-mb-md">{{flashcard.firstLanguage}}</div>
+          <div class="col-xs-12 col-md-6 q-mt-md q-mb-md">{{flashcard.secondLanguage}}</div>
         </div>
       </div>
     </div>
@@ -51,17 +59,9 @@ export default {
     this.temporaryFlashcardSecondLanguage = this.temporaryList.flashcards[this.temporaryFlashcardIndex].secondLanguage
   },
   validations: {
-    
     inputFlashcard: required,
-    
   },
   data: () => ({
-    // counter: 0,
-    // flashcard: "",
-    // currentList: {},
-    // currentFlashcardFirstLanguage: '',
-    // currentFlashcardSecondLanguage: '',
-    // to refactor
     accuracy: 0,
     correctAnswers: 0,
     incorrectAnswers: 0,
@@ -142,7 +142,6 @@ export default {
   .card
     height: 300px
     background-color: $dark
-    // border: 1px solid $accent
     .input  
       width: 100%
 
@@ -152,11 +151,8 @@ export default {
 
   .list
     .row 
-      // border-bottom: 1px solid $accent
       font-size: 20px
-      padding: 20px 0
   .first-language
     font-size: 26px
     font-weight: bold
-    padding-bottom: 20px
 </style>

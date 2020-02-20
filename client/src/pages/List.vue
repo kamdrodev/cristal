@@ -13,7 +13,7 @@
       </div>
     </div>
     
-    <q-card flat bordered class="my-card " v-for="flashcard in list.flashcards" :key="flashcard._id">
+    <q-card flat bordered class="my-card q-mb-md" v-for="flashcard in list.flashcards" :key="flashcard._id">
       <q-card-section>
         <div class="row items-center no-wrap">
           <div class="col">
@@ -30,9 +30,6 @@
                   </q-item>
                   <q-item clickable @click="openPromptDeleteFlashcard(flashcard)">
                     <q-item-section>Delete flashcard</q-item-section>
-                  </q-item>
-                  <q-item clickable>
-                    <q-item-section>Share</q-item-section>
                   </q-item>
                 </q-list>
               </q-menu>
