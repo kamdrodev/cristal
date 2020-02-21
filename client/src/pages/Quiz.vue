@@ -19,19 +19,6 @@
           </q-card-section>
         </q-card>
       </div>
-      <!-- <div class="col-xs-12 text-center">
-        <div class="row">
-          <div class="col-xs-6"><span class="languages">{{this.temporaryList.firstLanguage}}</span></div>
-          <div class="col-xs-6"><span class="languages">{{this.temporaryList.secondLanguage}}</span></div>
-        </div>
-      </div> -->
-      <!-- <div class="col-xs-12 text-center list desktop-only">
-
-        <div class="row">
-          <div class="col-xs-12 col-sm-6 col-md-6 q-mb-md ">{{this.temporaryList.firstLanguage.toUpperCase()}}</div>
-          <div class="col-xs-12 col-sm-6 col-md-6 q-mb-md ">{{this.temporaryList.secondLanguage.toUpperCase()}}</div>
-        </div>
-      </div> -->
       <div class="col-xs-12 text-center list" v-for="flashcard in this.temporaryList.flashcards">
 
         <div class="row">
@@ -39,7 +26,26 @@
           <div class="col-xs-12 col-md-6 q-mt-md q-mb-md text-weight-bold">{{flashcard.secondLanguage}}</div>
         </div>
       </div>
+        
+    <!-- Dialog - Close / Start -->
+     <q-dialog v-model="promptQuiz" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-avatar icon="delete" color="primary" text-color="white" />
+          <span class="q-ml-sm">Do you really want to solve this quiz once again?</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Close quiz" color="primary" v-close-popup @click="closeQuiz" />
+          <q-btn flat label="Start quiz" color="primary" @click="startQuiz"/>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+
     </div>
+
+    
 </template>
 
 <script>
@@ -62,6 +68,7 @@ export default {
     inputFlashcard: required,
   },
   data: () => ({
+    promptQuiz: false,
     accuracy: 0,
     correctAnswers: 0,
     incorrectAnswers: 0,
@@ -99,8 +106,9 @@ export default {
           this.incorrectAnswers++;
           // this.$q.notify({message: "Incorrect answer", color: 'negative'})
         }
+        await this.saveQuizResult()
+        this.promptQuiz = true
 
-        this.saveQuizResult()
       } else {
         this.temporaryFlashcardIndex++;
 
@@ -113,6 +121,9 @@ export default {
           this.$q.notify({message: "Correct answer", color: 'positive'})
         }  else {
           this.incorrectAnswers++;
+          this.temporaryFlashcardFirstLanguage = this.temporaryList.flashcards[this.temporaryFlashcardIndex].firstLanguage
+          this.temporaryFlashcardSecondLanguage = this.temporaryList.flashcards[this.temporaryFlashcardIndex].secondLanguage
+          this.inputFlashcard = '';
           // this.$q.notify({message: "Incorrect answer", color: 'negative'})
         }
       }
@@ -130,6 +141,22 @@ export default {
         this.$q.notify({message: e.message, color: 'negative'})
       }
     },
+
+    async closeQuiz() {
+      try {
+        this.$router.push(`/list/${this.$route.params.id}`)
+      } catch (e) {
+        this.$q.notify({message: "Something has been gone wrong" , color: 'negative'})
+      }
+    },
+    async startQuiz() {
+      try {
+        this.promptQuiz = false
+        this.$q.notify({message: "Quiz", color: 'positive'})
+      } catch (e) {
+        this.$q.notify({message: "Something has been gone wrong" , color: 'negative'})
+      }
+    }
   },
   computed: {
     ...mapGetters('lists', ['list'])
