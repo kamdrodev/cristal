@@ -26,29 +26,18 @@ app.use(helmet());
 app.use('/api/auth', authRoutes);
 app.use('/api/', listsRoutes);
 
-app.get('/api', (req, res) => {
-  return res.status(200).json({
-    'message': 'Hello World'
-  });
-});
 
 app.use((err, req, res, next) => {
-  if (!err.status) {
-    err.status = 500;
-  } 
-  if (!err.message) {
-    err.message = 'Something went really wrong';
+  if (res.headersSent) {
+      return next(err)
   }
-
-  if (!err.errors) {
-    err.erros = [];
-  }
-
+  err.message = err.message || 'Error';
+  err.status = err.status || 400;
   res.status(err.status).json({
-    message: err.message,
-    errors: err.errors,
-  });
+    message: err.message
+  })
 });
+
 
 app.listen(port, () => {
   console.log(chalk.yellow(`Server is running on port: ${port}`));

@@ -29,6 +29,7 @@ const actions = {
       }
     } catch(e) {
       console.log(e)
+      console.log(`qwewqe`, e.response.dataq, e.response.status)
       throw new Error(e.response.data.message)
     }
   },
@@ -46,8 +47,7 @@ const actions = {
         message: signInRequest.data.message
       }
     } catch(e) {
-      console.log(e);
-      throw new Error(e.response.data.message)
+      throw new Error('The email or password is incorrect')
     }
   },
   async signOut({dispatch, commit}) {

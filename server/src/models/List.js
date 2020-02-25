@@ -28,24 +28,29 @@ const ListSchema = mongoose.Schema({
     default: 0,
   },
   flashcards: [{
+    createdAt: {
+      type: Date,
+      default: new Date(),
+    },
     firstLanguage: {
       type: String,
     },
     secondLanguage: {
       type: String,
     },
+
   }],
   statistics: {
-      quizzes: [{
-        createdAt: {
-          type: Date,
-          default: new Date(),
-        },
-        accuracy: {
-          type: Number,
-          required: true,
-        },
-      }]
+    quizzes: [{
+      createdAt: {
+        type: Date,
+        default: new Date(),
+      },
+      accuracy: {
+        type: Number,
+        required: true,
+      },
+    }]
   },
   createdAt: {
     type: Date,

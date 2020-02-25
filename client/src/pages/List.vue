@@ -157,13 +157,7 @@ export default {
   name: 'PageList',
   async created() {
     await this.getList()
-
-
     this.chart = this.list.statistics.quizzes.map(a => a.accuracy);
-
-    console.log(this.list.statistics.quizzes.map(a => a.accuracy))
-
-    console.log(`list ${this.list}`)
   },
   data: () => ({
     promptCreateFlashcard: false,
@@ -282,9 +276,6 @@ export default {
     },
     async deleteFlashcard() {
       try {
-
-        console.log(this.$route.params.id)
-        console.log(this.formDeleteFlashcard.id);
         const deleteFlashcardProcess = await this.$store.dispatch('lists/deleteFlashcard', {
           listId: this.$route.params.id,
           flashcardId: this.formDeleteFlashcard.id,

@@ -11,15 +11,8 @@ const signUp = async (req, res, next) => {
     const validationErrors = validationResult(req);
 
     if (!validationErrors.isEmpty()) {
-      let errors = [];
-
-      for (let i = 0; i < validationErrors.errors.length; i++) {
-        errors.push(validationErrors.errors[i]);
-      }
-
-      const customError = new Error(validationErrors);
+      const customError = new Error('Validation error');
       customError.status = 400;
-      customError.errors = errors;
       return next(customError);
     }
 
@@ -36,7 +29,6 @@ const signUp = async (req, res, next) => {
 
     res.status(200).json({message: 'User has been created'});
   } catch (e) {
-    console.log(e);
     const customError = new Error('Something went wrong during sign-up process');
     customError.status = 401;
     return next(customError);
