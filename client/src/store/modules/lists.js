@@ -24,6 +24,7 @@ const actions = {
     try {
       const getAllListsRequest = await axios.get('lists', {
         params: {
+          'firstLanguage': listsQueryOptions.firstLanguage ? listsQueryOptions.firstLanguage : '',
           'secondLanguage': listsQueryOptions.secondLanguage ? listsQueryOptions.secondLanguage : '',
         }
       });

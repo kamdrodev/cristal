@@ -28,8 +28,12 @@ const getList = async (req, res, next) => {
 
 const getAllLists = async (req, res, next) => {
   try {
+
+    console.log(req.query.firstLanguage);
+    console.log(req.query.secondLanguage);
     let queryOptions = {
       "userId": req.user.id,
+      "firstLanguage": req.query.firstLanguage ? req.query.firstLanguage : null,
       "secondLanguage": req.query.secondLanguage ? req.query.secondLanguage : null,
     }
 

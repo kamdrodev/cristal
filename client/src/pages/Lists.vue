@@ -1,6 +1,7 @@
 <template>
   <div class="row">
     <div class="col-xs-12 col-sm-12 offset-md col-md-8 offset-md-2 col-lg-6 offset-lg-3 col-xl-6  offset-xl-3">
+      <q-select outlined v-model="listsQueryOptions.firstLanguage" :options="languages" @input="changeQueryOptions" label="I know..." />
       <q-select outlined v-model="listsQueryOptions.secondLanguage" :options="languages" @input="changeQueryOptions" label="I want to learn..." />
     <q-card flat bordered class="my-card q-mt-md" v-for="list in lists" :key="list._id">
       <q-card-section>
@@ -150,6 +151,7 @@ export default {
     promptUpdateList: false,
     promptDeleteList: false,
     listsQueryOptions: {
+      firstLanguage: 'polish',
       secondLanguage: 'french',
     },
     languages: [

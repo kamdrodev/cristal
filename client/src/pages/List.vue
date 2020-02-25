@@ -19,6 +19,7 @@
         <trend
           class="trend"
           :data="chart"
+          
           :gradient="['#6fa8dc', '#42b983', '#2c3e50']"
           auto-draw
           smooth
