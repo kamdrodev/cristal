@@ -42,7 +42,9 @@
       </q-card>
     </q-dialog>
 
-
+    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+      <q-btn fab icon="list" @click="closeQuiz" />
+    </q-page-sticky>
     </div>
 
     
@@ -156,7 +158,7 @@ export default {
       } catch (e) {
         this.$q.notify({message: "Something has been gone wrong" , color: 'negative'})
       }
-    }
+    },
   },
   computed: {
     ...mapGetters('lists', ['list'])

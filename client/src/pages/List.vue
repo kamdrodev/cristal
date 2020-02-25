@@ -1,18 +1,24 @@
 <template>
   <div class="row q-col-gutter-xs"">
     <div class="col-xs-12 col-sm-12 offset-md col-md-4 offset-md-4 col-lg-6 offset-lg-3 col-xl-6  offset-xl-3">
-      
-    <h4 class="text-center">{{list.title}}</h4>
-    <h6 class="text-center">{{list.description}}</h6>
-    <h6 class="text-center">{{list.firstLanguage}} <-> {{list.secondLanguage}}</h6>
-    <h6 class="text-center">Flashcards: {{list.flashcards.length}}</h6>
-      
+    <div class="row text-center">
+      <div class="col-xs-12">
+        <div class="q-mt-lg text-h6">{{list.title}}</div>
+        <div class="q-mt-lg text-h6">{{list.description}}</div>
+        <div class="q-mt-lg text-h6">Flashcards: {{ list.flashcards.length }}</div>
+        <q-btn  class="q-mt-lg button-view-quiz" @click="viewQuiz" size="large">Start Quiz</q-btn>
+      </div>
+    </div>
+   
+    <!-- <h4 class="text-center">{{list.title}}</h4> -->
+   <!-- 
     <div class="row ">
       <div class="col-xs-12 text-center">
         <q-btn flat class="button-quiz" @click="viewQuiz" size="large">Start Quiz</q-btn>
       </div>
+    </div> -->
     </div>
-    
+    <div class="col-xs-12 col-sm-12 offset-md col-md-4 offset-md-4 col-lg-6 offset-lg-3 col-xl-6  offset-xl-3">
 
     <div class="row">
       <div class="col-xs-12">
@@ -29,12 +35,14 @@
     </div>
     <div class="row">
       <div class="col-xs-12">
-        <q-card flat bordered class="my-card q-mb-md" v-for="flashcard in list.flashcards" :key="flashcard._id">
-          <q-card-section>
+        <q-card flat  class="card flashard q-mb-md" v-for="flashcard in list.flashcards" :key="flashcard._id">
+          <q-card-section >
             <div class="row items-center no-wrap">
               <div class="col">
                 <div class="text-h6">{{flashcard.firstLanguage}}</div>
-                <div class="text-subtitle2">{{flashcard.secondLanguage}}</div>
+              </div>
+              <div class="col">
+                <div class="text-h6">{{flashcard.firstLanguage}}</div>
               </div>
 
               <div class="col-auto">
@@ -54,11 +62,6 @@
             </div>
           </q-card-section>
 
-          <q-card-section>
-
-          </q-card-section>
-
-          <q-separator />
 
           <q-card-actions>
           </q-card-actions>
@@ -338,4 +341,15 @@ export default {
   .trend
     height: 300px
 
+  .card
+    height: 100%
+    &.informations  
+      background: linear-gradient(to right, $dark, $primary)
+      .button-view-quiz
+        background-color: $dark
+    &.flashcard
+      background: linear-gradient(to right, $dark, $primary)
+    
+  .button-view-quiz
+     background-color: $primary
 </style>
