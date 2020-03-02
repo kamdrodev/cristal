@@ -19,11 +19,11 @@
           </q-card-section>
         </q-card>
       </div>
-      <div class="col-xs-12 text-center list" v-for="flashcard in this.temporaryList.flashcards">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8 offset-lg-2 text-center list" v-for="flashcard in this.temporaryList.flashcards">
 
         <div class="row">
-          <div class="col-xs-12 col-md-6 q-mt-md q-mb-md text-weight-bold">{{flashcard.firstLanguage}}</div>
-          <div class="col-xs-12 col-md-6 q-mt-md q-mb-md text-weight-bold">{{flashcard.secondLanguage}}</div>
+          <div class="col-xs-12 col-md-6 q-mt-md q-mb-md text-weight-bold word first-language">{{flashcard.firstLanguage}}</div>
+          <div class="col-xs-12 col-md-6 q-mt-md q-mb-md text-weight-bold word second-language">{{flashcard.secondLanguage}}</div>
         </div>
       </div>
         
@@ -184,4 +184,8 @@ export default {
   .first-language
     font-size: 26px
     font-weight: bold
+  .word
+    font-size: 16px !important
+    &.second-language 
+      color: $primary
 </style>

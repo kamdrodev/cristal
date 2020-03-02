@@ -18,7 +18,7 @@
       </div>
     </div> -->
     </div>
-    <div class="col-xs-12 col-sm-12 offset-md col-md-4 offset-md-4 col-lg-6 offset-lg-3 col-xl-6  offset-xl-3">
+    <div class="col-xs-12 col-sm-12 offset-md col-md-12 col-lg-8 offset-lg-2 col-xl-8  offset-xl-2">
 
     <div class="row">
       <div class="col-xs-12">
@@ -34,8 +34,8 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-xs-12">
-        <q-card flat  class="card flashard q-mb-md" v-for="flashcard in list.flashcards" :key="flashcard._id">
+      <div class="col-xs-12 col-sm-6 col-md-12 col-lg-4 " v-for="flashcard in list.flashcards" :key="flashcard._id">
+        <!-- <q-card flat  class="card flashard q-mb-md" v-for="flashcard in list.flashcards" :key="flashcard._id">
           <q-card-section >
             <div class="row items-center no-wrap">
               <div class="col">
@@ -65,6 +65,42 @@
 
           <q-card-actions>
           </q-card-actions>
+        </q-card> -->
+        <q-card flat bordered class="my-card q-ma-md" >
+          <q-card-section>
+            <div class="row items-center no-wrap">
+              <div class="col text-center">
+                <div class=" word first-language ellipsis">{{flashcard.firstLanguage}}</div>
+                <div class=" word second-language ellipsis">{{flashcard.secondLanguage}}</div>
+              </div>
+
+              <div class="col-auto">
+                <q-btn color="" round flat icon="more_vert">
+                  <q-menu cover auto-close>
+                    <q-list>
+                      <q-item clickable @click="openPromptUpdateFlashcard(flashcard)">
+                        <q-item-section>Update flashcard</q-item-section>
+                      </q-item>
+                      <q-item clickable @click="openPromptDeleteFlashcard(flashcard)">
+                        <q-item-section>Delete flashcard</q-item-section>
+                      </q-item>
+                    </q-list>
+                  </q-menu>
+                </q-btn>
+              </div>
+            </div>
+          </q-card-section>
+
+          <!-- <q-card-section>
+            {{ lorem }}
+          </q-card-section>
+
+          <q-separator />
+
+          <q-card-actions>
+            <q-btn flat>Action 1</q-btn>
+            <q-btn flat>Action 2</q-btn>
+          </q-card-actions> -->
         </q-card>
       </div>
     </div>
@@ -81,7 +117,7 @@
       <q-card style="min-width: 350px">
         <form c>
         <q-card-section>
-          <div class="text-h6">Create word</div>
+          <div class="text-h6">Create flashcard</div>
         </q-card-section>
         <q-card-section class="q-pt-none">          
           <q-input filled v-model="formCreateFlashcard.firstLanguage" label="First language" :error="$v.formCreateFlashcard.firstLanguage.$error" class="q-pb-lg">
@@ -352,4 +388,9 @@ export default {
     
   .button-view-quiz
      background-color: $primary
+
+  .word
+    font-size: 16px !important
+    &.second-language 
+      color: $primary
 </style>
