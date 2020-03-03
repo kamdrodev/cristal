@@ -1,8 +1,16 @@
-## Cristal
-### Language learning application.
+# Cristal
+## Language learning application.
 Create your own sets of flashcards, learn them and check your progress.
 
-# Client
+## Screenshots
+
+![create-list](https://i.imgur.com/2irseM1.png)
+![create-flashcard](https://i.imgur.com/WqgcDVG.png)
+![list](https://i.imgur.com/6ZxGsuW.png)
+![list-trend](https://i.imgur.com/mXSk7A6.png)
+![quiz](https://i.imgur.com/WL9xynu.png)
+
+## Client
 
 ## Tools
 * Vue (Vuex)
@@ -16,23 +24,17 @@ npm install
 
 ### Compiles and hot-reloads for development
 ```
-npm run serve
+quasar dev
 ```
 
 ### Compiles and minifies for production
 ```
-npm run build
+quasar build
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
-# Server
+## Server
 
 ## Tools
 * Node.js
