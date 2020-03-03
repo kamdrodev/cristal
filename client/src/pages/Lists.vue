@@ -208,21 +208,17 @@ export default {
 
       this.$q.notify({message: getAllListsProcess.message, color: 'positive'})
     } catch (e) {
-      console.log(e)
       this.$q.notify({message: e.message, color: 'negative'})
     }
 
   },
   methods: {
     selectElementOfList(id) {
-      console.log('selectElementOfList)', id)
     },
     openPromptCreateList() {
       this.promptCreateList = true
     },
     async openPromptUpdateList(list) {
-
-      console.log(list);      
       this.promptUpdateList = true
       this.formUpdateList = {
         id: list._id,
@@ -244,12 +240,10 @@ export default {
 
         this.$q.notify({message: getAllListsProcess.message, color: 'positive'})
       } catch (e) {
-        console.log(e)
         this.$q.notify({message: e.message, color: 'negative'})
       }
     },
     async changeQueryOptions() {
-      console.log('change query options')
       await this.getAllLists()
     },
     async createList() {
@@ -286,7 +280,6 @@ export default {
     },
     async updateList() {
       try {
-        console.log('Edit list')
         this.$v.formUpdateList.$touch()
 
         if (this.$v.formUpdateList.$error) {

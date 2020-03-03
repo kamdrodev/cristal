@@ -28,9 +28,6 @@ const getList = async (req, res, next) => {
 
 const getAllLists = async (req, res, next) => {
   try {
-
-    console.log(req.query.firstLanguage);
-    console.log(req.query.secondLanguage);
     let queryOptions = {
       "userId": req.user.id,
       "firstLanguage": req.query.firstLanguage ? req.query.firstLanguage : null,
@@ -233,8 +230,6 @@ const deleteFlashcard = async (req, res, next) => {
 };
 
 const saveQuizResult = async (req, res, next) => {
-
-  console.log("SAVE  QUIZ RESULT ")
   try {
     const validationErrors = validationResult(req);
 
@@ -245,16 +240,12 @@ const saveQuizResult = async (req, res, next) => {
       return next(customError);
     }
 
-    console.log(req.params.listId)
-    console.log(req.body.accuracy)
-
     const saveQuizResult = await List.findOneAndUpdate(
       {_id: req.params.listId, userId: req.user.id}, 
       {$push: {'statistics.quizzes': {'accuracy': req.body.accuracy}}},
     );
 
     return res.status(200).json({message: `Statistics have been updated`});
-
   } catch(e) {
     const customError = new Error('Something went wrong during update statistics process');
   }
