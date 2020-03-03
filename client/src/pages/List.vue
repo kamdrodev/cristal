@@ -1,7 +1,7 @@
 <template>
   <div class="row q-col-gutter-xs"">
     <div class="col-xs-12 col-sm-12 offset-md col-md-4 offset-md-4 col-lg-6 offset-lg-3 col-xl-6  offset-xl-3">
-    <div class="row text-center">
+    <div class="row text-center q-mb-md">
       <div class="col-xs-12">
         <div class="q-mt-lg text-h6">{{list.title}}</div>
         <div class="q-mt-lg text-h6">{{list.description}}</div>
@@ -21,7 +21,7 @@
     <div class="col-xs-12 col-sm-12 offset-md col-md-12 col-lg-8 offset-lg-2 col-xl-8  offset-xl-2">
 
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col-xs-12  q-mb-md">
         <trend
           class="trend"
           :data="chart"

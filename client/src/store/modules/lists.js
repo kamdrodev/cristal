@@ -32,7 +32,7 @@ const actions = {
       commit('setLists', getAllListsRequest.data.lists);
 
       return {
-        message: 'Lists have been fetched'
+        message: getAllListsRequest.data.message
       }
     } catch(e) {
       console.log(e)
@@ -45,7 +45,7 @@ const actions = {
       commit('setList', getListRequest.data.list)
       
       return {
-        message: 'List has been fetched'
+        message: getListRequest.data.message
       }
     } catch(e) {
       console.log(e);
@@ -62,7 +62,7 @@ const actions = {
       });
       
       return {
-        message: 'List has been created'
+        message: createListRequest.data.message
       }
     } catch(e) {
       console.log(e);
@@ -89,7 +89,7 @@ const actions = {
       const deleteListRequest = await axios.delete(`lists/${listId}`);
 
       return {
-        message: 'List has been deleted'
+        message: deleteListRequest.data.message
       }
     } catch(e) {
       console.log(e);
@@ -105,7 +105,7 @@ const actions = {
       });
 
       return {
-        message: "Word  has been created"
+        message: createFlashcardRequest.data.message
       }
     } catch(e) {
       throw new Error(e.response.data.message);

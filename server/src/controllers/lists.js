@@ -78,7 +78,7 @@ const createList = async (req, res, next) => {
 
     const newListSave = await newList.save();
 
-    return res.status(200).json({message: `List ${req.body.title} has been created`});
+    return res.status(200).json({message: `List has been created`});
   } catch(e) {
     const customError = new Error('Something went wrong during create list process');
     customError.status = 401;

@@ -16,10 +16,10 @@
         />
 
         <q-toolbar-title>
-          Quasar App
+          Cristal
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <!-- <div>Quasar v{{ $q.version }}</div> -->
       </q-toolbar>
     </q-header>
 
