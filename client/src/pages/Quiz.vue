@@ -27,8 +27,8 @@
         </div>
       </div>
         
-    <!-- Dialog - Close / Start -->
-     <q-dialog v-model="promptQuiz" persistent>
+    <!-- Dialog - Close / Start  Quiz-->
+    <q-dialog v-model="promptQuiz" persistent>
       <q-card>
         <q-card-section class="row items-center">
           <q-avatar icon="delete" color="primary" text-color="white" />
@@ -36,14 +36,29 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn flat label="Close quiz" color="primary" v-close-popup @click="closeQuiz" />
+          <q-btn flat label="Close quiz" color="primary" @click="closeQuiz" />
           <q-btn flat label="Start quiz" color="primary" @click="startQuiz"/>
         </q-card-actions>
       </q-card>
     </q-dialog>
 
+    <!-- Dialog - Back to list -->
+    <q-dialog v-model="promptBackToList" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-avatar icon="delete" color="primary" text-color="white" />
+          <span class="q-ml-sm">Do you really want to back to list?</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="No" color="primary"  v-close-popup />
+          <q-btn flat label="Yes" color="primary" @click="closeQuiz"/>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
-      <q-btn fab icon="list" @click="closeQuiz" />
+      <q-btn fab icon="list" @click="openPromptBackToList" />
     </q-page-sticky>
     </div>
 
@@ -59,7 +74,6 @@ import { mapGetters } from 'vuex';
 export default {
   name: 'Quiz',
   async created() {
-
     await this.getList()
 
     this.temporaryList = Object.assign({}, this.list)
@@ -71,6 +85,7 @@ export default {
   },
   data: () => ({
     promptQuiz: false,
+    promptBackToList: false,
     accuracy: 0,
     correctAnswers: 0,
     incorrectAnswers: 0,
@@ -92,7 +107,6 @@ export default {
       }
     },
     async nextFlashcard() { 
-    // it is weird ---> refactor
       if (this.temporaryFlashcardIndex >= this.temporaryList.flashcards.length - 1) {
         this.temporaryFlashcardIndex = 0;
         this.correctAnswers = 0;
@@ -114,8 +128,7 @@ export default {
       } else {
         this.temporaryFlashcardIndex++;
 
-        if (this.inputFlashcard === this.temporaryFlashcardSecondLanguage) {
-          
+        if (this.inputFlashcard === this.temporaryFlashcardSecondLanguage) { 
           this.correctAnswers++;
           this.temporaryFlashcardFirstLanguage = this.temporaryList.flashcards[this.temporaryFlashcardIndex].firstLanguage
           this.temporaryFlashcardSecondLanguage = this.temporaryList.flashcards[this.temporaryFlashcardIndex].secondLanguage
@@ -128,9 +141,7 @@ export default {
           this.inputFlashcard = '';
           // this.$q.notify({message: "Incorrect answer", color: 'negative'})
         }
-      }
-
-      
+      } 
     },
     async saveQuizResult() {
       try {
@@ -143,7 +154,9 @@ export default {
         this.$q.notify({message: e.message, color: 'negative'})
       }
     },
-
+    async openPromptBackToList() {
+      this.promptBackToList = true;
+    },
     async closeQuiz() {
       try {
         this.$router.push(`/list/${this.$route.params.id}`)
