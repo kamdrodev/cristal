@@ -240,9 +240,14 @@ const saveQuizResult = async (req, res, next) => {
       return next(customError);
     }
 
+    console.log('result', JSON.stringify(req.body));
+    console.log('result', JSON.stringify(req.body.result));
+    console.log('result.correctAnswers', req.body.result.correctAnswers);
+    console.log('result.incorrectAnswers', req.body.result.incorrectAnswers);
+
     const saveQuizResult = await List.findOneAndUpdate(
       {_id: req.params.listId, userId: req.user.id}, 
-      {$push: {'statistics.quizzes': {'accuracy': req.body.accuracy}}},
+      {$push: {'statistics.quizzes': {'correctAnswers': req.body.result.correctAnswers, 'incorrectAnswers': req.body.result.incorrectAnswers}}},
     );
 
     return res.status(200).json({message: `Statistics have been updated`});

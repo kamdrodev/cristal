@@ -4,22 +4,22 @@
          <q-card class="card col-xs-12" >
           <q-card-section>
             <div class="flex flex-start">
-              {{ this.temporaryFlashcardIndex }} / {{this.temporaryList.flashcards.length}}
+              {{ this.temporary.flashcard.index }} / {{this.numberOfCards}}
               ---
-              {{ this.temporaryList.firstLanguage }} <-> {{ this.temporaryList.secondLanguage }}
+              {{ this.temporary.list.firstLanguage }} <-> {{ this.temporary.list.secondLanguage }}
             </div>
           </q-card-section>
           <q-card-section>
             
-              <div class="first-language text-center q-mb-lg">{{this.temporaryFlashcardFirstLanguage}}</div>
-              <q-input filled v-model="inputFlashcard" @keyup.enter="nextFlashcard" label="Type" :error="$v.inputFlashcard.$error" class="input">
+              <div class="first-language text-center q-mb-lg">{{this.temporary.flashcard.firstLanguage}}</div>
+              <q-input filled v-model="answer" @keyup.enter="nextFlashcard" label="Type" :error="$v.answer.$error" class="input">
                 <template v-slot:prepend>
                 </template>
               </q-input>
           </q-card-section>
         </q-card>
       </div>
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8 offset-lg-2 text-center list" v-for="flashcard in this.temporaryList.flashcards">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8 offset-lg-2 text-center list" v-for="flashcard in this.temporary.list.flashcards">
 
         <div class="row">
           <div class="col-xs-12 col-md-6 q-mt-md q-mb-md text-weight-bold word first-language">{{flashcard.firstLanguage}}</div>
@@ -76,24 +76,32 @@ export default {
   async created() {
     await this.getList()
 
-    this.temporaryList = Object.assign({}, this.list)
-    this.temporaryFlashcardFirstLanguage = this.temporaryList.flashcards[this.temporaryFlashcardIndex].firstLanguage
-    this.temporaryFlashcardSecondLanguage = this.temporaryList.flashcards[this.temporaryFlashcardIndex].secondLanguage
+    this.temporary.list = Object.assign({}, this.list)
+    this.temporary.flashcard.firstLanguage = this.temporary.list.flashcards[this.temporary.flashcard.index].firstLanguage
+    this.temporary.flashcard.secondLanguage = this.temporary.list.flashcards[this.temporary.flashcard.index].secondLanguage
   },
   validations: {
-    inputFlashcard: required,
+    answer: required,
   },
   data: () => ({
     promptQuiz: false,
     promptBackToList: false,
     accuracy: 0,
-    correctAnswers: 0,
-    incorrectAnswers: 0,
-    temporaryList: {},
-    temporaryFlashcardFirstLanguage: '',
-    temporaryFlashcardSecondLanguage: '',
-    temporaryFlashcardIndex: 0,
-    inputFlashcard: '',
+    numberOfCards: 5,
+    result: {
+      correctAnswers: 0,
+      incorrectAnswers: 0,
+      flashcards: [],
+    },
+    temporary: {
+      list: {},
+      flashcard: {
+        firstLanguage: '',
+        secondLanguage: '',
+        index: 0,
+      }
+    },
+    answer: '',
   }),
   methods: {
     async getList() {
@@ -107,47 +115,96 @@ export default {
       }
     },
     async nextFlashcard() { 
-      if (this.temporaryFlashcardIndex >= this.temporaryList.flashcards.length - 1) {
-        this.temporaryFlashcardIndex = 0;
-        this.correctAnswers = 0;
-        this.incorrectAnswers = 0;
 
-        if (this.inputFlashcard === this.temporaryFlashcardSecondLanguage) {
-          this.correctAnswers++;
-          this.temporaryFlashcardFirstLanguage = this.temporaryList.flashcards[this.temporaryFlashcardIndex].firstLanguage
-          this.temporaryFlashcardSecondLanguage = this.temporaryList.flashcards[this.temporaryFlashcardIndex].secondLanguage
-          this.inputFlashcard = '';
-          this.$q.notify({message: "Correct answer", color: 'positive'})
-        }  else {
-          this.incorrectAnswers++;
-          // this.$q.notify({message: "Incorrect answer", color: 'negative'})
-        }
+      const verifyFlashcardResult = await this.verifyFlashcard(this.answer)
+
+      this.temporary.flashcard.index++
+      if (this.temporary.flashcard.index >= this.numberOfCards) {
         await this.saveQuizResult()
         this.promptQuiz = true
+        console.log(`Result: ${JSON.stringify(this.result)}`)
+        this.temporary.flashcard.index = 0
+      }
+      
+      this.inputFlashcard = ''
 
-      } else {
-        this.temporaryFlashcardIndex++;
-
-        if (this.inputFlashcard === this.temporaryFlashcardSecondLanguage) { 
-          this.correctAnswers++;
-          this.temporaryFlashcardFirstLanguage = this.temporaryList.flashcards[this.temporaryFlashcardIndex].firstLanguage
-          this.temporaryFlashcardSecondLanguage = this.temporaryList.flashcards[this.temporaryFlashcardIndex].secondLanguage
-          this.inputFlashcard = '';
-          this.$q.notify({message: "Correct answer", color: 'positive'})
-        }  else {
-          this.incorrectAnswers++;
-          this.temporaryFlashcardFirstLanguage = this.temporaryList.flashcards[this.temporaryFlashcardIndex].firstLanguage
-          this.temporaryFlashcardSecondLanguage = this.temporaryList.flashcards[this.temporaryFlashcardIndex].secondLanguage
-          this.inputFlashcard = '';
-          // this.$q.notify({message: "Incorrect answer", color: 'negative'})
+      console.log(`correctAnswers`, this.result.correctAnswers)
+      console.log(`incorrectAnswers`, this.result.incorrectAnswers)
+      console.table(`flashcards`, this.result)
+ 
+      this.temporary.flashcard.firstLanguage = this.temporary.list.flashcards[this.temporary.flashcard.index].firstLanguage
+      this.temporary.flashcard.secondLanguage = this.temporary.list.flashcards[this.temporary.flashcard.index].secondLanguage
+    },
+    async checkIfFlashcardExistsInResult(firstLanguage) {
+      console.log('firstLanguage', firstLanguage)
+      for (let i = 0; i < this.result.flashcards.length; i++) {
+        if (this.result.flashcards[i]['firstLanguage'] == firstLanguage) {
+          console.log('True')
+          return true
         }
+      }
+      return false
+    },
+    async findIndexInData(data, property, value) {
+      var result = -1;
+      data.some(function (item, i) {
+          if (item[property] === value) {
+              result = i;
+              return true;
+          }
+      });
+      return result;
+    },
+    async verifyFlashcard(answer) {
+
+      if (this.temporary.flashcard.index >= this.numberOfCards) {
+        await this.saveQuizResult()
+        this.promptQuiz = true
+        console.log(`Result: ${JSON.stringify(this.result)}`)
+        this.temporary.flashcard.index = 0
+      }
+
+      const checkIfFlashcardExistsInResultProcess = await this.checkIfFlashcardExistsInResult(this.temporary.flashcard.firstLanguage)
+
+      if (!checkIfFlashcardExistsInResultProcess) {
+        this.result.flashcards.push(
+          {
+            'firstLanguage': this.temporary.flashcard.firstLanguage,
+            'secondLanguage': this.temporary.flashcard.secondLanguage,
+            'statistics': {
+              'correctAnswers': 0,
+              'incorrectAnswers': 0,
+            }
+          },
+        )
       } 
+
+      // find index of flashcard in result
+      let index = await this.findIndexInData(this.result.flashcards, 'firstLanguage', this.temporary.flashcard.firstLanguage)
+
+      if (answer === this.temporary.flashcard.secondLanguage) {
+        // list
+        this.result.correctAnswers++
+        // specific flashcard
+        this.result.flashcards[index].statistics.correctAnswers++
+
+        this.$q.notify({message: 'Correct answer', color: 'positive'})
+        return true
+      }
+
+      // list
+      this.result.incorrectAnswers++
+      // specific flashcard
+      this.result.flashcards[index].statistics.incorrectAnswers++
+
+      this.$q.notify({message: 'Incorrect answer', color: 'negative'})
+      return false
     },
     async saveQuizResult() {
       try {
         const saveQuizResultProcess = await this.$store.dispatch('lists/saveQuizResult', {
           listId: this.$route.params.id,
-          accuracy: this.correctAnswers / this.list.flashcards.length * 100,
+          result: this.result,
         })
         this.$q.notify({message: saveQuizResultProcess.message, color: 'positive'})
       } catch (e) {
@@ -161,15 +218,15 @@ export default {
       try {
         this.$router.push(`/list/${this.$route.params.id}`)
       } catch (e) {
-        this.$q.notify({message: "Something has been gone wrong" , color: 'negative'})
+        this.$q.notify({message: 'Something has been gone wrong' , color: 'negative'})
       }
     },
     async startQuiz() {
       try {
         this.promptQuiz = false
-        this.$q.notify({message: "Quiz", color: 'positive'})
+        this.$q.notify({message: 'Quiz', color: 'positive'})
       } catch (e) {
-        this.$q.notify({message: "Something has been gone wrong" , color: 'negative'})
+        this.$q.notify({message: 'Something has been gone wrong' , color: 'negative'})
       }
     },
   },

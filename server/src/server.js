@@ -23,6 +23,8 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(helmet());
 
+
+
 app.use('/api/auth', authRoutes);
 app.use('/api/', listsRoutes);
 

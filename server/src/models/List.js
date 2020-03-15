@@ -38,7 +38,16 @@ const ListSchema = mongoose.Schema({
     secondLanguage: {
       type: String,
     },
-
+    statistics: {
+      correctAnswers: {
+        type: Number,
+        default: 0,
+      },
+      incorrectAnswers: {
+        type: Number,
+        default: 0,
+      }
+    }
   }],
   statistics: {
     quizzes: [{
@@ -46,10 +55,14 @@ const ListSchema = mongoose.Schema({
         type: Date,
         default: new Date(),
       },
-      accuracy: {
+      correctAnswers: {
         type: Number,
-        required: true,
+        default: 0,
       },
+      incorrectAnswers: {
+        type: Number,
+        default: 0,
+      }
     }]
   },
   createdAt: {

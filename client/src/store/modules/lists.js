@@ -137,11 +137,11 @@ const actions = {
       throw new Error(e.response.data.message);
     }
   },
-  async saveQuizResult({dispatch, commit}, {listId, accuracy}) {
+  async saveQuizResult({dispatch, commit}, {listId, result}) {
     try {
-
+      console.log(`Vuex result`, result)
       const saveQuizResultRequest = await axios.post(`lists/${listId}/statistics`, {
-        accuracy,
+        result,
       });      
       return {
         message: saveQuizResultRequest.data.message
