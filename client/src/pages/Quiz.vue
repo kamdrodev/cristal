@@ -75,8 +75,8 @@ export default {
   name: 'Quiz',
   async created() {
     await this.getList()
-
     this.temporary.list = Object.assign({}, this.list)
+    this.temporary.flashcard.id = this.temporary.list.flashcards[this.temporary.flashcard.index]._id
     this.temporary.flashcard.firstLanguage = this.temporary.list.flashcards[this.temporary.flashcard.index].firstLanguage
     this.temporary.flashcard.secondLanguage = this.temporary.list.flashcards[this.temporary.flashcard.index].secondLanguage
   },
@@ -114,26 +114,28 @@ export default {
         this.$q.notify({message: e.message, color: 'negative'})
       }
     },
+    async randomFlashcard() {
+      return Math.floor(Math.random() * (this.temporary.list.flashcards.length - 0)) + 0;
+    },
     async nextFlashcard() { 
-
       const verifyFlashcardResult = await this.verifyFlashcard(this.answer)
 
+      let randFlashcard = await this.randomFlashcard();
+
       this.temporary.flashcard.index++
+
       if (this.temporary.flashcard.index >= this.numberOfCards) {
         await this.saveQuizResult()
         this.promptQuiz = true
         console.log(`Result: ${JSON.stringify(this.result)}`)
         this.temporary.flashcard.index = 0
       }
-      
-      this.inputFlashcard = ''
 
-      console.log(`correctAnswers`, this.result.correctAnswers)
-      console.log(`incorrectAnswers`, this.result.incorrectAnswers)
-      console.table(`flashcards`, this.result)
- 
-      this.temporary.flashcard.firstLanguage = this.temporary.list.flashcards[this.temporary.flashcard.index].firstLanguage
-      this.temporary.flashcard.secondLanguage = this.temporary.list.flashcards[this.temporary.flashcard.index].secondLanguage
+      this.answer = ''
+      
+      this.temporary.flashcard.id = this.temporary.list.flashcards[randFlashcard]._id
+      this.temporary.flashcard.firstLanguage = this.temporary.list.flashcards[randFlashcard].firstLanguage
+      this.temporary.flashcard.secondLanguage = this.temporary.list.flashcards[randFlashcard].secondLanguage
     },
     async checkIfFlashcardExistsInResult(firstLanguage) {
       console.log('firstLanguage', firstLanguage)
@@ -167,10 +169,13 @@ export default {
       const checkIfFlashcardExistsInResultProcess = await this.checkIfFlashcardExistsInResult(this.temporary.flashcard.firstLanguage)
 
       if (!checkIfFlashcardExistsInResultProcess) {
+
+        console.log('flashcard id', this.temporary.flashcard.id);
         this.result.flashcards.push(
           {
             'firstLanguage': this.temporary.flashcard.firstLanguage,
             'secondLanguage': this.temporary.flashcard.secondLanguage,
+            'flashcardId': this.temporary.flashcard.id,
             'statistics': {
               'correctAnswers': 0,
               'incorrectAnswers': 0,

@@ -140,7 +140,6 @@ router.post('/lists/:listId/statistics',
   [ 
     check('listId').trim(),
     check('listId').exists(),
-    check('result').trim(),
     check('result').exists(),
   ],
   authMiddlewares.jwtVerify,

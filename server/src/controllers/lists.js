@@ -240,14 +240,31 @@ const saveQuizResult = async (req, res, next) => {
       return next(customError);
     }
 
-    console.log('result', JSON.stringify(req.body));
-    console.log('result', JSON.stringify(req.body.result));
     console.log('result.correctAnswers', req.body.result.correctAnswers);
     console.log('result.incorrectAnswers', req.body.result.incorrectAnswers);
+    console.log('result.incorrectAnswers', req.body.result.flashcards);
 
-    const saveQuizResult = await List.findOneAndUpdate(
+ 
+    for (let i = 0; i < req.body.result.flashcards.length; i++) {
+      await List.findOneAndUpdate(
+        {_id: req.params.listId, userId: req.user.id, "flashcards._id": req.body.result.flashcards[i].flashcardId}, 
+        {$inc: 
+          {
+            'flashcards.$.statistics.correctAnswers': req.body.result.flashcards[i].statistics.correctAnswers, 
+            'flashcards.$.statistics.incorrectAnswers': req.body.result.flashcards[i].statistics.incorrectAnswers,
+          }
+        },
+      ); 
+    }
+    
+    await List.findOneAndUpdate(
       {_id: req.params.listId, userId: req.user.id}, 
-      {$push: {'statistics.quizzes': {'correctAnswers': req.body.result.correctAnswers, 'incorrectAnswers': req.body.result.incorrectAnswers}}},
+      {$push: {'statistics.quizzes': 
+        { 
+          'correctAnswers': req.body.result.correctAnswers, 
+          'incorrectAnswers': req.body.result.incorrectAnswers,
+        }}
+      },
     );
 
     return res.status(200).json({message: `Statistics have been updated`});
