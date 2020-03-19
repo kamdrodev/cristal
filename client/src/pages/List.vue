@@ -4,8 +4,25 @@
     <div class="row text-center">
       <div class="col-xs-12">
         <div class="q-pb-md q-pt-md text-h6 shadow-24">{{list.title}}</div>
-        <div class="q-pb-md q-pt-md text-h6">{{list.description}}</div>
-        <div class="q-pb-md q-pt-md text-h6">Flashcards: {{ list.flashcards.length }}</div>
+        <div class="q-pb-md q-pt-md text-h6 shadow-24" >{{list.description}}</div>
+        <div class="q-pb-md q-pt-md text-h6 shadow-24">Flashcards: {{ list.flashcards.length }}</div>
+        <div class="q-pb-md q-pt-md text-h6 shadow-24">Views: {{ list.views }}</div>
+      </div>
+
+      <div class="col-xs-12">
+        <div class="q-pb-md q-pt-md text-h6 shadow-24">Statistics</div>
+      </div>
+      <div class="col-xs-12 col-md-12 col-lg-6">
+        <div class="q-pb-md q-pt-md text-h6 shadow-24">Correct Answers: {{this.listNumberOfAllCorrectAnswers}}</div>
+      </div>
+      <div class="col-xs-12 col-md-12 col-lg-6">
+        <div class="q-pb-md q-pt-md text-h6 shadow-24">Incorrect Answers: {{this.listNumberOfAllIncorrectAnswers}}</div>
+      </div>
+      <div class="col-xs-12  shadow-24">
+          <div class="col-xs-12 q-pb-md q-pt-md text-h6">Accuracy: {{this.listAccuracy}} %</div>
+      </div>
+
+      <div class="col-xs-12">
         <q-btn class="q-mb-md q-mt-md button-view-quiz" @click="viewQuiz" size="large">Start Quiz</q-btn>
       </div>
     </div>
@@ -315,15 +332,20 @@ export default {
     list() {
       return this.$store.getters['lists/list']
     },
+    listNumberOfAllCorrectAnswers() {
+      return this.list.statistics.quizzes.reduce((a, b) => a + (b['correctAnswers'] || 0), 0)
+    },
+    listNumberOfAllIncorrectAnswers() {
+      return this.list.statistics.quizzes.reduce((a, b) => a + (b['incorrectAnswers'] || 0), 0)
+    },
+    listAccuracy() {
+      return parseFloat(this.listNumberOfAllCorrectAnswers / (this.listNumberOfAllCorrectAnswers + this.listNumberOfAllIncorrectAnswers) * 100).toFixed(2)
+    }
   }
 }
 </script>
 
 <style lang="sass">
-    
-  // *
-  //   border: 1px solid red !important
-
   .button-quiz
     width: 300px
 
