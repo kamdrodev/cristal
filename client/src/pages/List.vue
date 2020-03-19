@@ -22,14 +22,14 @@
           <div class="col-xs-12 q-pb-md q-pt-md text-h6">Accuracy: {{this.listAccuracy}} %</div>
       </div>
 
-      <div class="col-xs-12">
+      <div class="col-xs-12 q-mb-md q-mt-md">
         <q-btn class="q-mb-md q-mt-md button-view-quiz" @click="viewQuiz" size="large">Start Quiz</q-btn>
       </div>
     </div>
     </div>
-    <div class="col-xs-12 col-sm-12 offset-md col-md-12 col-lg-8 offset-lg-2 col-xl-8  offset-xl-2">
+    <div class="col-xs-12 col-sm-12 offset-md col-md-12 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
 
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-xs-12  q-mb-md">
         <trend
           class="trend"
@@ -41,16 +41,35 @@
         >
         </trend>
       </div>
-    </div>
+    </div> -->
     <div class="row">
-      <div class="col-xs-12 col-sm-6 col-md-12 col-lg-4 " v-for="flashcard in list.flashcards" :key="flashcard._id">
-        <q-card flat bordered class="my-card q-ma-md" >
+      <div class="col-xs-12 col-sm-6 col-md-12 col-lg-4 q-pa-xs" v-for="flashcard in list.flashcards" :key="flashcard._id">
+        <q-card flat bordered class="my-card" >
           <q-card-section>
             <div class="row items-center no-wrap">
+            
+
               <div class="col text-center">
-                <div class=" word first-language ellipsis">{{flashcard.firstLanguage}}</div>
-                <div class=" word second-language ellipsis">{{flashcard.secondLanguage}}</div>
+
+                <div class="word first-language ellipsis">{{flashcard.firstLanguage}}</div>
+                <div class="word second-language ellipsis">{{flashcard.secondLanguage}}</div>
+
+                <div class="q-pb-xs q-pt-xs text-h6">
+                  Statistics
+                  
+                </div>
+                <div class="q-pb-xs q-pt-xs text-h6">
+                  Correct Answers: {{flashcard.statistics.correctAnswers}}
+                </div>
+                <div class="q-pb-xs q-pt-xs text-h6">
+                  Incorrect Answers: {{flashcard.statistics.incorrectAnswers}}
+                </div>
+                <div class="q-pb-xs q-pt-xs text-h6">
+                  Accuracy: {{ parseFloat(flashcard.statistics.correctAnswers / (flashcard.statistics.correctAnswers + flashcard.statistics.incorrectAnswers) * 100).toFixed(2) }} %
+                </div>
               </div>
+
+              
 
               <div class="col-auto">
                 <q-btn color="" round flat icon="more_vert">
@@ -340,7 +359,16 @@ export default {
     },
     listAccuracy() {
       return parseFloat(this.listNumberOfAllCorrectAnswers / (this.listNumberOfAllCorrectAnswers + this.listNumberOfAllIncorrectAnswers) * 100).toFixed(2)
-    }
+    },
+    flashcardNumberOfAllCorrectAnswers() {
+      return (flashcard) => flashcard.statistics.correctAnswers
+    },
+    flashcardNumberOfAllCorrectAnswers() {
+
+    },
+    // flashcardAccuracy() {
+    //   return parseFloat(this. / (this.listNumberOfAllCorrectAnswers + this.listNumberOfAllIncorrectAnswers) * 100).toFixed(2)
+    // },
   }
 }
 </script>
@@ -350,7 +378,6 @@ export default {
     width: 300px
 
   .trend
-    height: 300px
 
   .card
     height: 100%
@@ -365,7 +392,7 @@ export default {
      background-color: $primary
 
   .word
-    font-size: 16px !important
+    font-size: 38px !important
     &.second-language 
       color: $primary
 </style>
