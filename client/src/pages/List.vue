@@ -43,20 +43,19 @@
       </div>
     </div> -->
     <div class="row">
-      <div class="col-xs-12 col-sm-6 col-md-12 col-lg-4 q-pa-xs" v-for="flashcard in list.flashcards" :key="flashcard._id">
-        <q-card flat bordered class="my-card" >
+      <div class="col-xs-12 col-sm-6 col-md-12 col-lg-12 q-pa-xs" v-for="flashcard in list.flashcards" :key="flashcard._id">
+        <q-card flat class="my-card" >
           <q-card-section>
             <div class="row items-center no-wrap">
             
 
               <div class="col text-center">
 
-                <div class="word first-language ellipsis">{{flashcard.firstLanguage}}</div>
-                <div class="word second-language ellipsis">{{flashcard.secondLanguage}}</div>
+                <div class="word first-language  q-pb-xs q-pt-xs text-h4">{{flashcard.firstLanguage}}</div>
+                <div class="word second-language  q-pb-xs q-pt-xs text-h4">{{flashcard.secondLanguage}}</div>
 
-                <div class="q-pb-xs q-pt-xs text-h6">
+                <div class="q-pb-md q-pt-md text-h6">
                   Statistics
-                  
                 </div>
                 <div class="q-pb-xs q-pt-xs text-h6">
                   Correct Answers: {{flashcard.statistics.correctAnswers}}
@@ -71,8 +70,7 @@
 
               
 
-              <div class="col-auto">
-                <q-btn color="" round flat icon="more_vert">
+                <q-btn color="" round flat icon="more_vert" class="button-action">
                   <q-menu cover auto-close>
                     <q-list>
                       <q-item clickable @click="openPromptUpdateFlashcard(flashcard)">
@@ -84,7 +82,6 @@
                     </q-list>
                   </q-menu>
                 </q-btn>
-              </div>
             </div>
           </q-card-section>
         </q-card>
@@ -373,7 +370,7 @@ export default {
 }
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
   .button-quiz
     width: 300px
 
@@ -387,12 +384,18 @@ export default {
         background-color: $dark
     &.flashcard
       background: linear-gradient(to right, $dark, $primary)
+    .button-action
+      display: none
     
   .button-view-quiz
      background-color: $primary
 
+  .button-action
+    position: absolute
+    top: 0
+    right: 0
+
   .word
-    font-size: 38px !important
     &.second-language 
       color: $primary
 </style>

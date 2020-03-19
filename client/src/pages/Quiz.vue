@@ -11,7 +11,7 @@
           </q-card-section>
           <q-card-section>
             
-              <div class="first-language text-center q-mb-lg">{{this.temporary.flashcard.firstLanguage}}</div>
+              <div class="first-language text-center q-mb-lg text-h4">{{this.temporary.flashcard.firstLanguage}}</div>
               <q-input filled v-model="answer" @keyup.enter="nextFlashcard" label="Type" :error="$v.answer.$error" class="input">
                 <template v-slot:prepend>
                 </template>
@@ -22,8 +22,8 @@
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8 offset-lg-2 text-center list" v-for="flashcard in this.temporary.list.flashcards">
 
         <div class="row">
-          <div class="col-xs-12 col-md-6 q-mt-md q-mb-md text-weight-bold word first-language">{{flashcard.firstLanguage}}</div>
-          <div class="col-xs-12 col-md-6 q-mt-md q-mb-md text-weight-bold word second-language">{{flashcard.secondLanguage}}</div>
+          <div class="col-xs-12 col-md-6 q-mt-md q-mb-md text-weight-bold word first-language text-h6">{{flashcard.firstLanguage}}</div>
+          <div class="col-xs-12 col-md-6 q-mt-md q-mb-md text-weight-bold word second-language text-h6">{{flashcard.secondLanguage}}</div>
         </div>
       </div>
         
@@ -244,7 +244,7 @@ export default {
 </script>
 
 
-<style lang="sass">
+<style lang="sass" scoped >
   .card
     height: 300px
     background-color: $dark
@@ -259,10 +259,9 @@ export default {
     .row 
       font-size: 20px
   .first-language
-    font-size: 26px
-    font-weight: bold
+    
+
   .word
-    font-size: 16px !important
     &.second-language 
       color: $primary
 </style>
