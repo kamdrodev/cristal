@@ -164,6 +164,7 @@ export default {
         this.promptQuiz = true
         console.log(`Result: ${JSON.stringify(this.result)}`)
         this.temporary.flashcard.index = 0
+        this.result = {}
       }
 
       const checkIfFlashcardExistsInResultProcess = await this.checkIfFlashcardExistsInResult(this.temporary.flashcard.firstLanguage)
@@ -229,6 +230,7 @@ export default {
     async startQuiz() {
       try {
         this.promptQuiz = false
+
         this.$q.notify({message: 'Quiz', color: 'positive'})
       } catch (e) {
         this.$q.notify({message: 'Something has been gone wrong' , color: 'negative'})
