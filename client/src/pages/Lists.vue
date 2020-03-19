@@ -164,8 +164,8 @@ export default {
       id: '',
       title: '',
       description: '',
-      firstLanguage: '',
-      secondLanguage: '',
+      firstLanguage: 'polish',
+      secondLanguage: 'french',
     },
     formUpdateList: {
       id: '',
