@@ -3,25 +3,24 @@
     <div class="col-xs-12 col-sm-12 offset-md col-md-4 offset-md-4 col-lg-6 offset-lg-3 col-xl-6  offset-xl-3">
     <div class="row text-center">
       <div class="col-xs-12">
-        <div class="q-pb-md q-pt-md text-h6 shadow-24">{{list.title}}</div>
-        <div class="q-pb-md q-pt-md text-h6 shadow-24" >{{list.description}}</div>
-        <div class="q-pb-md q-pt-md text-h6 shadow-24">Flashcards: {{ list.flashcards.length }}</div>
-        <div class="q-pb-md q-pt-md text-h6 shadow-24">Views: {{ list.views }}</div>
+        <div class="q-pb-md q-pt-md text-h6 ">{{list.title}}</div>
+        <div class="q-pb-md q-pt-md text-h6 " >{{list.description}}</div>
+        <div class="q-pb-md q-pt-md text-h6 ">Flashcards: {{ list.flashcards.length }}</div>
+        <div class="q-pb-md q-pt-md text-h6 ">Views: {{ list.views }}</div>
       </div>
 
       <div class="col-xs-12">
-        <div class="q-pb-md q-pt-md text-h6 shadow-24">Statistics</div>
+        <div class="q-pb-md q-pt-md text-h6 ">Statistics</div>
       </div>
       <div class="col-xs-12 col-md-12 col-lg-6">
-        <div class="q-pb-md q-pt-md text-h6 shadow-24">Correct Answers: {{this.listNumberOfAllCorrectAnswers}}</div>
+        <div class="q-pb-md q-pt-md text-h6 ">Correct Answers: {{this.listNumberOfAllCorrectAnswers}}</div>
       </div>
       <div class="col-xs-12 col-md-12 col-lg-6">
-        <div class="q-pb-md q-pt-md text-h6 shadow-24">Incorrect Answers: {{this.listNumberOfAllIncorrectAnswers}}</div>
+        <div class="q-pb-md q-pt-md text-h6 ">Incorrect Answers: {{this.listNumberOfAllIncorrectAnswers}}</div>
       </div>
-      <div class="col-xs-12  shadow-24">
-          <div class="col-xs-12 q-pb-md q-pt-md text-h6">Accuracy: {{this.listAccuracy}} %</div>
+      <div class="col-xs-12 ">
+        <div class="q-pb-md q-pt-md text-h6  ">Accuracy: {{this.listAccuracy}} %</div>
       </div>
-
       <div class="col-xs-12 q-mb-md q-mt-md">
         <q-btn class="q-mb-md q-mt-md button-view-quiz" @click="viewQuiz" size="large">Start Quiz</q-btn>
       </div>
