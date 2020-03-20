@@ -4,11 +4,10 @@ Create your own sets of flashcards, learn them and check your progress.
 
 ## Screenshots
 
-![create-list](https://i.imgur.com/2irseM1.png)
-![create-flashcard](https://i.imgur.com/WqgcDVG.png)
-![list](https://i.imgur.com/6ZxGsuW.png)
-![list-trend](https://i.imgur.com/mXSk7A6.png)
-![quiz](https://i.imgur.com/WL9xynu.png)
+![sign-up](./client/preview/sign-up.png)
+![create-list](./client/preview/create-list.png)
+![list](./client/preview/list.png)
+![quiz](./client/preview/quiz.png)
 
 ## Client
 
