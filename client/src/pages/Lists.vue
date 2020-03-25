@@ -148,7 +148,7 @@ export default {
     promptUpdateList: false,
     promptDeleteList: false,
     listsQueryOptions: {
-      firstLanguage: 'polish',
+      firstLanguage: 'english',
       secondLanguage: 'french',
     },
     languages: [
