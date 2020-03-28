@@ -16,7 +16,7 @@
         <div class="q-pb-md q-pt-md text-h6 incorrect-answers">Incorrect Answers: {{this.listNumberOfAllIncorrectAnswers}}</div>
       </div>
       <div class="col-xs-12 ">
-        <div class="q-pb-md q-pt-md text-h6  accuracy">Accuracy: {{this.listAccuracy}} %</div>
+        <div class="q-pb-md q-pt-md text-h6  accuracy">Accuracy: {{ isNaN(this.listAccuracy) ? 0 : this.listAccuracy }} %</div>
       </div>
       <div class="col-xs-12 q-mb-md q-mt-md">
         <q-btn class="q-mb-md q-mt-md button-view-quiz" @click="viewQuiz" size="large">Start Quiz</q-btn>
@@ -55,7 +55,8 @@
 
                   <span class="q-pa-xs incorrect-answers">{{ isNaN(flashcard.statistics.incorrectAnswers) ? 0 : flashcard.statistics.incorrectAnswers }}</span>
 
-                  <span class="q-pa-xs accuracy">{{ isNaN(parseFloat(flashcard.statistics.correctAnswers / (flashcard.statistics.correctAnswers + flashcard.statistics.incorrectAnswers) * 100).toFixed(2)) ? 0 : parseFloat(flashcard.statistics.correctAnswers / (flashcard.statistics.correctAnswers + flashcard.statistics.incorrectAnswers) * 100).toFixed(2)  }} %</span>
+                  <span class="q-pa-xs accuracy">
+                  {{ isNaN(parseFloat(flashcard.statistics.correctAnswers / (flashcard.statistics.correctAnswers + flashcard.statistics.incorrectAnswers) * 100).toFixed(2)) ? 0 : parseFloat(flashcard.statistics.correctAnswers / (flashcard.statistics.correctAnswers + flashcard.statistics.incorrectAnswers) * 100).toFixed(2)  }} %</span>
                 </div>
                 <div class="q-pb-xs q-pt-xs text-h6 statistics incorrect-answers">
                   
