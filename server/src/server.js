@@ -23,11 +23,8 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(helmet());
 
-
-
 app.use('/api/auth', authRoutes);
 app.use('/api/', listsRoutes);
-
 
 app.use((err, req, res, next) => {
   if (res.headersSent) {
@@ -39,7 +36,6 @@ app.use((err, req, res, next) => {
     message: err.message
   })
 });
-
 
 app.listen(port, () => {
   console.log(chalk.yellow(`Server is running on port: ${port}`));

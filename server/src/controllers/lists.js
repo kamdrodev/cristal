@@ -167,7 +167,6 @@ const createFlashcard = async (req, res, next) => {
       {_id: req.params.listId, userId: req.user.id}, 
       {$push: {'flashcards': {'firstLanguage': req.body.firstLanguage, 'secondLanguage': req.body.secondLanguage}}},
     );
-
     
     return res.status(200).json({message: `Flashcard has been created`});
   } catch(e) {
@@ -219,7 +218,6 @@ const deleteFlashcard = async (req, res, next) => {
       {$pull: {'flashcards': {_id: req.params.flashcardId}}},
     );
 
-
     return res.status(200).json({message: `Flashcard has been updated`});
   } catch(e) {
     const customError = new Error('Something went wrong during delete flashcard process');
@@ -240,11 +238,6 @@ const saveQuizResult = async (req, res, next) => {
       return next(customError);
     }
 
-    console.log('result.correctAnswers', req.body.result.correctAnswers);
-    console.log('result.incorrectAnswers', req.body.result.incorrectAnswers);
-    console.log('result.incorrectAnswers', req.body.result.flashcards);
-
- 
     for (let i = 0; i < req.body.result.flashcards.length; i++) {
       await List.findOneAndUpdate(
         {_id: req.params.listId, userId: req.user.id, "flashcards._id": req.body.result.flashcards[i].flashcardId}, 
@@ -272,7 +265,6 @@ const saveQuizResult = async (req, res, next) => {
     const customError = new Error('Something went wrong during update statistics process');
   }
 };
-
 
 const lists = {
   getList,

@@ -145,7 +145,4 @@ router.post('/lists/:listId/statistics',
   authMiddlewares.jwtVerify,
   listsControllers.saveQuizResult);
 
-
-
-
 export default router;
