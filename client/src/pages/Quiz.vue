@@ -3,7 +3,7 @@
       <div class="col-xs-12 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
          <q-card class="card col-xs-12" >
           <q-card-section>
-            <div class="flex flex-start">
+            <div class="flex flex-start text-h6">
               {{ this.temporary.flashcard.index }} / {{this.numberOfCards}}
               ---
               {{ this.temporary.list.firstLanguage }} <-> {{ this.temporary.list.secondLanguage }}
@@ -11,7 +11,7 @@
           </q-card-section>
           <q-card-section>
             
-              <div class="first-language text-center q-mb-lg text-h4">{{this.temporary.flashcard.firstLanguage}}</div>
+              <div class="first-language text-center q-mb-lg text-h5">{{this.temporary.flashcard.firstLanguage}}</div>
               <q-input filled v-model="answer" @keyup.enter="nextFlashcard" label="Type" :error="$v.answer.$error" class="input">
                 <template v-slot:prepend>
                 </template>
@@ -19,11 +19,11 @@
           </q-card-section>
         </q-card>
       </div>
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8 offset-lg-2 text-center list" v-for="flashcard in this.temporary.list.flashcards">
+      <div class="q-ma-lg col-xs-12 col-sm-12 col-md-12 col-lg-8 offset-lg-2 text-center list" v-for="flashcard in this.temporary.list.flashcards">
 
         <div class="row">
-          <div class="col-xs-12 col-md-6 q-mt-md q-mb-md text-weight-bold word first-language text-h6">{{flashcard.firstLanguage}}</div>
-          <div class="col-xs-12 col-md-6 q-mt-md q-mb-md text-weight-bold word second-language text-h6">{{flashcard.secondLanguage}}</div>
+          <div class="col-xs-12 col-md-6 q-mt-md q-mb-md text-weight-bold word first-language text-h5">{{flashcard.firstLanguage}}</div>
+          <div class="col-xs-12 col-md-6 q-mt-md q-mb-md text-weight-bold word second-language text-h5">{{flashcard.secondLanguage}}</div>
         </div>
       </div>
         
@@ -31,7 +31,7 @@
     <q-dialog v-model="promptQuiz" persistent>
       <q-card>
         <q-card-section class="row items-center">
-          <q-avatar icon="delete" color="primary" text-color="white" />
+          <q-avatar icon="list" color="primary" text-color="white" />
           <span class="q-ml-sm">Do you really want to solve this quiz once again?</span>
         </q-card-section>
 
@@ -46,7 +46,7 @@
     <q-dialog v-model="promptBackToList" persistent>
       <q-card>
         <q-card-section class="row items-center">
-          <q-avatar icon="delete" color="primary" text-color="white" />
+          <q-avatar icon="list" color="primary" text-color="white" />
           <span class="q-ml-sm">Do you really want to back to list?</span>
         </q-card-section>
 
@@ -253,11 +253,9 @@ export default {
 
   .languages
     font-weight: bold
-    font-size: 24px
 
   .list
     .row 
-      font-size: 20px
   .first-language
     
 

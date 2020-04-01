@@ -21,23 +21,18 @@
                   <q-item clickable @click="openPromptDeleteList(list)">
                     <q-item-section>Delete list</q-item-section>
                   </q-item>
+                  <q-item clickable @click="viewList(list)">
+                    <q-item-section>View list</q-item-section>
+                  </q-item>
                 </q-list>
               </q-menu>
             </q-btn>
           </div>
         </div>
       </q-card-section>
-
       <q-card-section>
         <!-- {{ lorem }} -->
       </q-card-section>
-
-
-
-      <q-card-actions class="justify-end">
-        <q-btn flat @click="viewList(list)">Go to list</q-btn>
-        <!-- <q-btn flat>Action 2</q-btn> -->
-      </q-card-actions>
     </q-card>
 
 
@@ -334,4 +329,7 @@ export default {
 
 <style lang="sass">
   
+  .my-card
+    &:hover
+
 </style>

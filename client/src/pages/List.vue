@@ -1,8 +1,8 @@
 <template>
   <div class="row q-col-gutter-xs">
     <div class="col-xs-12 col-sm-12 offset-md col-md-4 offset-md-4 col-lg-6 offset-lg-3 col-xl-6  offset-xl-3">
-    <div class="row text-center statistics">
-      <div class="col-xs-12">
+    <div class="row text-center list statistics">
+      <div class="col-xs-12 ">
         <!-- <div class="q-pb-md q-pt-md text-h6 ">{{list.title}}</div> -->
         <div class="q-pb-md q-pt-md text-h6 title" >{{list.title}}</div>
         <div class="q-pb-md q-pt-md text-h6 description" >{{list.description}}</div>
@@ -10,13 +10,13 @@
         <div class="q-pb-md q-pt-md text-h6 views">Views: {{ list.views }}</div>
       </div>
       <div class="col-xs-12 col-md-12 col-lg-6">
-        <div class="q-pb-md q-pt-md text-h6 correct-answers">Correct Answers: {{this.listNumberOfAllCorrectAnswers}}</div>
+        <div class="q-pb-md q-pt-md text-h6 statistics correct-answers">Correct Answers: {{this.listNumberOfAllCorrectAnswers}}</div>
       </div>
       <div class="col-xs-12 col-md-12 col-lg-6">
-        <div class="q-pb-md q-pt-md text-h6 incorrect-answers">Incorrect Answers: {{this.listNumberOfAllIncorrectAnswers}}</div>
+        <div class="q-pb-md q-pt-md text-h6 statistics incorrect-answers">Incorrect Answers: {{this.listNumberOfAllIncorrectAnswers}}</div>
       </div>
       <div class="col-xs-12 ">
-        <div class="q-pb-md q-pt-md text-h6  accuracy">Accuracy: {{ isNaN(this.listAccuracy) ? 0 : this.listAccuracy }} %</div>
+        <div class="q-pb-md q-pt-md text-h6  statistics accuracy">Accuracy: {{ isNaN(this.listAccuracy) ? 0 : this.listAccuracy }} %</div>
       </div>
       <div class="col-xs-12 q-mb-md q-mt-md">
         <q-btn class="q-mb-md q-mt-md button-view-quiz" @click="viewQuiz" size="large">Start Quiz</q-btn>
@@ -39,7 +39,7 @@
       </div>
     </div> -->
     <div class="row">
-      <div class="col-xs-12 col-sm-6 col-md-12 col-lg-12 q-pa-xs" v-for="flashcard in list.flashcards" :key="flashcard._id">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 q-pa-xs" v-for="flashcard in list.flashcards" :key="flashcard._id">
         <q-card flat class="my-card flashcard" >
           <q-card-section>
             <div class="row items-center no-wrap">
@@ -50,20 +50,28 @@
                 <div class="word first-language  q-pb-xs q-pt-xs text-h4">{{flashcard.firstLanguage}}</div>
                 <div class="word second-language  q-pb-xs q-pt-xs text-h4">{{flashcard.secondLanguage}}</div>
 
-                <div class="q-pb-xs q-pt-xs text-h6 statistics">
-                  <span class="q-pa-xs correct-answers">{{ isNaN(flashcard.statistics.correctAnswers) ? 0 : flashcard.statistics.correctAnswers }}</span>
+                <div class="q-pb-xs q-pt-xs text-h6 statistics left-align">
+                
+            
+                  <span class="q-pa-xs">
+                    <q-badge class="badge correct-answers">
+                    {{ isNaN(flashcard.statistics.correctAnswers) ? 0 : flashcard.statistics.correctAnswers }} %       
+                    </q-badge>
+                  </span>
 
-                  <span class="q-pa-xs incorrect-answers">{{ isNaN(flashcard.statistics.incorrectAnswers) ? 0 : flashcard.statistics.incorrectAnswers }}</span>
+                  <span class="q-pa-xs">
+                    <q-badge class="badge incorrect-answers">
+                    {{ isNaN(flashcard.statistics.incorrectAnswers) ? 0 : flashcard.statistics.incorrectAnswers }} %
+                    </q-badge>
+                  </span>
 
-                  <span class="q-pa-xs accuracy">
-                  {{ isNaN(parseFloat(flashcard.statistics.correctAnswers / (flashcard.statistics.correctAnswers + flashcard.statistics.incorrectAnswers) * 100).toFixed(2)) ? 0 : parseFloat(flashcard.statistics.correctAnswers / (flashcard.statistics.correctAnswers + flashcard.statistics.incorrectAnswers) * 100).toFixed(2)  }} %</span>
+                  <span class="q-pa-xs">
+                    <q-badge class="badge accuracy">
+                      {{ isNaN(parseFloat(flashcard.statistics.correctAnswers / (flashcard.statistics.correctAnswers + flashcard.statistics.incorrectAnswers) * 100).toFixed(2)) ? 0 : parseFloat(flashcard.statistics.correctAnswers / (flashcard.statistics.correctAnswers + flashcard.statistics.incorrectAnswers) * 100).toFixed(2)  }} %
+                    </q-badge>
+                  </span>
                 </div>
-                <div class="q-pb-xs q-pt-xs text-h6 statistics incorrect-answers">
-                  
-                </div>
-                <div class="q-pb-xs q-pt-xs text-h6 statistics accuracy">
-                  
-                </div>
+                
               </div>
 
               
@@ -386,7 +394,7 @@ export default {
       display: none
     
   .button-view-quiz
-     background-color: $primary
+     background-color: $dark
 
   .button-action
     position: absolute
@@ -397,12 +405,25 @@ export default {
     &.second-language 
       color: $primary
 
+  .list
+    .statistics
+      &.correct-answers
+        color: $positive
+      &.incorrect-answers
+        color: $negative
+      &.accuracy
+        color: $info
   
-  .statistics
-    .correct-answers
-      color: $positive
-    .incorrect-answers
-      color: $negative
-    .accuracy
-      color: $info
+  .flashcard
+    .statistics
+      position: absolute
+      right: 0
+      .badge
+        &.correct-answers
+          background-color: $positive
+        &.incorrect-answers
+          background-color: $negative
+        &.accuracy
+          background-color: $info
+
 </style>
