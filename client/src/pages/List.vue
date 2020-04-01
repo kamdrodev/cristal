@@ -39,7 +39,7 @@
       </div>
     </div> -->
     <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 q-pa-xs" v-for="flashcard in list.flashcards" :key="flashcard._id">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 q-mt-lg q-mb-lg q-pa-xs" v-for="flashcard in list.flashcards" :key="flashcard._id">
         <q-card flat class="my-card flashcard" >
           <q-card-section>
             <div class="row items-center no-wrap">
@@ -418,6 +418,7 @@ export default {
     .statistics
       position: absolute
       right: 0
+      bottom: 0
       .badge
         &.correct-answers
           background-color: $positive
