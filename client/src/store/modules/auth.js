@@ -54,6 +54,7 @@ const actions = {
     try {
       localStorage.removeItem('token')
       commit('setToken', null)
+      dispatch('router/routerPush', {path: '/sign-in'}, {root: true})
       return {
         message: 'You have been logged out'
       }

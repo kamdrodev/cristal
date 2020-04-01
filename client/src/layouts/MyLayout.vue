@@ -36,6 +36,16 @@
             <q-item-label>Lists</q-item-label>
             <q-item-label caption>All lists</q-item-label>
           </q-item-section>
+          
+        </q-item>
+        <q-item clickable @click="signOut">
+          <q-item-section avatar>
+            <q-icon name="power_settings_new" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Sign out</q-item-label>
+          </q-item-section>
+          
         </q-item>
        
       </q-list>
@@ -48,6 +58,9 @@
 </template>
 
 <script>
+
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'MyLayout',
 
@@ -55,6 +68,20 @@ export default {
     return {
       leftDrawerOpen: false
     }
+  },
+  methods: {
+    async signOut() {
+      try {
+        const signOutProcess = await this.$store.dispatch('auth/signOut')
+
+        this.$q.notify({message: signOutProcess.message, color: 'positive'})
+      } catch (e) {
+        this.$q.notify({message: e.message, color: 'negative'})
+      }
+    }
+  },
+  computed: {
+    ...mapGetters('auth', ['isAuthenticated'])
   }
 }
 </script>
