@@ -1,86 +1,80 @@
-import axios from 'axios'
+import axios from 'axios';
 
 const state = {
   token: localStorage.getItem('token') || null,
-  status: ''
-}
+  status: '',
+};
 
 const getters = {
-  isAuthenticated: state => !!state.token,
-}
+  isAuthenticated: (state) => !!state.token,
+};
 
 const mutations = {
   setToken: (state, token) => {
-    state.token = token
-  }
-}
+    state.token = token;
+  },
+};
 
 const actions = {
-  async signUp({dispatch}, {username, email, password}) {
+  async signUp({ dispatch }, { username, email, password }) {
     try {
       const signUpRequest = await axios.post('auth/sign-up', {
         username,
         email,
         password,
-      })
-      dispatch('router/routerPush', {path: '/sign-in'}, {root: true})
+      });
+      dispatch('router/routerPush', { path: '/sign-in' }, { root: true });
       return {
-        message: signUpRequest.data.message
-      }
-    } catch(e) {
-      console.log(e)
-      console.log(`qwewqe`, e.response.dataq, e.response.status)
-      throw new Error(e.response.data.message)
+        message: signUpRequest.data.message,
+      };
+    } catch (e) {
+      console.log(e);
+      console.log(`qwewqe`, e.response.dataq, e.response.status);
+      throw new Error(e.response.data.message);
     }
   },
-  signIn: async function({dispatch, commit}, {email, password}) {
+  signIn: async function ({ dispatch, commit }, { email, password }) {
     try {
       const signInRequest = await axios.post('auth/sign-in', {
         email,
         password,
-      })
-      
-      localStorage.setItem('token', signInRequest.data.token)
-      commit('setToken', signInRequest.data.token)
-      dispatch('router/routerPush', {path: '/lists'}, {root: true})
+      });
+
+      localStorage.setItem('token', signInRequest.data.token);
+      commit('setToken', signInRequest.data.token);
+      dispatch('router/routerPush', { path: '/lists' }, { root: true });
       return {
-        message: signInRequest.data.message
-      }
-    } catch(e) {
-      throw new Error('The email or password is incorrect')
+        message: signInRequest.data.message,
+      };
+    } catch (e) {
+      throw new Error('The email or password is incorrect');
     }
   },
-  async signOut({dispatch, commit}) {
+  async signOut({ dispatch, commit }) {
     try {
-      localStorage.removeItem('token')
-      commit('setToken', null)
-      dispatch('router/routerPush', {path: '/sign-in'}, {root: true})
+      localStorage.removeItem('token');
+      commit('setToken', null);
+      dispatch('router/routerPush', { path: '/sign-in' }, { root: true });
       return {
-        message: 'You have been logged out'
-      }
-    } catch(e) {
-      throw new Error('You have not been logged out')
+        message: 'You have been logged out',
+      };
+    } catch (e) {
+      throw new Error('You have not been logged out');
     }
-    
   },
-  async verifyToken({dispatch, commit}) {
+  async verifyToken({ dispatch, commit }) {
     try {
-      const verifyTokenRequest = await axios.get(`auth/verify-token`, {
-        
-      })
+      const verifyTokenRequest = await axios.get(`auth/verify-token`, {});
       return {
         message: 'You are logged in.',
-      }
-
+      };
     } catch (e) {
-      localStorage.removeItem('token')
-      commit('setToken', null)
-      throw new Error('Something went wrong during sign in process')
-
+      localStorage.removeItem('token');
+      commit('setToken', null);
+      throw new Error('Something went wrong during sign in process');
     }
-  }
-}
-
+  },
+};
 
 export default {
   state,
@@ -88,5 +82,4 @@ export default {
   mutations,
   actions,
   namespaced: true,
-}
-
+};

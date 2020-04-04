@@ -1,16 +1,14 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import Trend from 'vuetrend'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import Trend from 'vuetrend';
 
-
-import auth from './modules/auth.js'
-import router from './modules/router.js'
-import lists from './modules/lists.js'
+import auth from './modules/auth.js';
+import router from './modules/router.js';
+import lists from './modules/lists.js';
 
 // import example from './module-example'
-Vue.use(Trend)
-Vue.use(Vuex)
-
+Vue.use(Trend);
+Vue.use(Vuex);
 
 /*
  * If not building with SSR mode, you can
@@ -30,7 +28,7 @@ const store = new Vuex.Store({
 
   // enable strict mode (adds overhead!)
   // for dev mode only
-  strict: process.env.DEV
-})
+  strict: process.env.DEV,
+});
 
-export default store
+export default store;

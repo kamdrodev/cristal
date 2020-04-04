@@ -19,7 +19,7 @@ app.use(cors());
 import authRoutes from './routes/auth.js';
 import listsRoutes from './routes/lists.js';
 
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(helmet());
 
@@ -28,13 +28,13 @@ app.use('/api/', listsRoutes);
 
 app.use((err, req, res, next) => {
   if (res.headersSent) {
-      return next(err)
+    return next(err);
   }
   err.message = err.message || 'Error';
   err.status = err.status || 400;
   res.status(err.status).json({
-    message: err.message
-  })
+    message: err.message,
+  });
 });
 
 app.listen(port, () => {

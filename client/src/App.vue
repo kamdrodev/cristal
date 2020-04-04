@@ -8,28 +8,24 @@
 export default {
   name: 'App',
   created() {
-
     // Theme
-    this.$q.dark.set(true)
-    
+    this.$q.dark.set(true);
+
     // Notifications
     this.$q.notify.setDefaults({
       position: 'top-right',
-    })
-
-
-  }
-}
+    });
+  },
+};
 </script>
 
 <style lang="sass">
 
-  @import 'css/quasar.variables.scss'
-  
-  \:root 
-    --color-palette-1: #0f0e17
-  
-  html, body 
-    background-color: $dark !important
-    
+@import 'css/quasar.variables.scss'
+
+\:root
+  --color-palette-1: #0f0e17
+
+html, body
+  background-color: $dark !important
 </style>

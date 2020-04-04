@@ -1,24 +1,17 @@
-import axios from "axios";
+import axios from 'axios';
 import router from '../../router/index.js';
 
-const state = {
- 
-};
+const state = {};
 
-const getters = {
+const getters = {};
 
-};
-
-const mutations = {
-  
-};
+const mutations = {};
 
 const actions = {
-  async routerPush({}, {path}) {
-    router.push({path})
-  }
+  async routerPush({}, { path }) {
+    router.push({ path });
+  },
 };
-
 
 export default {
   state,
@@ -27,4 +20,3 @@ export default {
   actions,
   namespaced: true,
 };
-

@@ -22,7 +22,7 @@ const UserSchema = mongoose.Schema({
   isAdmin: {
     type: Boolean,
     defaul: false,
-  }
+  },
 });
 
 export default mongoose.model('User', UserSchema);

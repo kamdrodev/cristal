@@ -2,21 +2,23 @@ import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
-
-const subSchema = mongoose.Schema({
-  flashcardId: {
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'List'      
+const subSchema = mongoose.Schema(
+  {
+    flashcardId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'List',
+    },
+    correctAnswers: {
+      type: Number,
+      default: 0,
+    },
+    incorrectAnswers: {
+      type: Number,
+      default: 0,
+    },
   },
-  correctAnswers: {
-    type: Number,
-    default: 0,
-  },
-  incorrectAnswers: {
-    type: Number,
-    default: 0,
-  },
-}, {_id: false})
+  { _id: false },
+);
 
 const ListSchema = mongoose.Schema({
   title: {
@@ -43,43 +45,47 @@ const ListSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
-  flashcards: [{
-    createdAt: {
-      type: Date,
-      default: new Date(),
-    },
-    firstLanguage: {
-      type: String,
-    },
-    secondLanguage: {
-      type: String,
-    },
-    statistics: {
-      correctAnswers: {
-        type: Number,
-        default: 0,
-      },
-      incorrectAnswers: {
-        type: Number,
-        default: 0,
-      }
-    }
-  }],
-  statistics: {
-    quizzes: [{
+  flashcards: [
+    {
       createdAt: {
         type: Date,
         default: new Date(),
       },
-      correctAnswers: {
-        type: Number,
-        default: 0,
+      firstLanguage: {
+        type: String,
       },
-      incorrectAnswers: {
-        type: Number,
-        default: 0,
+      secondLanguage: {
+        type: String,
       },
-    }]
+      statistics: {
+        correctAnswers: {
+          type: Number,
+          default: 0,
+        },
+        incorrectAnswers: {
+          type: Number,
+          default: 0,
+        },
+      },
+    },
+  ],
+  statistics: {
+    quizzes: [
+      {
+        createdAt: {
+          type: Date,
+          default: new Date(),
+        },
+        correctAnswers: {
+          type: Number,
+          default: 0,
+        },
+        incorrectAnswers: {
+          type: Number,
+          default: 0,
+        },
+      },
+    ],
   },
   createdAt: {
     type: Date,
@@ -88,7 +94,7 @@ const ListSchema = mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-  }
+  },
 });
 
 export default mongoose.model('List', ListSchema);

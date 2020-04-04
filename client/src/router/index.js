@@ -1,10 +1,10 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
 
-import routes from './routes'
+import routes from './routes';
 import store from '../store/index.js';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 /*
  * If not building with SSR mode, you can
@@ -23,26 +23,26 @@ const Router = new VueRouter({
   // quasar.conf.js -> build -> vueRouterMode
   // quasar.conf.js -> build -> publicPath
   mode: process.env.VUE_ROUTER_MODE,
-  base: process.env.VUE_ROUTER_BASE
-})
+  base: process.env.VUE_ROUTER_BASE,
+});
 
 Router.beforeEach(async (to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    console.log("Dashboard test")
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    console.log('Dashboard test');
     try {
-      const verifyTokenRequest = await store.dispatch("auth/verifyToken");
-      console.log(localStorage.getItem("token"));
-      console.log("Good")
+      const verifyTokenRequest = await store.dispatch('auth/verifyToken');
+      console.log(localStorage.getItem('token'));
+      console.log('Good');
       next();
     } catch (e) {
       console.log(e);
       next({
-        path: "/sign-in"
-      })
+        path: '/sign-in',
+      });
     }
   } else {
-    next();    
+    next();
   }
 });
 
-export default Router
+export default Router;

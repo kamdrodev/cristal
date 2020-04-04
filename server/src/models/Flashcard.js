@@ -11,7 +11,7 @@ const FlashcardSchema = mongoose.Schema({
     text: {
       type: String,
       required: true,
-    }    
+    },
   },
   secondLanguage: {
     language: {
@@ -21,7 +21,7 @@ const FlashcardSchema = mongoose.Schema({
     text: {
       type: String,
       required: true,
-    }    
+    },
   },
   createdAt: {
     type: Date,
@@ -46,7 +46,7 @@ const FlashcardSchema = mongoose.Schema({
   isAdmin: {
     type: Boolean,
     defaul: false,
-  }
+  },
 });
 
 export default mongoose.model('Flashcard', FlashcardSchema);

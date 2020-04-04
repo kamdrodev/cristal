@@ -2,16 +2,12 @@
   <div>
     <Lists></Lists>
   </div>
-    
 </template>
 
 <script>
-
 export default {
-  name: 'Dashboard'
-}
+  name: 'Dashboard',
+};
 </script>
 
-<style lang="sass">
-  
-</style>
+<style lang="sass"></style>

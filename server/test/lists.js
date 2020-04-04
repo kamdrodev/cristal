@@ -1,26 +1,26 @@
 import mocha from 'mocha';
 import supertest from 'supertest';
 
-
 import mongoose from 'mongoose';
 import app from '../src/server.js';
 import config from './config.js';
-
 
 describe('lists', () => {
   let token = '';
   let list;
 
   before(() => {
-    mongoose.connection.dropDatabase(() => {
-
-    });
+    mongoose.connection.dropDatabase(() => {});
   });
 
   before((done) => {
     supertest(app)
       .post(`${config.prefix}/auth/sign-up`)
-      .send({username: config.account.username, email: config.account.email, password: config.account.password}) 
+      .send({
+        username: config.account.username,
+        email: config.account.email,
+        password: config.account.password,
+      })
       .set('Accept', 'application/json')
       .expect(200)
       .end((err, res) => {
@@ -35,7 +35,7 @@ describe('lists', () => {
   before((done) => {
     supertest(app)
       .post(`${config.prefix}/auth/sign-in`)
-      .send({email: config.account.email, password: config.account.password}) 
+      .send({ email: config.account.email, password: config.account.password })
       .set('Accept', 'application/json')
       .expect(200)
       .end((err, res) => {
@@ -46,7 +46,7 @@ describe('lists', () => {
           console.log(res.body);
           console.log('!!!!', token);
           token = res.body.token;
-          done()
+          done();
         }
       });
   });
@@ -62,7 +62,7 @@ describe('lists', () => {
           done(err);
         } else {
           console.log('%#$#$#', token);
-          done()
+          done();
         }
       });
   }).timeout(10000);
@@ -77,7 +77,7 @@ describe('lists', () => {
           done(err);
         } else {
           console.log('%#$#$#', token);
-          done()
+          done();
         }
       });
   }).timeout(10000);

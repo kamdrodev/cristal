@@ -1,10 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header class="header">
-      <q-toolbar
-        class="toolbar"
-      >
-
+      <q-toolbar class="toolbar">
         <q-btn
           flat
           dense
@@ -12,20 +9,17 @@
           @click="leftDrawerOpen = !leftDrawerOpen"
           icon="menu"
           aria-label="Menu"
-          
         />
 
         <q-toolbar-title>
-          Cristal  
+          Cristal
         </q-toolbar-title>
-        
+
         <!-- <div>Quasar v{{ $q.version }}</div> -->
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"      
-    >
+    <q-drawer v-model="leftDrawerOpen">
       <q-list>
         <q-item-label header>Cristal</q-item-label>
         <q-item clickable to="/lists">
@@ -36,7 +30,6 @@
             <q-item-label>Lists</q-item-label>
             <q-item-label caption>All lists</q-item-label>
           </q-item-section>
-          
         </q-item>
         <q-item clickable @click="signOut">
           <q-item-section avatar>
@@ -45,9 +38,7 @@
           <q-item-section>
             <q-item-label>Sign out</q-item-label>
           </q-item-section>
-          
         </q-item>
-       
       </q-list>
     </q-drawer>
 
@@ -58,35 +49,34 @@
 </template>
 
 <script>
-
 import { mapGetters } from 'vuex';
 
 export default {
   name: 'MyLayout',
 
-  data () {
+  data() {
     return {
-      leftDrawerOpen: false
-    }
+      leftDrawerOpen: false,
+    };
   },
   methods: {
     async signOut() {
       try {
-        const signOutProcess = await this.$store.dispatch('auth/signOut')
+        const signOutProcess = await this.$store.dispatch('auth/signOut');
 
-        this.$q.notify({message: signOutProcess.message, color: 'positive'})
+        this.$q.notify({ message: signOutProcess.message, color: 'positive' });
       } catch (e) {
-        this.$q.notify({message: e.message, color: 'negative'})
+        this.$q.notify({ message: e.message, color: 'negative' });
       }
-    }
+    },
   },
   computed: {
-    ...mapGetters('auth', ['isAuthenticated'])
-  }
-}
+    ...mapGetters('auth', ['isAuthenticated']),
+  },
+};
 </script>
 
 <style lang="sass">
-  .header
-    background-color: $dark
+.header
+  background-color: $dark
 </style>

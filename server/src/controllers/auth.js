@@ -7,7 +7,6 @@ import User from '../models/User.js';
 
 const signUp = async (req, res, next) => {
   try {
-
     const validationErrors = validationResult(req);
 
     if (!validationErrors.isEmpty()) {
@@ -22,14 +21,16 @@ const signUp = async (req, res, next) => {
     const newUser = new User({
       username: req.body.username,
       email: req.body.email,
-      password: hashedPassword
+      password: hashedPassword,
     });
 
     const newUserSave = await newUser.save();
 
-    res.status(200).json({message: 'User has been created'});
+    res.status(200).json({ message: 'User has been created' });
   } catch (e) {
-    const customError = new Error('Something went wrong during sign-up process');
+    const customError = new Error(
+      'Something went wrong during sign-up process',
+    );
     customError.status = 401;
     return next(customError);
   }
@@ -37,10 +38,9 @@ const signUp = async (req, res, next) => {
 
 const signIn = async (req, res, next) => {
   try {
-
     const validationErrors = validationResult(req);
 
-    if (!validationErrors.isEmpty()) {     
+    if (!validationErrors.isEmpty()) {
       let errors = [];
 
       for (let i = 0; i < validationErrors.errors.length; i++) {
@@ -53,10 +53,9 @@ const signIn = async (req, res, next) => {
       return next(customError);
     }
 
-    const user = await User.findOne({email: req.body.email});
+    const user = await User.findOne({ email: req.body.email });
 
     if (!user) {
-
       const customError = new Error('Email or password is incorrect');
       customError.status = 401;
 
@@ -66,22 +65,27 @@ const signIn = async (req, res, next) => {
     const match = await bcrypt.compare(req.body.password, user.password);
 
     if (match) {
-      const jwtToken =  await jwt.sign({
-        id: user._id,
-        email: user.email,
-        name: user.name,
-        admin: user.isAdmin
-      }, process.env.SECRET_KEY, {expiresIn: '2h'});
+      const jwtToken = await jwt.sign(
+        {
+          id: user._id,
+          email: user.email,
+          name: user.name,
+          admin: user.isAdmin,
+        },
+        process.env.SECRET_KEY,
+        { expiresIn: '2h' },
+      );
 
-      return res.status(200).json({message: 'You have been signed in', token: jwtToken});
+      return res
+        .status(200)
+        .json({ message: 'You have been signed in', token: jwtToken });
     } else {
-
       const customError = new Error('Email or password is incorrect');
       customError.status = 401;
 
       return next(customError);
     }
-  } catch(e) {
+  } catch (e) {
     const customError = new Error('Something went wrong during sign-in proces');
     customError.status = 401;
 
@@ -91,14 +95,14 @@ const signIn = async (req, res, next) => {
 
 const verifyToken = async (req, res, next) => {
   try {
-    return res.status(200).json({message: 'Token is valid'});
-  } catch(e) {
+    return res.status(200).json({ message: 'Token is valid' });
+  } catch (e) {
     const customError = new Error('Email or password is incorrect');
     customError.status = 401;
 
     return next(customError);
   }
-}
+};
 
 const auth = {
   signUp,
