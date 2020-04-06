@@ -44,6 +44,7 @@
     </div>
     <div
       class="col-xs-12 col-sm-12 offset-md col-md-12 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2"
+      id='list'
     >
       <!-- <div class="row">
       <div class="col-xs-12  q-mb-md">
@@ -154,7 +155,11 @@
       </div>
 
       <q-page-sticky position="bottom-right" :offset="[18, 18]">
-        <q-btn fab icon="post_add" @click="openPromptCreateFlashcard" />
+        <!-- <q-btn fab icon="post_add" @click="openPromptCreateFlashcard" /> -->
+        <q-fab icon="widgets" direction="up">
+          <q-fab-action fab icon="post_add" @click="openPromptCreateFlashcard" />
+          <q-fab-action fab icon="print" @click="printList"  />
+        </q-fab>  
       </q-page-sticky>
 
       <!--  Dialog - Create flashcard -->
@@ -263,6 +268,7 @@
 </template>
 
 <script>
+
 import { required, email } from 'vuelidate/lib/validators';
 
 export default {
@@ -446,6 +452,14 @@ export default {
         });
       } catch (e) {
         this.$q.notify({ message: e.message, color: 'negative' });
+      }
+    },
+    printList() {
+      try { 
+      window.print(); 
+      } catch(e) {
+        console.log(e);
+        this.$q.notify({ message: "Something went wrong", color: 'negative' });
       }
     },
     viewQuiz() {
