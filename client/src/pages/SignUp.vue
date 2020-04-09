@@ -41,16 +41,12 @@
             </template>
           </q-btn>
           <div>
-            <router-link :to="{ hash: '#Handling-links' }">
-              <template v-slot="props">
-                <q-btn
-                  to="/sign-in"
-                  flat
-                  label="Already have an account?"
-                  class="link"
-                />
-              </template>
-            </router-link>
+            <q-btn
+              to="/sign-in"
+              flat
+              label="Already have an account?"
+              class="link"
+            />
           </div>
         </form>
       </div>

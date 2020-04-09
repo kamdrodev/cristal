@@ -6,7 +6,7 @@
           <div class="flex flex-start text-h6">
             {{ this.temporary.flashcard.index }} / {{ this.numberOfCards }}
             ---
-            {{ this.temporary.list.firstLanguage }} <->
+            {{ this.temporary.list.firstLanguage }}
             {{ this.temporary.list.secondLanguage }}
           </div>
         </q-card-section>
@@ -30,6 +30,7 @@
     <div
       class="q-ma-lg col-xs-12 col-sm-12 col-md-12 col-lg-8 offset-lg-2 text-center list"
       v-for="flashcard in this.temporary.list.flashcards"
+      :key="flashcard._id" 
     >
       <div class="row">
         <div

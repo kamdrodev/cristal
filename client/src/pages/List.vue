@@ -500,10 +500,6 @@ export default {
     flashcardNumberOfAllCorrectAnswers() {
       return (flashcard) => flashcard.statistics.correctAnswers;
     },
-    flashcardNumberOfAllCorrectAnswers() {},
-    // flashcardAccuracy() {
-    //   return parseFloat(this. / (this.listNumberOfAllCorrectAnswers + this.listNumberOfAllIncorrectAnswers) * 100).toFixed(2)
-    // },
   },
 };
 </script>
