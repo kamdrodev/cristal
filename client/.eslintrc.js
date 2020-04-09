@@ -39,6 +39,47 @@ module.exports = {
     'prefer-promise-reject-errors': 'off',
 
     // allow debugger during development only
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
-  }
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'padding-line-between-statements': [
+      'error',
+        {
+          'blankLine': 'always',
+          'prev': '*',
+          'next': [
+              'block',
+              'block-like',
+              'cjs-export',
+              'class',
+              'const',
+              'export',
+              'import',
+              'let',
+              'var',
+              'return'
+          ]
+        },
+        {
+          'blankLine': 'always',
+          'prev': [
+              'block',
+              'block-like',
+              'cjs-export',
+              'class',
+              'const',
+              'export',
+              'import',
+              'let',
+              'var',
+              'return'
+          ],
+          'next': '*'
+        },
+        {
+          'blankLine': 'never',
+          'prev': ['const', 'let', 'var'],
+          'next': ['const', 'let', 'var']
+        },
+        { 'blankLine': 'any', 'prev': ['export', 'import'], 'next': ['export', 'import'] }
+    ]
+    } 
 }
