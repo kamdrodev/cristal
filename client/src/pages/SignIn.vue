@@ -2,7 +2,10 @@
   <q-page class="flex flex-center">
     <div class="row">
       <div class="col-xs-12 text-center">
-        <form @submit.prevent="signIn" class="form-sign-in q-gutter-xs">
+        <form
+          @submit.prevent="signIn"
+          class="form-sign-in q-gutter-xs"
+        >
           <h4>Sign In</h4>
           <q-input
             filled
@@ -25,13 +28,23 @@
               <q-icon name="security" />
             </template>
           </q-input>
-          <q-btn type="submit" label="Send" size="lg" class="button-submit">
+          <q-btn
+            type="submit"
+            label="Send"
+            size="lg"
+            class="button-submit"
+          >
             <template v-slot:loading>
               <q-spinner-facebook />
             </template>
           </q-btn>
           <div>
-            <q-btn to="/sign-up" flat label="Create account" class="link" />
+            <q-btn
+              to="/sign-up"
+              flat
+              label="Create account"
+              class="link"
+            />
           </div>
         </form>
       </div>

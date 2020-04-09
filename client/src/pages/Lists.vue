@@ -28,21 +28,42 @@
         <q-card-section>
           <div class="row items-center no-wrap">
             <div class="col">
-              <div class="text-h6">{{ list.title }}</div>
-              <div class="text-subtitle2">{{ list.description }}</div>
+              <div class="text-h6">
+                {{ list.title }}
+              </div>
+              <div class="text-subtitle2">
+                {{ list.description }}
+              </div>
             </div>
 
             <div class="col-auto">
-              <q-btn color="" round flat icon="more_vert">
-                <q-menu cover auto-close>
+              <q-btn
+                color=""
+                round
+                flat
+                icon="more_vert"
+              >
+                <q-menu
+                  cover
+                  auto-close
+                >
                   <q-list>
-                    <q-item clickable @click="openPromptUpdateList(list)">
+                    <q-item
+                      clickable
+                      @click="openPromptUpdateList(list)"
+                    >
                       <q-item-section>Update list</q-item-section>
                     </q-item>
-                    <q-item clickable @click="openPromptDeleteList(list)">
+                    <q-item
+                      clickable
+                      @click="openPromptDeleteList(list)"
+                    >
                       <q-item-section>Delete list</q-item-section>
                     </q-item>
-                    <q-item clickable @click="viewList(list)">
+                    <q-item
+                      clickable
+                      @click="viewList(list)"
+                    >
                       <q-item-section>View list</q-item-section>
                     </q-item>
                   </q-list>
@@ -56,17 +77,29 @@
         </q-card-section>
       </q-card>
 
-      <q-page-sticky position="bottom-right" :offset="[18, 18]">
-        <q-btn fab icon="post_add" @click="openPromptCreateList" />
+      <q-page-sticky
+        position="bottom-right"
+        :offset="[18, 18]"
+      >
+        <q-btn
+          fab
+          icon="post_add"
+          @click="openPromptCreateList"
+        />
       </q-page-sticky>
     </div>
 
     <!-- // Dialog - Create List -->
-    <q-dialog v-model="promptCreateList" persistent>
+    <q-dialog
+      v-model="promptCreateList"
+      persistent
+    >
       <q-card style="min-width: 350px;">
         <form c>
           <q-card-section>
-            <div class="text-h6">Create list</div>
+            <div class="text-h6">
+              Create list
+            </div>
           </q-card-section>
 
           <q-card-section class="q-pt-none">
@@ -119,20 +152,36 @@
             </q-input>
           </q-card-section>
 
-          <q-card-actions align="right" class="text-primary">
-            <q-btn flat label="Cancel" v-close-popup />
-            <q-btn flat label="Create list" @click="createList" />
+          <q-card-actions
+            align="right"
+            class="text-primary"
+          >
+            <q-btn
+              flat
+              label="Cancel"
+              v-close-popup
+            />
+            <q-btn
+              flat
+              label="Create list"
+              @click="createList"
+            />
           </q-card-actions>
         </form>
       </q-card>
     </q-dialog>
 
     <!-- Dialog - Update List -->
-    <q-dialog v-model="promptUpdateList" persistent>
+    <q-dialog
+      v-model="promptUpdateList"
+      persistent
+    >
       <q-card style="min-width: 350px;">
         <form c>
           <q-card-section>
-            <div class="text-h6">Update list</div>
+            <div class="text-h6">
+              Update list
+            </div>
           </q-card-section>
 
           <q-card-section class="q-pt-none">
@@ -161,25 +210,53 @@
             </q-input>
           </q-card-section>
 
-          <q-card-actions align="right" class="text-primary">
-            <q-btn flat label="Cancel" v-close-popup />
-            <q-btn flat label="Update list" @click="updateList" />
+          <q-card-actions
+            align="right"
+            class="text-primary"
+          >
+            <q-btn
+              flat
+              label="Cancel"
+              v-close-popup
+            />
+            <q-btn
+              flat
+              label="Update list"
+              @click="updateList"
+            />
           </q-card-actions>
         </form>
       </q-card>
     </q-dialog>
 
     <!-- Dialog - Delete list -->
-    <q-dialog v-model="promptDeleteList" persistent>
+    <q-dialog
+      v-model="promptDeleteList"
+      persistent
+    >
       <q-card>
         <q-card-section class="row items-center">
-          <q-avatar icon="delete" color="primary" text-color="white" />
+          <q-avatar
+            icon="delete"
+            color="primary"
+            text-color="white"
+          />
           <span class="q-ml-sm">Do you really want to delete this list?</span>
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn flat label="Cancel" color="primary" v-close-popup />
-          <q-btn flat label="Delete list" color="primary" @click="deleteList" />
+          <q-btn
+            flat
+            label="Cancel"
+            color="primary"
+            v-close-popup
+          />
+          <q-btn
+            flat
+            label="Delete list"
+            color="primary"
+            @click="deleteList"
+          />
         </q-card-actions>
       </q-card>
     </q-dialog>

@@ -6,7 +6,9 @@
       <div class="row text-center list statistics">
         <div class="col-xs-12">
           <!-- <div class="q-pb-md q-pt-md text-h6 ">{{list.title}}</div> -->
-          <div class="q-pb-md q-pt-md text-h6 title">{{ list.title }}</div>
+          <div class="q-pb-md q-pt-md text-h6 title">
+            {{ list.title }}
+          </div>
           <div class="q-pb-md q-pt-md text-h6 description">
             {{ list.description }}
           </div>
@@ -37,14 +39,15 @@
             class="q-mb-md q-mt-md button-view-quiz"
             @click="viewQuiz"
             size="large"
-            >Start Quiz</q-btn
           >
+            Start Quiz
+          </q-btn>
         </div>
       </div>
     </div>
     <div
       class="col-xs-12 col-sm-12 offset-md col-md-12 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2"
-      id='list'
+      id="list"
     >
       <!-- <div class="row">
       <div class="col-xs-12  q-mb-md">
@@ -65,7 +68,10 @@
           v-for="flashcard in list.flashcards"
           :key="flashcard._id"
         >
-          <q-card flat class="my-card flashcard">
+          <q-card
+            flat
+            class="my-card flashcard"
+          >
             <q-card-section>
               <div class="row items-center no-wrap">
                 <div class="col text-center">
@@ -112,11 +118,11 @@
                           )
                             ? 0
                             : parseFloat(
-                                (flashcard.statistics.correctAnswers /
-                                  (flashcard.statistics.correctAnswers +
-                                    flashcard.statistics.incorrectAnswers)) *
-                                  100,
-                              ).toFixed(2)
+                              (flashcard.statistics.correctAnswers /
+                                (flashcard.statistics.correctAnswers +
+                                  flashcard.statistics.incorrectAnswers)) *
+                                100,
+                            ).toFixed(2)
                         }}
                         %
                       </q-badge>
@@ -131,7 +137,10 @@
                   icon="more_vert"
                   class="button-action"
                 >
-                  <q-menu cover auto-close>
+                  <q-menu
+                    cover
+                    auto-close
+                  >
                     <q-list>
                       <q-item
                         clickable
@@ -154,20 +163,39 @@
         </div>
       </div>
 
-      <q-page-sticky position="bottom-right" :offset="[18, 18]">
+      <q-page-sticky
+        position="bottom-right"
+        :offset="[18, 18]"
+      >
         <!-- <q-btn fab icon="post_add" @click="openPromptCreateFlashcard" /> -->
-        <q-fab icon="widgets" direction="up">
-          <q-fab-action fab icon="post_add" @click="openPromptCreateFlashcard" />
-          <q-fab-action fab icon="print" @click="printList"  />
+        <q-fab
+          icon="widgets"
+          direction="up"
+        >
+          <q-fab-action
+            fab
+            icon="post_add"
+            @click="openPromptCreateFlashcard"
+          />
+          <q-fab-action
+            fab
+            icon="print"
+            @click="printList"
+          />
         </q-fab>  
       </q-page-sticky>
 
       <!--  Dialog - Create flashcard -->
-      <q-dialog v-model="promptCreateFlashcard" persistent>
+      <q-dialog
+        v-model="promptCreateFlashcard"
+        persistent
+      >
         <q-card style="min-width: 350px;">
           <form c>
             <q-card-section>
-              <div class="text-h6">Create flashcard</div>
+              <div class="text-h6">
+                Create flashcard
+              </div>
             </q-card-section>
             <q-card-section class="q-pt-none">
               <q-input
@@ -194,20 +222,36 @@
               </q-input>
             </q-card-section>
 
-            <q-card-actions align="right" class="text-primary">
-              <q-btn flat label="Cancel" v-close-popup />
-              <q-btn flat label="Create flashcard" @click="createFlashcard" />
+            <q-card-actions
+              align="right"
+              class="text-primary"
+            >
+              <q-btn
+                flat
+                label="Cancel"
+                v-close-popup
+              />
+              <q-btn
+                flat
+                label="Create flashcard"
+                @click="createFlashcard"
+              />
             </q-card-actions>
           </form>
         </q-card>
       </q-dialog>
 
       <!--  Dialog - Update flashcard -->
-      <q-dialog v-model="promptUpdateFlashcard" persistent>
+      <q-dialog
+        v-model="promptUpdateFlashcard"
+        persistent
+      >
         <q-card style="min-width: 350px;">
           <form c>
             <q-card-section>
-              <div class="text-h6">Update word</div>
+              <div class="text-h6">
+                Update word
+              </div>
             </q-card-section>
             <q-card-section class="q-pt-none">
               <q-input
@@ -234,26 +278,49 @@
               </q-input>
             </q-card-section>
 
-            <q-card-actions align="right" class="text-primary">
-              <q-btn flat label="Cancel" v-close-popup />
-              <q-btn flat label="Update word" @click="updateFlashcard" />
+            <q-card-actions
+              align="right"
+              class="text-primary"
+            >
+              <q-btn
+                flat
+                label="Cancel"
+                v-close-popup
+              />
+              <q-btn
+                flat
+                label="Update word"
+                @click="updateFlashcard"
+              />
             </q-card-actions>
           </form>
         </q-card>
       </q-dialog>
 
       <!-- Dialog - Delete flashcard -->
-      <q-dialog v-model="promptDeleteFlashcard" persistent>
+      <q-dialog
+        v-model="promptDeleteFlashcard"
+        persistent
+      >
         <q-card>
           <q-card-section class="row items-center">
-            <q-avatar icon="delete" color="primary" text-color="white" />
-            <span class="q-ml-sm"
-              >Do you really want to delete this flashcard?</span
-            >
+            <q-avatar
+              icon="delete"
+              color="primary"
+              text-color="white"
+            />
+            <span
+              class="q-ml-sm"
+            >Do you really want to delete this flashcard?</span>
           </q-card-section>
 
           <q-card-actions align="right">
-            <q-btn flat label="Cancel" color="primary" v-close-popup />
+            <q-btn
+              flat
+              label="Cancel"
+              color="primary"
+              v-close-popup
+            />
             <q-btn
               flat
               label="Delete flashcard"

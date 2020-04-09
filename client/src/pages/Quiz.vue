@@ -22,7 +22,7 @@
             :error="$v.answer.$error"
             class="input"
           >
-            <template v-slot:prepend> </template>
+            <template v-slot:prepend />
           </q-input>
         </q-card-section>
       </q-card>
@@ -47,39 +47,80 @@
     </div>
 
     <!-- Dialog - Close / Start  Quiz-->
-    <q-dialog v-model="promptQuiz" persistent>
+    <q-dialog
+      v-model="promptQuiz"
+      persistent
+    >
       <q-card>
         <q-card-section class="row items-center">
-          <q-avatar icon="list" color="primary" text-color="white" />
-          <span class="q-ml-sm"
-            >Do you really want to solve this quiz once again?</span
-          >
+          <q-avatar
+            icon="list"
+            color="primary"
+            text-color="white"
+          />
+          <span
+            class="q-ml-sm"
+          >Do you really want to solve this quiz once again?</span>
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn flat label="Close quiz" color="primary" @click="closeQuiz" />
-          <q-btn flat label="Start quiz" color="primary" @click="startQuiz" />
+          <q-btn
+            flat
+            label="Close quiz"
+            color="primary"
+            @click="closeQuiz"
+          />
+          <q-btn
+            flat
+            label="Start quiz"
+            color="primary"
+            @click="startQuiz"
+          />
         </q-card-actions>
       </q-card>
     </q-dialog>
 
     <!-- Dialog - Back to list -->
-    <q-dialog v-model="promptBackToList" persistent>
+    <q-dialog
+      v-model="promptBackToList"
+      persistent
+    >
       <q-card>
         <q-card-section class="row items-center">
-          <q-avatar icon="list" color="primary" text-color="white" />
+          <q-avatar
+            icon="list"
+            color="primary"
+            text-color="white"
+          />
           <span class="q-ml-sm">Do you really want to back to list?</span>
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn flat label="No" color="primary" v-close-popup />
-          <q-btn flat label="Yes" color="primary" @click="closeQuiz" />
+          <q-btn
+            flat
+            label="No"
+            color="primary"
+            v-close-popup
+          />
+          <q-btn
+            flat
+            label="Yes"
+            color="primary"
+            @click="closeQuiz"
+          />
         </q-card-actions>
       </q-card>
     </q-dialog>
 
-    <q-page-sticky position="bottom-right" :offset="[18, 18]">
-      <q-btn fab icon="list" @click="openPromptBackToList" />
+    <q-page-sticky
+      position="bottom-right"
+      :offset="[18, 18]"
+    >
+      <q-btn
+        fab
+        icon="list"
+        @click="openPromptBackToList"
+      />
     </q-page-sticky>
   </div>
 </template>

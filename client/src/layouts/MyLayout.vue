@@ -21,17 +21,27 @@
 
     <q-drawer v-model="leftDrawerOpen">
       <q-list>
-        <q-item-label header>Cristal</q-item-label>
-        <q-item clickable to="/lists">
+        <q-item-label header>
+          Cristal
+        </q-item-label>
+        <q-item
+          clickable
+          to="/lists"
+        >
           <q-item-section avatar>
             <q-icon name="view_quilt" />
           </q-item-section>
           <q-item-section>
             <q-item-label>Lists</q-item-label>
-            <q-item-label caption>All lists</q-item-label>
+            <q-item-label caption>
+              All lists
+            </q-item-label>
           </q-item-section>
         </q-item>
-        <q-item clickable @click="signOut">
+        <q-item
+          clickable
+          @click="signOut"
+        >
           <q-item-section avatar>
             <q-icon name="power_settings_new" />
           </q-item-section>
