@@ -155,7 +155,6 @@ export default {
       if (this.temporary.flashcard.index >= this.numberOfCards) {
         await this.saveQuizResult();
         this.promptQuiz = true;
-        console.log(`Result: ${JSON.stringify(this.result)}`);
         this.temporary.flashcard.index = 0;
       }
 
@@ -172,7 +171,6 @@ export default {
       ].secondLanguage;
     },
     async checkIfFlashcardExistsInResult(firstLanguage) {
-      console.log('firstLanguage', firstLanguage);
 
       for (let i = 0; i < this.result.flashcards.length; i++) {
         if (this.result.flashcards[i]['firstLanguage'] == firstLanguage) {
@@ -201,7 +199,6 @@ export default {
       if (this.temporary.flashcard.index >= this.numberOfCards) {
         await this.saveQuizResult();
         this.promptQuiz = true;
-        console.log(`Result: ${JSON.stringify(this.result)}`);
         this.temporary.flashcard.index = 0;
         this.result = {};
       }
@@ -211,7 +208,6 @@ export default {
       );
 
       if (!checkIfFlashcardExistsInResultProcess) {
-        console.log('flashcard id', this.temporary.flashcard.id);
         this.result.flashcards.push({
           firstLanguage: this.temporary.flashcard.firstLanguage,
           secondLanguage: this.temporary.flashcard.secondLanguage,
