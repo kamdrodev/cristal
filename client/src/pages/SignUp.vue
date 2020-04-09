@@ -104,10 +104,10 @@ export default {
 };
 </script>
 
-<style lang="sass">
-.form-sign-up
-  .button-submit
-    width: 300px
-.link
-  width: 100%
+<style lang="scss">
+  .form-sign-up {
+    .button-submit {
+      width: 300px;
+    }
+  }
 </style>

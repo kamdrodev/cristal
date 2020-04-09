@@ -84,10 +84,10 @@ export default {
 };
 </script>
 
-<style lang="sass">
-.form-sign-in
-  .button-submit
-    width: 300px
-.link
-  width: 100%
+<style lang="scss">
+  .form-sign-in {
+    .button-submit {
+      width: 300px;
+    }
+   }
 </style>
