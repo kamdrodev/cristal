@@ -28,16 +28,10 @@ const Router = new VueRouter({
 
 Router.beforeEach(async (to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    console.log('Dashboard test');
-
     try {
       const verifyTokenRequest = await store.dispatch('auth/verifyToken');
-
-      console.log(localStorage.getItem('token'));
-      console.log('Good');
       next();
     } catch (e) {
-      console.log(e);
       next({
         path: '/sign-in',
       });
