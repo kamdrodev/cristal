@@ -7,6 +7,7 @@ const getList = async (req, res, next) => {
 
         if (!validationErrors.isEmpty()) {
             const customError = new Error("Incorrect Data");
+
             customError.status = 400;
 
             return next(customError);
@@ -25,12 +26,12 @@ const getList = async (req, res, next) => {
         return res.status(200).json({ message: "List have been fetched", list: list });
     } catch (e) {
         const customError = new Error("Something went wrong during get list process");
+
         customError.status = 401;
 
         return next(customError);
     }
 };
-
 const getAllLists = async (req, res, next) => {
     try {
         let queryOptions = {
@@ -40,11 +41,11 @@ const getAllLists = async (req, res, next) => {
                 ? req.query.secondLanguage
                 : null,
         };
-
         const validationErrors = validationResult(req);
 
         if (!validationErrors.isEmpty()) {
             const customError = new Error("Incorrect Data");
+
             customError.status = 400;
 
             return next(customError);
@@ -55,18 +56,19 @@ const getAllLists = async (req, res, next) => {
         return res.status(200).json({ message: "Lists have been fetched", lists: lists });
     } catch (e) {
         const customError = new Error("Something went wrong during get all lists process");
+
         customError.status = 401;
 
         return next(customError);
     }
 };
-
 const createList = async (req, res, next) => {
     try {
         const validationErrors = validationResult(req);
 
         if (!validationErrors.isEmpty()) {
             const customError = new Error("Incorrect Data");
+
             customError.status = 400;
 
             return next(customError);
@@ -85,18 +87,19 @@ const createList = async (req, res, next) => {
         return res.status(200).json({ message: "List has been created" });
     } catch (e) {
         const customError = new Error("Something went wrong during create list process");
+
         customError.status = 401;
 
         return next(customError);
     }
 };
-
 const updateList = async (req, res, next) => {
     try {
         const validationErrors = validationResult(req);
 
         if (!validationErrors.isEmpty()) {
             const customError = new Error("Incorrect Data");
+
             customError.status = 400;
 
             return next(customError);
@@ -112,18 +115,19 @@ const updateList = async (req, res, next) => {
         const customError = new Error(
             "Something went wrong during update list process",
         );
+
         customError.status = 401;
 
         return next(customError);
     }
 };
-
 const deleteList = async (req, res, next) => {
     try {
         const validationErrors = validationResult(req);
 
         if (!validationErrors.isEmpty()) {
             const customError = new Error("Incorrect Data");
+
             customError.status = 400;
 
             return next(customError);
@@ -137,18 +141,19 @@ const deleteList = async (req, res, next) => {
         return res.status(200).json({ message: "List have been deleted" });
     } catch (e) {
         const customError = new Error("Something went wrong during delete list process");
+
         customError.status = 401;
 
         return next(customError);
     }
 };
-
 const getFlashcard = async (req, res, next) => {
     try {
         const validationErrors = validationResult(req);
 
         if (!validationErrors.isEmpty()) {
             const customError = new Error("Incorrect Data");
+
             customError.status = 400;
 
             return next(customError);
@@ -163,18 +168,19 @@ const getFlashcard = async (req, res, next) => {
         return res.status(200).json({ message: "Flashcard has been created" });
     } catch (e) {
         const customError = new Error("Something went wrong during get flashcard process");
+
         customError.status = 401;
 
         return next(customError);
     }
 };
-
 const createFlashcard = async (req, res, next) => {
     try {
         const validationErrors = validationResult(req);
 
         if (!validationErrors.isEmpty()) {
             const customError = new Error("Incorrect Data");
+
             customError.status = 400;
 
             return next(customError);
@@ -195,18 +201,19 @@ const createFlashcard = async (req, res, next) => {
         return res.status(200).json({ message: "Flashcard has been created" });
     } catch (e) {
         const customError = new Error("Something went wrong during create flashcard process");
+
         customError.status = 401;
 
         return next(customError);
     }
 };
-
 const updateFlashcard = async (req, res, next) => {
     try {
         const validationErrors = validationResult(req);
 
         if (!validationErrors.isEmpty()) {
             const customError = new Error("Incorrect Data");
+
             customError.status = 400;
 
             return next(customError);
@@ -229,18 +236,19 @@ const updateFlashcard = async (req, res, next) => {
         return res.status(200).json({ message: "Flashcard has been updated" });
     } catch (e) {
         const customError = new Error("Something went wrong during update flashcard process");
+
         customError.status = 401;
 
         return next(customError);
     }
 };
-
 const deleteFlashcard = async (req, res, next) => {
     try {
         const validationErrors = validationResult(req);
 
         if (!validationErrors.isEmpty()) {
             const customError = new Error("Incorrect Data");
+
             customError.status = 400;
 
             return next(customError);
@@ -254,18 +262,19 @@ const deleteFlashcard = async (req, res, next) => {
         return res.status(200).json({ message: "Flashcard has been updated" });
     } catch (e) {
         const customError = new Error("Something went wrong during delete flashcard process");
+
         customError.status = 401;
 
         return next(customError);
     }
 };
-
 const saveQuizResult = async (req, res, next) => {
     try {
         const validationErrors = validationResult(req);
 
         if (!validationErrors.isEmpty()) {
             const customError = new Error("Incorrect Data");
+
             customError.status = 400;
 
             return next(customError);
@@ -304,12 +313,12 @@ const saveQuizResult = async (req, res, next) => {
         return res.status(200).json({ message: "Statistics have been updated" });
     } catch (e) {
         const customError = new Error("Something went wrong during update statistics process");
+
         customError.status = 401;
         
         return next(customError);
     }
 };
-
 const lists = {
     getList,
     getAllLists,

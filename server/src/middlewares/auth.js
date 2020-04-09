@@ -3,8 +3,10 @@ import User from "../models/User.js";
 
 const checkIfUserExists = async (req, res, next) => {
     const users = await User.find({ email: req.body.email });
+
     if (users.length > 0) {
         const customError = new Error("Email is already used");
+
         customError.status = 403;
       
         return next(customError);
@@ -13,7 +15,6 @@ const checkIfUserExists = async (req, res, next) => {
         return next();
     }
 };
-
 const jwtVerify = async (req, res, next) => {
     try {
         const token = req.headers["authorization"].replace("Bearer ", "");
@@ -24,12 +25,12 @@ const jwtVerify = async (req, res, next) => {
         return next();
     } catch (e) {
         const customError = new Error("You are not authorized");
+
         customError.status = 401;
       
         return next(customError);
     }
 };
-
 const auth = {
     checkIfUserExists,
     jwtVerify,

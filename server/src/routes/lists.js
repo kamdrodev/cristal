@@ -31,6 +31,7 @@ router.post(
             "english",
             "japanese",
         ];
+
         if (!listOfLanguages.includes(value)) {
             throw new Error("You can't select this language");
         }

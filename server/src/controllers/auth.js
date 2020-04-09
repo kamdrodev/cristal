@@ -10,13 +10,13 @@ const signUp = async (req, res, next) => {
 
         if (!validationErrors.isEmpty()) {
             const customError = new Error("Validation error");
+
             customError.status = 400;
            
             return next(customError);
         }
 
         let hashedPassword = await bcrypt.hash(req.body.password, 10);
-
         const newUser = new User({
             username: req.body.username,
             email: req.body.email,
@@ -28,12 +28,12 @@ const signUp = async (req, res, next) => {
         return res.status(200).json({ message: "User has been created" });
     } catch (e) {
         const customError = new Error("Something went wrong during sign-up process");
+
         customError.status = 401;
 
         return next(customError);
     }
 };
-
 const signIn = async (req, res, next) => {
     try {
         const validationErrors = validationResult(req);
@@ -46,6 +46,7 @@ const signIn = async (req, res, next) => {
             }
 
             const customError = new Error("Something went wrong during sign-in process");
+
             customError.status = 400;
             customError.errors = errors;
        
@@ -56,6 +57,7 @@ const signIn = async (req, res, next) => {
 
         if (!user) {
             const customError = new Error("Email or password is incorrect");
+
             customError.status = 401;
 
             return next(customError);
@@ -78,30 +80,31 @@ const signIn = async (req, res, next) => {
             return res.status(200).json({ message: "You have been signed in", token: jwtToken });
         } else {
             const customError = new Error("Email or password is incorrect");
+
             customError.status = 401;
 
             return next(customError);
         }
     } catch (e) {
         const customError = new Error("Something went wrong during sign-in proces");
+
         customError.status = 401;
 
         return next(customError);
     }
 };
-
 const verifyToken = async (req, res, next) => {
     try {
 
         return res.status(200).json({ message: "Token is valid" });
     } catch (e) {
         const customError = new Error("Email or password is incorrect");
+
         customError.status = 401;
 
         return next(customError);
     }
 };
-
 const auth = {
     signUp,
     signIn,

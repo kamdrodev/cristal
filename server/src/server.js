@@ -9,7 +9,6 @@ import mongoose from "mongoose";
 import chalk from "chalk";
 
 const app = express();
-
 const port = process.env.PORT || 5000;
 
 mongoose.connect(process.env.DATABASE_URL);
@@ -31,6 +30,7 @@ app.use((err, req, res, next) => {
  
         return next(err);
     }
+
     err.message = err.message || "Error";
     err.status = err.status || 400;
 
