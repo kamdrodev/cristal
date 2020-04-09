@@ -4,17 +4,14 @@ const state = {
   token: localStorage.getItem('token') || null,
   status: '',
 };
-
 const getters = {
   isAuthenticated: (state) => !!state.token,
 };
-
 const mutations = {
   setToken: (state, token) => {
     state.token = token;
   },
 };
-
 const actions = {
   async signUp({ dispatch }, { username, email, password }) {
     try {
@@ -23,7 +20,9 @@ const actions = {
         email,
         password,
       });
+
       dispatch('router/routerPush', { path: '/sign-in' }, { root: true });
+
       return {
         message: signUpRequest.data.message,
       };
@@ -43,6 +42,7 @@ const actions = {
       localStorage.setItem('token', signInRequest.data.token);
       commit('setToken', signInRequest.data.token);
       dispatch('router/routerPush', { path: '/lists' }, { root: true });
+
       return {
         message: signInRequest.data.message,
       };
@@ -55,6 +55,7 @@ const actions = {
       localStorage.removeItem('token');
       commit('setToken', null);
       dispatch('router/routerPush', { path: '/sign-in' }, { root: true });
+
       return {
         message: 'You have been logged out',
       };
@@ -65,6 +66,7 @@ const actions = {
   async verifyToken({ dispatch, commit }) {
     try {
       const verifyTokenRequest = await axios.get(`auth/verify-token`, {});
+
       return {
         message: 'You are logged in.',
       };

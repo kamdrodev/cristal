@@ -4,12 +4,10 @@ const state = {
   lists: [],
   list: {},
 };
-
 const getters = {
   lists: (lists) => state.lists,
   list: (list) => state.list,
 };
-
 const mutations = {
   setLists: (state, lists) => {
     state.lists = lists;
@@ -18,7 +16,6 @@ const mutations = {
     state.list = list;
   },
 };
-
 const actions = {
   async getAllLists({ dispatch, commit }, { listsQueryOptions }) {
     try {
@@ -46,6 +43,7 @@ const actions = {
   async getList({ dispatch, commit }, { listId }) {
     try {
       const getListRequest = await axios.get(`lists/${listId}`);
+
       commit('setList', getListRequest.data.list);
 
       return {
@@ -160,12 +158,14 @@ const actions = {
   async saveQuizResult({ dispatch, commit }, { listId, result }) {
     try {
       console.log(`Vuex result`, result);
+
       const saveQuizResultRequest = await axios.post(
         `lists/${listId}/statistics`,
         {
           result,
         },
       );
+
       return {
         message: saveQuizResultRequest.data.message,
       };
