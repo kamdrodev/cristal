@@ -89,7 +89,7 @@ const createList = async (req, res, next) => {
             userId: req.user.id,
         });
 
-        const newListSave = await newList.save();
+        await newList.save();
 
         return res.status(200).json({ message: "List has been created" });
     } catch (e) {
@@ -327,6 +327,9 @@ const saveQuizResult = async (req, res, next) => {
         const customError = new Error(
             "Something went wrong during update statistics process",
         );
+        customError.status = 401;
+        
+        return next(customError);
     }
 };
 

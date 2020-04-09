@@ -1,25 +1,5 @@
 import mongoose from "mongoose";
 
-const Schema = mongoose.Schema;
-
-const subSchema = mongoose.Schema(
-    {
-        flashcardId: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "List",
-        },
-        correctAnswers: {
-            type: Number,
-            default: 0,
-        },
-        incorrectAnswers: {
-            type: Number,
-            default: 0,
-        },
-    },
-    { _id: false },
-);
-
 const ListSchema = mongoose.Schema({
     title: {
         type: String,

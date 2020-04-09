@@ -15,7 +15,6 @@ const signUp = async (req, res, next) => {
             return next(customError);
         }
 
-        let salt = await bcrypt.genSalt(10);
         let hashedPassword = await bcrypt.hash(req.body.password, 10);
 
         const newUser = new User({
@@ -24,9 +23,9 @@ const signUp = async (req, res, next) => {
             password: hashedPassword,
         });
 
-        const newUserSave = await newUser.save();
+        await newUser.save();
 
-        res.status(200).json({ message: "User has been created" });
+        return res.status(200).json({ message: "User has been created" });
     } catch (e) {
         const customError = new Error(
             "Something went wrong during sign-up process",
