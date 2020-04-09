@@ -28,11 +28,13 @@ app.use("/api/", listsRoutes);
 
 app.use((err, req, res, next) => {
     if (res.headersSent) {
+ 
         return next(err);
     }
     err.message = err.message || "Error";
     err.status = err.status || 400;
-    res.status(err.status).json({
+
+    return res.status(err.status).json({
         message: err.message,
     });
 });
