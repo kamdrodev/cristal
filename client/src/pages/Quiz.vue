@@ -133,6 +133,7 @@ export default {
         const getListProcess = await this.$store.dispatch('lists/getList', {
           listId: this.$route.params.id,
         });
+
         this.$q.notify({ message: getListProcess.message, color: 'positive' });
       } catch (e) {
         this.$q.notify({ message: e.message, color: 'negative' });
@@ -147,7 +148,6 @@ export default {
     },
     async nextFlashcard() {
       const verifyFlashcardResult = await this.verifyFlashcard(this.answer);
-
       let randFlashcard = await this.randomFlashcard();
 
       this.temporary.flashcard.index++;
@@ -173,22 +173,28 @@ export default {
     },
     async checkIfFlashcardExistsInResult(firstLanguage) {
       console.log('firstLanguage', firstLanguage);
+
       for (let i = 0; i < this.result.flashcards.length; i++) {
         if (this.result.flashcards[i]['firstLanguage'] == firstLanguage) {
           console.log('True');
+
           return true;
         }
       }
+
       return false;
     },
     async findIndexInData(data, property, value) {
       var result = -1;
+
       data.some(function (item, i) {
         if (item[property] === value) {
           result = i;
+
           return true;
         }
       });
+
       return result;
     },
     async verifyFlashcard(answer) {
@@ -231,6 +237,7 @@ export default {
         this.result.flashcards[index].statistics.correctAnswers++;
 
         this.$q.notify({ message: 'Correct answer', color: 'positive' });
+
         return true;
       }
 
@@ -240,6 +247,7 @@ export default {
       this.result.flashcards[index].statistics.incorrectAnswers++;
 
       this.$q.notify({ message: 'Incorrect answer', color: 'negative' });
+
       return false;
     },
     async saveQuizResult() {
@@ -251,6 +259,7 @@ export default {
             result: this.result,
           },
         );
+
         this.$q.notify({
           message: saveQuizResultProcess.message,
           color: 'positive',

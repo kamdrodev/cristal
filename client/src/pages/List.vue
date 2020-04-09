@@ -432,6 +432,7 @@ export default {
         const getListProcess = await this.$store.dispatch('lists/getList', {
           listId: this.$route.params.id,
         });
+
         this.$q.notify({ message: getListProcess.message, color: 'positive' });
       } catch (e) {
         this.$q.notify({ message: e.message, color: 'negative' });

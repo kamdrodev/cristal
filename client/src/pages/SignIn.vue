@@ -65,13 +65,16 @@ export default {
     async signIn() {
       try {
         this.$v.formSignIn.$touch();
+
         if (this.$v.formSignIn.$error) {
           throw new Error('Please review fields again.');
         }
+
         const signInProcess = await this.$store.dispatch('auth/signIn', {
           email: this.formSignIn.email,
           password: this.formSignIn.password,
         });
+
         this.$q.notify({ message: signInProcess.message, color: 'positive' });
       } catch (e) {
         this.$q.notify({ message: e.message, color: 'negative' });
