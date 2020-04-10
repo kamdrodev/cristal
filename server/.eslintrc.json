@@ -33,46 +33,50 @@
         "no-unused-vars": "off",
         "unused-imports/no-unused-imports": 2,
         "unused-imports/no-unused-vars": 2,
-    "padding-line-between-statements": [
-        "error",
-        {
-            "blankLine": "always",
-            "prev": "*",
-            "next": [
-                "block",
-                "block-like",
-                "cjs-export",
-                "class",
-                "const",
-                "export",
-                "import",
-                "let",
-                "var",
-                "return"
-            ]
-        },
-        {
-            "blankLine": "always",
-            "prev": [
-                "block",
-                "block-like",
-                "cjs-export",
-                "class",
-                "const",
-                "export",
-                "import",
-                "let",
-                "var",
-                "return"
-            ],
-            "next": "*"
-        },
-        {
-            "blankLine": "never",
-            "prev": ["const", "let", "var"],
-            "next": ["const", "let", "var"]
-        },
-        { "blankLine": "any", "prev": ["export", "import"], "next": ["export", "import"] }
-    ]
+        "padding-line-between-statements": [
+          "error",
+          {
+              "blankLine": "always",
+              "prev": "*",
+              "next": [
+                  "block",
+                  "block-like",
+                  "cjs-export",
+                  "class",
+                  "const",
+                  "export",
+                  "import",
+                  "let",
+                  "var",
+                  "return"
+              ]
+          },
+          {
+              "blankLine": "always",
+              "prev": [
+                  "block",
+                  "block-like",
+                  "cjs-export",
+                  "class",
+                  "const",
+                  "export",
+                  "import",
+                  "let",
+                  "var",
+                  "return"
+              ],
+              "next": "*"
+          },
+          {
+              "blankLine": "never",
+              "prev": ["const", "let", "var"],
+              "next": ["const", "let", "var"]
+          },
+          { "blankLine": "any", "prev": ["export", "import"], "next": ["export", "import"] }
+        ],
+        "object-curly-spacing": [
+          "error",
+          "always" 
+        ] 
     }
 }
