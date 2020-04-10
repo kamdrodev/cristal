@@ -37,7 +37,6 @@ module.exports = {
   // add your custom rules here
   rules: {
     'prefer-promise-reject-errors': 'off',
-
     // allow debugger during development only
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'padding-line-between-statements': [
@@ -80,6 +79,10 @@ module.exports = {
           'next': ['const', 'let', 'var']
         },
         { 'blankLine': 'any', 'prev': ['export', 'import'], 'next': ['export', 'import'] }
+    ],
+    'object-curly-spacing': [
+      'error',
+      'always'
     ]
-    } 
+  } 
 }
