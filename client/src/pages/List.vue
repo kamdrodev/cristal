@@ -34,15 +34,6 @@
             Accuracy: {{ isNaN(this.listAccuracy) ? 0 : this.listAccuracy }} %
           </div>
         </div>
-        <div class="col-xs-12 q-mb-md q-mt-md">
-          <q-btn
-            class="q-mb-md q-mt-md button-view-quiz"
-            @click="viewQuiz"
-            size="large"
-          >
-            Start Quiz
-          </q-btn>
-        </div>
       </div>
     </div>
     <div
@@ -181,6 +172,10 @@
             fab
             icon="print"
             @click="printList"
+          />
+          <q-fab-action
+            icon="play_arrow"
+            @click="viewQuiz"
           />
         </q-fab>  
       </q-page-sticky>
