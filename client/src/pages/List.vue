@@ -572,54 +572,54 @@ export default {
 };
 </script>
 
-<style lang="sass" scoped>
-.button-quiz
-  width: 300px
+<style lang="scss" scoped>
 
-.trend
+.card {
+  &.informations {
+    background: linear-gradient(to right, $dark, $primary);
+  }
+  &.flashcard {    
+    background: linear-gradient(to right, $dark, $primary);
+  }
+}
 
-.card
-  height: 100%
-  &.informations
-    background: linear-gradient(to right, $dark, $primary)
-    .button-view-quiz
-      background-color: $dark
-  &.flashcard
-    background: linear-gradient(to right, $dark, $primary)
-  .button-action
-    display: none
+.button-action {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
 
-.button-view-quiz
-   background-color: $dark
+.list {
+  .statistics {
+    &.correct-answers {
+      color: $positive;
+    }
+    &.incorrect-answers {
+      color: $negative;
+    }
+    &.accuracy {
+      color: $info;
+    }
+  }
+}
 
-.button-action
-  position: absolute
-  top: 0
-  right: 0
 
-.word
-  &.second-language
-    color: $primary
+.flashcard {
+  .statistics {
+    .badge {
+      &.correct-answers {
+        background-color: $positive;
+      }
+      &.incorrect-answers {
+        background-color: $negative;
+      }
+      &.accuracy {
+        background-color: $info;
+      }
+    }
+  }
+}
 
-.list
-  .statistics
-    &.correct-answers
-      color: $positive
-    &.incorrect-answers
-      color: $negative
-    &.accuracy
-      color: $info
 
-.flashcard
-  .statistics
-    position: absolute
-    right: 0
-    bottom: 0
-    .badge
-      &.correct-answers
-        background-color: $positive
-      &.incorrect-answers
-        background-color: $negative
-      &.accuracy
-        background-color: $info
+
 </style>
