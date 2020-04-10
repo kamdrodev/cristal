@@ -9,7 +9,8 @@
         "build": "babel  src/ -d dist/",
         "serve": "pm2 start dist/server.js",
         "coverage": "nyc npm run test",
-        "lint": "eslint ."
+        "lint": "eslint .",
+        "lint-fix": "eslint . --fix"
     },
     "author": "kd",
     "license": "ISC",
