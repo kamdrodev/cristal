@@ -247,7 +247,6 @@ export default {
         await this.saveQuizResult();
         this.promptQuiz = true;
         this.temporary.flashcard.index = 0;
-        this.result = {};
       }
 
       const checkIfFlashcardExistsInResultProcess = await this.checkIfFlashcardExistsInResult(
@@ -282,16 +281,33 @@ export default {
         this.$q.notify({ message: 'Correct answer', color: 'positive' });
 
         return true;
+      } else {
+        // list
+        this.result.incorrectAnswers++;
+        // specific flashcard
+        this.result.flashcards[index].statistics.incorrectAnswers++;
       }
-
-      // list
-      this.result.incorrectAnswers++;
-      // specific flashcard
-      this.result.flashcards[index].statistics.incorrectAnswers++;
 
       this.$q.notify({ message: 'Incorrect answer', color: 'negative' });
 
       return false;
+    },
+    async reloadQuiz() { 
+      this.result.correctAnswers = 0;
+      this.result.incorrectAnswers = 0;
+      this.result.flashcards = [];
+      
+      let randFlashcard = await this.randomFlashcard();
+
+      this.temporary.flashcard.id = this.temporary.list.flashcards[
+        randFlashcard
+      ]._id;
+      this.temporary.flashcard.firstLanguage = this.temporary.list.flashcards[
+        randFlashcard
+      ].firstLanguage;
+      this.temporary.flashcard.secondLanguage = this.temporary.list.flashcards[
+        randFlashcard
+      ].secondLanguage;
     },
     async saveQuizResult() {
       try {
@@ -302,6 +318,8 @@ export default {
             result: this.result,
           },
         );
+        
+        await this.reloadQuiz();
 
         this.$q.notify({
           message: saveQuizResultProcess.message,
