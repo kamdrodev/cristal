@@ -14,8 +14,19 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 .logo {
   width: 50% !important;
+  max-width: 500px;
+  animation: roll 3s infinite;
+}
+
+@keyframes roll {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

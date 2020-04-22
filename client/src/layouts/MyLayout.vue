@@ -11,8 +11,8 @@
           aria-label="Menu"
         />
 
-        <q-toolbar-title>
-          Cristal
+        <q-toolbar-title class="toolbar">
+          <img src="~assets/logo.svg" class="logo"><span class="title">Cristal</span>
         </q-toolbar-title>
 
         <!-- <div>Quasar v{{ $q.version }}</div> -->
@@ -22,7 +22,7 @@
     <q-drawer v-model="leftDrawerOpen">
       <q-list>
         <q-item-label header>
-          Cristal
+          Cristal 
         </q-item-label>
         <q-item
           clickable
@@ -86,7 +86,29 @@ export default {
 };
 </script>
 
-<style lang="sass">
-.header
-  background-color: $dark
+<style lang="scss" scoped>
+  .header {
+    background-color: $dark;
+  }
+  
+  .toolbar {
+    display: flex;
+    align-items: center;
+    .title {
+      padding-left: 12px;
+    }
+  }
+  .logo {
+    width: 60px;
+    animation: roll 3s infinite;
+  }
+    
+  @keyframes roll {
+    0% {
+      transform: rotate(0);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 </style>
