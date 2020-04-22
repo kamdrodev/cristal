@@ -1,4 +1,7 @@
+<img src="./client/src/assets/logo.svg" width="60px"> 
+
 # Cristal
+
 ## Language learning application.
 Create your own sets of flashcards, learn them and check your progress.
 
