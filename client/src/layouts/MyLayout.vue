@@ -12,7 +12,10 @@
         />
 
         <q-toolbar-title class="toolbar">
-          <img src="~assets/logo.svg" class="logo"><span class="title">Cristal</span>
+          <img
+            src="~assets/logo.svg"
+            class="logo"
+          ><span class="title">Cristal</span>
         </q-toolbar-title>
 
         <!-- <div>Quasar v{{ $q.version }}</div> -->
@@ -41,6 +44,7 @@
         <q-item
           clickable
           @click="signOut"
+          class="fixed-bottom"
         >
           <q-item-section avatar>
             <q-icon name="power_settings_new" />
