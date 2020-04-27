@@ -361,22 +361,22 @@ export default {
 };
 </script>
 
-<style lang="sass" scoped>
-.card
-  height: 300px
-  background-color: $dark
-  .input
-    width: 100%
+<style lang="scss" scoped>
 
-.languages
-  font-weight: bold
+.card {
+  height: 300px;
+  background-color: $dark;
+ 
+  .input {
+    width: 100%; 
+  }
+}
 
-.list
-  .row
-.first-language
+.word {
+  &.second-language {
+    color: $primary;
+  }
+}
 
 
-.word
-  &.second-language
-    color: $primary
 </style>

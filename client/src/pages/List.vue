@@ -576,6 +576,14 @@ export default {
   &.flashcard {    
     background: linear-gradient(to right, $dark, $primary);
   }
+  
+
+}
+
+.word {
+  &.second-language {
+    color: $primary !important;
+  }
 }
 
 .button-action {
