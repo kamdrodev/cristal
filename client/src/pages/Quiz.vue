@@ -158,7 +158,7 @@ export default {
     promptQuiz: false,
     promptBackToList: false,
     accuracy: 0,
-    numberOfCards: 5,
+    numberOfCards: 25,
     result: {
       correctAnswers: 0,
       incorrectAnswers: 0,
