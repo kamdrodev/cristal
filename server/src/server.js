@@ -1,5 +1,3 @@
-dotenv.config()
-
 import express from 'express'
 import dotenv from 'dotenv'
 import bodyParser from 'body-parser'
@@ -8,15 +6,17 @@ import cors from 'cors'
 import mongoose from 'mongoose'
 import chalk from 'chalk'
 
+import authRoutes from './routes/auth.js'
+import listsRoutes from './routes/lists.js'
+
+dotenv.config()
+
 const app = express()
 const port = process.env.PORT || 5000
 
 mongoose.connect(process.env.DATABASE_URL)
 
 app.use(cors())
-
-import authRoutes from './routes/auth.js'
-import listsRoutes from './routes/lists.js'
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())

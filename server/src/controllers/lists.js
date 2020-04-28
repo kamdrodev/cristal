@@ -36,9 +36,10 @@ const getList = async (req, res, next) => {
     return next(customError)
   }
 }
+
 const getAllLists = async (req, res, next) => {
   try {
-    let queryOptions = {
+    const queryOptions = {
       userId: req.user.id,
       firstLanguage: req.query.firstLanguage ? req.query.firstLanguage : null,
       secondLanguage: req.query.secondLanguage ? req.query.secondLanguage : null
@@ -68,6 +69,7 @@ const getAllLists = async (req, res, next) => {
     return next(customError)
   }
 }
+
 const createList = async (req, res, next) => {
   try {
     const validationErrors = validationResult(req)
@@ -101,6 +103,7 @@ const createList = async (req, res, next) => {
     return next(customError)
   }
 }
+
 const updateList = async (req, res, next) => {
   try {
     const validationErrors = validationResult(req)
@@ -129,6 +132,7 @@ const updateList = async (req, res, next) => {
     return next(customError)
   }
 }
+
 const deleteList = async (req, res, next) => {
   try {
     const validationErrors = validationResult(req)
@@ -186,6 +190,7 @@ const getFlashcard = async (req, res, next) => {
     return next(customError)
   }
 }
+
 const createFlashcard = async (req, res, next) => {
   try {
     const validationErrors = validationResult(req)
@@ -221,6 +226,7 @@ const createFlashcard = async (req, res, next) => {
     return next(customError)
   }
 }
+
 const updateFlashcard = async (req, res, next) => {
   try {
     const validationErrors = validationResult(req)
@@ -258,6 +264,7 @@ const updateFlashcard = async (req, res, next) => {
     return next(customError)
   }
 }
+
 const deleteFlashcard = async (req, res, next) => {
   try {
     const validationErrors = validationResult(req)
@@ -339,6 +346,7 @@ const saveQuizResult = async (req, res, next) => {
     return next(customError)
   }
 }
+
 const lists = {
   getList,
   getAllLists,

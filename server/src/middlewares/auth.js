@@ -14,9 +14,10 @@ const checkIfUserExists = async (req, res, next) => {
     return next()
   }
 }
+
 const jwtVerify = async (req, res, next) => {
   try {
-    const token = req.headers['authorization'].replace('Bearer ', '')
+    const token = req.headers.authorization.replace('Bearer ', '')
     const user = await jwt.verify(token, process.env.SECRET_KEY)
 
     req.user = user

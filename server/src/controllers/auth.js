@@ -16,7 +16,7 @@ const signUp = async (req, res, next) => {
       return next(customError)
     }
 
-    let hashedPassword = await bcrypt.hash(req.body.password, 10)
+    const hashedPassword = await bcrypt.hash(req.body.password, 10)
     const newUser = new User({
       username: req.body.username,
       email: req.body.email,
@@ -34,12 +34,13 @@ const signUp = async (req, res, next) => {
     return next(customError)
   }
 }
+
 const signIn = async (req, res, next) => {
   try {
     const validationErrors = validationResult(req)
 
     if (!validationErrors.isEmpty()) {
-      let errors = []
+      const errors = []
 
       for (let i = 0; i < validationErrors.errors.length; i++) {
         errors.push(validationErrors.errors[i])
@@ -97,6 +98,7 @@ const signIn = async (req, res, next) => {
     return next(customError)
   }
 }
+
 const verifyToken = async (req, res, next) => {
   try {
     return res.status(200).json({ message: 'Token is valid' })
@@ -108,6 +110,7 @@ const verifyToken = async (req, res, next) => {
     return next(customError)
   }
 }
+
 const auth = {
   signUp,
   signIn,
