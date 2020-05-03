@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
 const UserSchema = mongoose.Schema({
   username: {
@@ -21,6 +21,6 @@ const UserSchema = mongoose.Schema({
     type: Boolean,
     defaul: false
   }
-})
+});
 
-export default mongoose.model('User', UserSchema)
+export default mongoose.model('User', UserSchema);

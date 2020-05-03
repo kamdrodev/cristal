@@ -1,41 +1,41 @@
-import List from '../models/List.js'
-import { validationResult } from 'express-validator'
+import List from '../models/List.js';
+import { validationResult } from 'express-validator';
 
 const getList = async (req, res, next) => {
   try {
-    const validationErrors = validationResult(req)
+    const validationErrors = validationResult(req);
 
     if (!validationErrors.isEmpty()) {
-      const customError = new Error('Incorrect Data')
+      const customError = new Error('Incorrect Data');
 
-      customError.status = 400
+      customError.status = 400;
 
-      return next(customError)
+      return next(customError);
     }
 
     await List.findOneAndUpdate(
       { _id: req.params.listId, userId: req.user.id },
       { $inc: { views: 1 } }
-    )
+    );
 
     const list = await List.findOne({
       _id: req.params.listId,
       userId: req.user.id
-    })
+    });
 
     return res
       .status(200)
-      .json({ message: 'List have been fetched', list: list })
+      .json({ message: 'List have been fetched', list: list });
   } catch (e) {
     const customError = new Error(
       'Something went wrong during get list process'
-    )
+    );
 
-    customError.status = 401
+    customError.status = 401;
 
-    return next(customError)
+    return next(customError);
   }
-}
+};
 
 const getAllLists = async (req, res, next) => {
   try {
@@ -43,43 +43,43 @@ const getAllLists = async (req, res, next) => {
       userId: req.user.id,
       firstLanguage: req.query.firstLanguage ? req.query.firstLanguage : null,
       secondLanguage: req.query.secondLanguage ? req.query.secondLanguage : null
-    }
-    const validationErrors = validationResult(req)
+    };
+    const validationErrors = validationResult(req);
 
     if (!validationErrors.isEmpty()) {
-      const customError = new Error('Incorrect Data')
+      const customError = new Error('Incorrect Data');
 
-      customError.status = 400
+      customError.status = 400;
 
-      return next(customError)
+      return next(customError);
     }
 
-    const lists = await List.find(queryOptions)
+    const lists = await List.find(queryOptions);
 
     return res
       .status(200)
-      .json({ message: 'Lists have been fetched', lists: lists })
+      .json({ message: 'Lists have been fetched', lists: lists });
   } catch (e) {
     const customError = new Error(
       'Something went wrong during get all lists process'
-    )
+    );
 
-    customError.status = 401
+    customError.status = 401;
 
-    return next(customError)
+    return next(customError);
   }
-}
+};
 
 const createList = async (req, res, next) => {
   try {
-    const validationErrors = validationResult(req)
+    const validationErrors = validationResult(req);
 
     if (!validationErrors.isEmpty()) {
-      const customError = new Error('Incorrect Data')
+      const customError = new Error('Incorrect Data');
 
-      customError.status = 400
+      customError.status = 400;
 
-      return next(customError)
+      return next(customError);
     }
 
     const newList = new List({
@@ -88,119 +88,119 @@ const createList = async (req, res, next) => {
       firstLanguage: req.body.firstLanguage,
       secondLanguage: req.body.secondLanguage,
       userId: req.user.id
-    })
+    });
 
-    await newList.save()
+    await newList.save();
 
-    return res.status(200).json({ message: 'List has been created' })
+    return res.status(200).json({ message: 'List has been created' });
   } catch (e) {
     const customError = new Error(
       'Something went wrong during create list process'
-    )
+    );
 
-    customError.status = 401
+    customError.status = 401;
 
-    return next(customError)
+    return next(customError);
   }
-}
+};
 
 const updateList = async (req, res, next) => {
   try {
-    const validationErrors = validationResult(req)
+    const validationErrors = validationResult(req);
 
     if (!validationErrors.isEmpty()) {
-      const customError = new Error('Incorrect Data')
+      const customError = new Error('Incorrect Data');
 
-      customError.status = 400
+      customError.status = 400;
 
-      return next(customError)
+      return next(customError);
     }
 
     await List.findOneAndUpdate(
       { _id: req.params.listId, userId: req.user.id },
       { $set: { title: req.body.title, description: req.body.description } }
-    )
+    );
 
-    return res.status(200).json({ message: 'Lists have been updated' })
+    return res.status(200).json({ message: 'Lists have been updated' });
   } catch (e) {
     const customError = new Error(
       'Something went wrong during update list process'
-    )
+    );
 
-    customError.status = 401
+    customError.status = 401;
 
-    return next(customError)
+    return next(customError);
   }
-}
+};
 
 const deleteList = async (req, res, next) => {
   try {
-    const validationErrors = validationResult(req)
+    const validationErrors = validationResult(req);
 
     if (!validationErrors.isEmpty()) {
-      const customError = new Error('Incorrect Data')
+      const customError = new Error('Incorrect Data');
 
-      customError.status = 400
+      customError.status = 400;
 
-      return next(customError)
+      return next(customError);
     }
 
     await List.findOneAndDelete({
       _id: req.params.listId,
       userId: req.user.id
-    })
+    });
 
-    return res.status(200).json({ message: 'List have been deleted' })
+    return res.status(200).json({ message: 'List have been deleted' });
   } catch (e) {
     const customError = new Error(
       'Something went wrong during delete list process'
-    )
+    );
 
-    customError.status = 401
+    customError.status = 401;
 
-    return next(customError)
+    return next(customError);
   }
-}
+};
 const getFlashcard = async (req, res, next) => {
   try {
-    const validationErrors = validationResult(req)
+    const validationErrors = validationResult(req);
 
     if (!validationErrors.isEmpty()) {
-      const customError = new Error('Incorrect Data')
+      const customError = new Error('Incorrect Data');
 
-      customError.status = 400
+      customError.status = 400;
 
-      return next(customError)
+      return next(customError);
     }
 
     await List.findOne({
       _id: req.params.listId,
       userId: req.user.id,
       'flashcards._id': req.params.flashcardId
-    })
+    });
 
-    return res.status(200).json({ message: 'Flashcard has been created' })
+    return res.status(200).json({ message: 'Flashcard has been created' });
   } catch (e) {
     const customError = new Error(
       'Something went wrong during get flashcard process'
-    )
+    );
 
-    customError.status = 401
+    customError.status = 401;
 
-    return next(customError)
+    return next(customError);
   }
-}
+};
 
 const createFlashcard = async (req, res, next) => {
   try {
-    const validationErrors = validationResult(req)
+    const validationErrors = validationResult(req);
 
     if (!validationErrors.isEmpty()) {
-      const customError = new Error('Incorrect Data')
+      const customError = new Error('Incorrect Data');
 
-      customError.status = 400
+      customError.status = 400;
 
-      return next(customError)
+      return next(customError);
     }
 
     await List.findOneAndUpdate(
@@ -213,30 +213,30 @@ const createFlashcard = async (req, res, next) => {
           }
         }
       }
-    )
+    );
 
-    return res.status(200).json({ message: 'Flashcard has been created' })
+    return res.status(200).json({ message: 'Flashcard has been created' });
   } catch (e) {
     const customError = new Error(
       'Something went wrong during create flashcard process'
-    )
+    );
 
-    customError.status = 401
+    customError.status = 401;
 
-    return next(customError)
+    return next(customError);
   }
-}
+};
 
 const updateFlashcard = async (req, res, next) => {
   try {
-    const validationErrors = validationResult(req)
+    const validationErrors = validationResult(req);
 
     if (!validationErrors.isEmpty()) {
-      const customError = new Error('Incorrect Data')
+      const customError = new Error('Incorrect Data');
 
-      customError.status = 400
+      customError.status = 400;
 
-      return next(customError)
+      return next(customError);
     }
 
     await List.findOneAndUpdate(
@@ -251,58 +251,58 @@ const updateFlashcard = async (req, res, next) => {
           'flashcards.$.secondLanguage': req.body.secondLanguage
         }
       }
-    )
+    );
 
-    return res.status(200).json({ message: 'Flashcard has been updated' })
+    return res.status(200).json({ message: 'Flashcard has been updated' });
   } catch (e) {
     const customError = new Error(
       'Something went wrong during update flashcard process'
-    )
+    );
 
-    customError.status = 401
+    customError.status = 401;
 
-    return next(customError)
+    return next(customError);
   }
-}
+};
 
 const deleteFlashcard = async (req, res, next) => {
   try {
-    const validationErrors = validationResult(req)
+    const validationErrors = validationResult(req);
 
     if (!validationErrors.isEmpty()) {
-      const customError = new Error('Incorrect Data')
+      const customError = new Error('Incorrect Data');
 
-      customError.status = 400
+      customError.status = 400;
 
-      return next(customError)
+      return next(customError);
     }
 
     await List.findOneAndUpdate(
       { _id: req.params.listId, userId: req.user.id },
       { $pull: { flashcards: { _id: req.params.flashcardId } } }
-    )
+    );
 
-    return res.status(200).json({ message: 'Flashcard has been updated' })
+    return res.status(200).json({ message: 'Flashcard has been updated' });
   } catch (e) {
     const customError = new Error(
       'Something went wrong during delete flashcard process'
-    )
+    );
 
-    customError.status = 401
+    customError.status = 401;
 
-    return next(customError)
+    return next(customError);
   }
-}
+};
 const saveQuizResult = async (req, res, next) => {
   try {
-    const validationErrors = validationResult(req)
+    const validationErrors = validationResult(req);
 
     if (!validationErrors.isEmpty()) {
-      const customError = new Error('Incorrect Data')
+      const customError = new Error('Incorrect Data');
 
-      customError.status = 400
+      customError.status = 400;
 
-      return next(customError)
+      return next(customError);
     }
 
     for (let i = 0; i < req.body.result.flashcards.length; i++) {
@@ -320,7 +320,7 @@ const saveQuizResult = async (req, res, next) => {
               req.body.result.flashcards[i].statistics.incorrectAnswers
           }
         }
-      )
+      );
     }
 
     await List.findOneAndUpdate(
@@ -333,19 +333,19 @@ const saveQuizResult = async (req, res, next) => {
           }
         }
       }
-    )
+    );
 
-    return res.status(200).json({ message: 'Statistics have been updated' })
+    return res.status(200).json({ message: 'Statistics have been updated' });
   } catch (e) {
     const customError = new Error(
       'Something went wrong during update statistics process'
-    )
+    );
 
-    customError.status = 401
+    customError.status = 401;
 
-    return next(customError)
+    return next(customError);
   }
-}
+};
 
 const lists = {
   getList,
@@ -358,6 +358,6 @@ const lists = {
   updateFlashcard,
   deleteFlashcard,
   saveQuizResult
-}
+};
 
-export default lists
+export default lists;

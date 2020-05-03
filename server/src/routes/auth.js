@@ -1,10 +1,10 @@
-import express from 'express'
-import { check } from 'express-validator'
+import express from 'express';
+import { check } from 'express-validator';
 
-import authControllers from '../controllers/auth.js'
-import authMiddlewares from '../middlewares/auth.js'
+import authControllers from '../controllers/auth.js';
+import authMiddlewares from '../middlewares/auth.js';
 
-const router = express.Router()
+const router = express.Router();
 
 router.post(
   '/sign-up',
@@ -30,7 +30,7 @@ router.post(
   ],
   authMiddlewares.checkIfUserExists,
   authControllers.signUp
-)
+);
 
 router.post(
   '/sign-in',
@@ -48,12 +48,12 @@ router.post(
     .isLength({ min: 6, max: 16 })
     .withMessage('The password must be 6+ chars long'),
   authControllers.signIn
-)
+);
 
 router.get(
   '/verify-token',
   authMiddlewares.jwtVerify,
   authControllers.verifyToken
-)
+);
 
-export default router
+export default router;

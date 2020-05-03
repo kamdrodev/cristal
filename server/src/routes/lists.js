@@ -1,12 +1,12 @@
-import express from 'express'
-import { body, check } from 'express-validator'
+import express from 'express';
+import { body, check } from 'express-validator';
 
-import listsControllers from '../controllers/lists.js'
-import authMiddlewares from '../middlewares/auth.js'
+import listsControllers from '../controllers/lists.js';
+import authMiddlewares from '../middlewares/auth.js';
 
-const router = express.Router()
+const router = express.Router();
 
-router.get('/lists', authMiddlewares.jwtVerify, listsControllers.getAllLists)
+router.get('/lists', authMiddlewares.jwtVerify, listsControllers.getAllLists);
 
 router.get(
   '/lists/:listId',
@@ -17,7 +17,7 @@ router.get(
   ],
   authMiddlewares.jwtVerify,
   listsControllers.getList
-)
+);
 
 router.post(
   '/lists',
@@ -30,13 +30,13 @@ router.post(
       'russian',
       'english',
       'japanese'
-    ]
+    ];
 
     if (!listOfLanguages.includes(value)) {
-      throw new Error("You can't select this language")
+      throw new Error("You can't select this language");
     }
 
-    return true
+    return true;
   }),
   body('secondLanguage').custom(value => {
     const listOfLanguages = [
@@ -47,13 +47,13 @@ router.post(
       'russian',
       'english',
       'japanese'
-    ]
+    ];
 
     if (!listOfLanguages.includes(value)) {
-      throw new Error("You can't select this language")
+      throw new Error("You can't select this language");
     }
 
-    return true
+    return true;
   }),
   [
     check('title').trim(),
@@ -67,7 +67,7 @@ router.post(
   ],
   authMiddlewares.jwtVerify,
   listsControllers.createList
-)
+);
 
 router.put(
   '/lists/:listId',
@@ -82,7 +82,7 @@ router.put(
   ],
   authMiddlewares.jwtVerify,
   listsControllers.updateList
-)
+);
 
 router.delete(
   '/lists/:listId',
@@ -93,7 +93,7 @@ router.delete(
   ],
   authMiddlewares.jwtVerify,
   listsControllers.deleteList
-)
+);
 
 router.get(
   '/lists/:listId/flashcards/:flashcardId',
@@ -105,7 +105,7 @@ router.get(
   ],
   authMiddlewares.jwtVerify,
   listsControllers.getFlashcard
-)
+);
 
 router.post(
   '/lists/:listId/flashcards',
@@ -119,7 +119,7 @@ router.post(
   ],
   authMiddlewares.jwtVerify,
   listsControllers.createFlashcard
-)
+);
 
 router.put(
   '/lists/:listId/flashcards/:flashcardId',
@@ -135,7 +135,7 @@ router.put(
   ],
   authMiddlewares.jwtVerify,
   listsControllers.updateFlashcard
-)
+);
 
 router.delete(
   '/lists/:listId/flashcards/:flashcardId',
@@ -147,13 +147,13 @@ router.delete(
   ],
   authMiddlewares.jwtVerify,
   listsControllers.deleteFlashcard
-)
+);
 
 router.post(
   '/lists/:listId/statistics',
   [check('listId').trim(), check('listId').exists(), check('result').exists()],
   authMiddlewares.jwtVerify,
   listsControllers.saveQuizResult
-)
+);
 
-export default router
+export default router;

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
 const ListSchema = mongoose.Schema({
   title: {
@@ -75,6 +75,6 @@ const ListSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   }
-})
+});
 
-export default mongoose.model('List', ListSchema)
+export default mongoose.model('List', ListSchema);
