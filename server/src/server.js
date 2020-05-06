@@ -22,6 +22,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(helmet());
 
+app.use(express.static('../client/dist/spa'));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../client/dist/spa/index.html'));
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/', listsRoutes);
 
