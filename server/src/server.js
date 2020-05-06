@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import cors from 'cors';
 import mongoose from 'mongoose';
-import chalk from 'chalk';
+import path from 'path';
 
 import authRoutes from './routes/auth.js';
 import listsRoutes from './routes/lists.js';
@@ -24,12 +24,12 @@ app.use(helmet());
 
 app.use(express.static('../client/dist/spa'));
 
+app.use('/api/auth', authRoutes);
+app.use('/api/', listsRoutes);
+
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../client/dist/spa/index.html'));
 });
-
-app.use('/api/auth', authRoutes);
-app.use('/api/', listsRoutes);
 
 app.use((err, req, res, next) => {
   if (res.headersSent) {
@@ -45,7 +45,7 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(port, () => {
-  console.log(chalk.yellow(`Server is running on port: ${port}`));
+  console.log(`Server is running on port: ${port}`);
 });
 
 export default app;
