@@ -34,7 +34,7 @@
       </q-card>
     </div>
     <div
-      class="q-ma-lg col-xs-12 col-sm-12 col-md-12 col-lg-8 offset-lg-2 text-center list"
+      class="q-pa-lg col-xs-12 col-sm-12 col-md-12 col-lg-8 offset-lg-2 text-center list"
       v-for="flashcard in this.temporary.list.flashcards"
       :key="flashcard._id" 
     >
