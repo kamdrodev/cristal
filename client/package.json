@@ -8,8 +8,7 @@
   "author": "kamdrodev <kamdrodev@protonmail.com>",
   "private": true,
   "scripts": {
-    "lint": "eslint --ext .js,.vue .",
-    "lint-fix": "eslint --ext .js,.vue . --fix",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore ./",
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {

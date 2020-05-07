@@ -326,21 +326,27 @@
         </q-card>
       </q-dialog>
 
-      <div id="listToPrint" class="container">
+      <div
+        id="listToPrint"
+        class="container"
+      >
         <div class="container">
           <div 
             class="row text-center text-bold"
             v-for="flashcard in list.flashcards"
             :key="flashcard._id"
           >
-            <div class="col-xs-6 q-pt-md q-pb-md">{{flashcard.firstLanguage}}</div>
-            <div class="col-xs-6 q-pt-md q-pb-md">{{flashcard.secondLanguage}}</div>
+            <div class="col-xs-6 q-pt-md q-pb-md">
+              {{ flashcard.firstLanguage }}
+            </div>
+            <div class="col-xs-6 q-pt-md q-pb-md">
+              {{ flashcard.secondLanguage }}
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  
 </template>
 
 <script>
