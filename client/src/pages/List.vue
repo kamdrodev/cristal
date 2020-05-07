@@ -325,8 +325,22 @@
           </q-card-actions>
         </q-card>
       </q-dialog>
+
+      <div id="listToPrint" class="container">
+        <div class="container">
+          <div 
+            class="row text-center text-bold"
+            v-for="flashcard in list.flashcards"
+            :key="flashcard._id"
+          >
+            <div class="col-xs-6 q-pt-md q-pb-md">{{flashcard.firstLanguage}}</div>
+            <div class="col-xs-6 q-pt-md q-pb-md">{{flashcard.secondLanguage}}</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+  
 </template>
 
 <script>
@@ -519,10 +533,13 @@ export default {
     },
     printList() {
       try { 
-      window.print(); 
+      // window.print(); 
+
+      this.$htmlToPaper('listToPrint');
+
       } catch(e) {
         console.log(e);
-        this.$q.notify({ message: "Something went wrong", color: 'negative' });
+        this.$q.notify({ message: 'Something went wrong', color: 'negative' });
       }
     },
     viewQuiz() {
@@ -576,8 +593,6 @@ export default {
   &.flashcard {    
     background: linear-gradient(to right, $dark, $primary);
   }
-  
-
 }
 
 .word {
@@ -606,7 +621,6 @@ export default {
   }
 }
 
-
 .flashcard {
   .statistics {
     .badge {
@@ -622,7 +636,5 @@ export default {
     }
   }
 }
-
-
 
 </style>
