@@ -3,7 +3,7 @@
 # Cristal
 
 ## Language learning application.
-Create your own sets of flashcards, learn them and check your progress.
+Create your own word vocabulary lists. Learn languages with flashcards and control your progress.
 
 ## Screenshots
 
