@@ -3,6 +3,7 @@
     <q-header class="header">
       <q-toolbar class="toolbar">
         <q-btn
+          v-if="isAuthenticated"
           flat
           dense
           round
@@ -22,7 +23,7 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen">
+    <q-drawer v-model="leftDrawerOpen" v-if="isAuthenticated">
       <q-list>
         <q-item-label header>
           Cristal 
