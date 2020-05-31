@@ -16,7 +16,7 @@ Create your own word vocabulary lists. Learn languages with flashcards and contr
 
 ## Tools
 * Vue (Vuex)
-* Vuesax
+* Quasar
 * Sass
 
 ## Project setup
