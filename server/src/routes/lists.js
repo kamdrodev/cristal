@@ -74,7 +74,6 @@ router.put(
   [
     check('listId').trim(),
     check('listId').exists(),
-    check('listId').isLength({ min: 6 }),
     check('title').trim(),
     check('title').exists(),
     check('description').trim(),
@@ -89,7 +88,6 @@ router.delete(
   [
     check('listId').trim(),
     check('listId').exists(),
-    check('listId').isLength({ min: 6 })
   ],
   authMiddlewares.jwtVerify,
   listsControllers.deleteList
